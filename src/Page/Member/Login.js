@@ -4,6 +4,8 @@ import Marquee from "react-fast-marquee";
 import { Link, useNavigate } from 'react-router-dom';
 import '../../App.css';
 import './Login.css';
+import KakaoLogin from 'react-kakao-login';
+import GoogleLogin from 'react-google-login';
 
 function Login() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -80,8 +82,42 @@ function Login() {
                         </div>
                     </div>
                     <button  onClick = { clickBtn } type = "button" className = "btn btn-light" style = {{ position: "relative", zIndex: "1", marginTop: window.innerWidth <= 767 ? "17vh" :"20vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>Login</button>
-                    <button type = "button" className = "btn btn-outline-light" style = {{ position: "relative", zIndex: "1", marginTop: "1vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>Google</button>
-                    <button type = "button" className = "btn btn-outline-warning" style = {{ position: "relative", zIndex: "1", marginTop: "1vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>Kakao</button>
+                    <GoogleLogin
+                        clientId='39342264028-eu6iqv41a0db4ub1asvql5g8fhrm146l.apps.googleusercontent.com'
+                        buttonText='Google'
+                        onSuccess={(result) => console.log(result)}
+                        onFailure={(result) => console.log(result)}
+                        // cookiePolicy={'single_host_origin'}
+                        isSignedIn={true}
+                        className = "btn btn-outline-light" 
+                        style = {{ 
+                            position: "relative", 
+                            zIndex: "1", 
+                            marginTop: "1vh", 
+                            width: window.innerWidth <= 767 ? "90%" :"60%", 
+                            marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", 
+                            fontSize: "1.5rem" 
+                        }}
+                    />
+                    <KakaoLogin
+                        token="a4f2c5ae0c7d781058ce2872976b922e"
+                        buttonText='Kakao'
+                        onSuccess={(result) => console.log(result)}
+                        onFail={(result) => console.log(result)}
+                        needProfile={true}
+                        useLoginForm={true}
+                        persistAccessToken={true}
+                        throughTalk={true}
+                        className = "btn btn-outline-warning" 
+                        style = {{ 
+                            position: "relative", 
+                            zIndex: "1", 
+                            marginTop: "1vh", 
+                            width: window.innerWidth <= 767 ? "90%" :"60%", 
+                            marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", 
+                            fontSize: "1.5rem" 
+                        }}
+                    />
                     <button type = "button" className = "btn btn-outline-success" style = {{ position: "relative", zIndex: "1", marginTop: "1vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>Naver</button>
                     <Link to = "/SignUp"><p style = {{ position: "relative", zIndex: "1", marginTop: window.innerWidth <= 767 ? "3vh" :"2.5vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", color: "white", fontSize: "0.8rem" }}>아직 회원이 아니신가요?</p></Link>
                 </div>

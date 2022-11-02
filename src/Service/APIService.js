@@ -75,7 +75,7 @@ export const LoginAPI = (memberDTO) => {
         if(response.role === "ADMIN") {
           window.location.href = "/"; // 추후 어드민페이지 개발예정
         } else {
-          window.location.href = "/";
+          window.location.href = "/Home";
         }
       }
     })

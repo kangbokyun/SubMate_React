@@ -1,0 +1,126 @@
+  :root{
+    --speed: 1;
+    --duration: 3;
+    --fade: 0.2;
+    --delay: 0;
+    --inbetween: 0.5;
+    --total: calc( var(--speed) + var(--duration) + var(--fade) + var(--inbetween) );
+  }
+  
+  /* first row */
+  body #showcase-dynamic div p:nth-of-type(1){--row-delay: 0s;}
+  /* second row */
+  body #showcase-dynamic div p:nth-of-type(2){--row-delay: .15s;}
+  /* third row */
+  body #showcase-dynamic div p:nth-of-type(3){--row-delay: .3s;}
+  /* fourth row */
+  body #showcase-dynamic div p:nth-of-type(4){--row-delay: .45s;}
+  /* fiveth row */
+  body #showcase-dynamic div p:nth-of-type(5){--row-delay: 1s;}
+  
+  @keyframes group1 {
+    0% {transform: translateY(50px);opacity: 0;}
+    21.27% {transform: translateY(0);opacity: 1;}
+    100% {transform: translateY(0);opacity: 1;}
+  }
+  @keyframes group2 {
+    0% {transform: translateY(50px);opacity: 0;}
+    10.63% {transform: translateY(0);opacity: 1;}
+    42.55% {transform: translateY(0); opacity: 1;}
+    44.68% {transform: translateY(0);opacity: 0;}
+    100% {transform: translateY(0);opacity: 0;}
+  }
+  @keyframes group3 {
+    0% {transform: translateY(50px);opacity: 0;}
+    7.09% {transform: translateY(0);opacity: 1;}
+    28.36% {transform: translateY(0); opacity: 1;}
+    29.78% {transform: translateY(0);opacity: 0;}
+    100% {transform: translateY(0);opacity: 0;}
+  }
+  @keyframes group4 {
+    0% {transform: translateY(50px);opacity: 0;}
+    5.31% {transform: translateY(0);opacity: 1;}
+    21.27% {transform: translateY(0); opacity: 1;}
+    22.34% {transform: translateY(0);opacity: 0;}
+    100% {transform: translateY(0);opacity: 0;}
+  }
+  @keyframes group5 {
+    0% {transform: translateY(50px);opacity: 0;}
+    4.25% {transform: translateY(0);opacity: 1;}
+    17.02% {transform: translateY(0); opacity: 1;}
+    17.87% {transform: translateY(0);opacity: 0;}
+    100% {transform: translateY(0);opacity: 0;}
+  }
+  
+  /* if one item */
+  body #showcase-dynamic div:nth-of-type(1){--Fdelay: calc( 1s * var(--delay) );}
+  body #showcase-dynamic div:first-child:nth-last-child(1) {
+      --time: calc( 1s * var(--total) );
+  }
+  #showcase-dynamic div:first-child:nth-last-child(1) p{
+    -webkit-animation: group1 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) forwards; /* Safari 4.0 - 8.0 */
+    animation: group1 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) forwards;
+  }
+  
+  /* if two items */
+  body #showcase-dynamic div:nth-of-type(2){--Fdelay: calc( 1s * (var(--delay) + var(--total)) );}
+  body #showcase-dynamic div:first-child:nth-last-child(2),
+  body #showcase-dynamic div:first-child:nth-last-child(2) ~ div {
+      --time: calc( 1s * (var(--total) * 2) );
+  }
+  #showcase-dynamic div:first-child:nth-last-child(2) p,
+  #showcase-dynamic div:first-child:nth-last-child(2) ~ div p{
+    -webkit-animation: group2 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) infinite; /* Safari 4.0 - 8.0 */
+    animation: group2 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) infinite;
+  }
+  /* if three items */
+  body #showcase-dynamic div:nth-of-type(3){--Fdelay: calc( 1s * (var(--delay) + (var(--total) * 2)) );}
+  body #showcase-dynamic div:first-child:nth-last-child(3),
+  body #showcase-dynamic div:first-child:nth-last-child(3) ~ div {
+      --time: calc( 1s * (var(--total) * 3) );
+  }
+  #showcase-dynamic div:first-child:nth-last-child(3) p,
+  #showcase-dynamic div:first-child:nth-last-child(3) ~ div p{
+    -webkit-animation: group3 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) infinite; /* Safari 4.0 - 8.0 */
+    animation: group3 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) infinite;
+  }
+  /* if four items */
+  body #showcase-dynamic div:nth-of-type(4){--Fdelay: calc( 1s * (var(--delay) + (var(--total) * 3)) );}
+  body #showcase-dynamic div:first-child:nth-last-child(4),
+  body #showcase-dynamic div:first-child:nth-last-child(4) ~ div {
+      --time: calc( 1s * (var(--total) * 4) );
+  }
+  #showcase-dynamic div:first-child:nth-last-child(4) p,
+  #showcase-dynamic div:first-child:nth-last-child(4) ~ div p{
+    -webkit-animation: group4 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) infinite; /* Safari 4.0 - 8.0 */
+    animation: group4 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) infinite;
+  }
+  /* if five items */
+  body #showcase-dynamic div:nth-of-type(5){--Fdelay: calc( 1s * (var(--delay) + (var(--total) * 4)) );}
+  body #showcase-dynamic div:first-child:nth-last-child(4),
+  body #showcase-dynamic div:first-child:nth-last-child(4) ~ div {
+      --time: calc( 1s * (var(--total) * 5) );
+  }
+  #showcase-dynamic div:first-child:nth-last-child(5) p,
+  #showcase-dynamic div:first-child:nth-last-child(5) ~ div p{
+    -webkit-animation: group5 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) infinite; /* Safari 4.0 - 8.0 */
+    animation: group5 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) infinite;
+  }
+  
+  #showcase-dynamic{
+    display: grid;
+    grid-template-columns: 1fr;
+    background-color: gray;
+    color: #fff;
+    font-size: 2em;
+  }
+  #showcase-dynamic div{
+    align-self: center;
+    justify-self: start;
+    grid-column-start: 1;
+    grid-row-start: 1;
+  }
+  #showcase-dynamic p{
+    opacity: 0;
+  }
+  

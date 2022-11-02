@@ -1,26 +1,40 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
-import Chat from './Pages/Chat/Chat';
-import Mate from './Pages/Mate/Mate';
-import Login from './Pages/Member/Login';
-import MyInfo from './Pages/Member/MyInfo';
-import SignUp from './Pages/Member/SignUp';
-import PidMain from './Pages/PID/PidMain';
-import ProfileMain from './Pages/Profile/ProfileMain';
+import Board from './Page/Board/Board';
+import Chat from './Page/Chat/Chat';
+import InChat from './Page/Chat/InChat';
+import Main from './Page/Main';
+import Mate from './Page/Mate/Mate';
+import Login from './Page/Member/Login';
+import SignUp from './Page/Member/SignUp';
+import Profile from './Page/Profile/Profile';
+import SetBoard from './Page/Setting/SetBoard';
+import SetChat from './Page/Setting/SetChat';
+import SetCustomer from './Page/Setting/SetCustomer';
+import SetMate from './Page/Setting/SetMate';
+import SetProfile from './Page/Setting/SetProfile';
+import Setting from './Page/Setting/Setting';
 
 function AppRoute() {
     return(
         <Router>
             <Routes>
-                <Route path = "/" element = { <App /> } />
-                <Route path = "/SignUp" element = { <SignUp /> } />
                 <Route path = "/Login" element = { <Login /> } />
-                <Route path = "/MyInfo" element = { <MyInfo /> } />
-                <Route path = "/Pid" element = { <PidMain /> } />
-                <Route path = "/Profile" element = { <ProfileMain /> } />
-                <Route path = "/Chat" element = { <Chat /> } />
+                <Route path = "/SignUp" element = { <SignUp /> } />
+                <Route path = "/" element = { <App /> } />
+                <Route path = "/Home" element = { <Main /> } />
                 <Route path = "/Mate" element = { <Mate /> } />
+                <Route path = "/Chat" element = { <Chat /> } />
+                <Route path = "/Board" element = { <Board /> } />
+                <Route path = "/Profile" element = { <Profile /> } />
+                <Route path = "/Setting" element = { <Setting /> } />
+                <Route path = "/SetMate" element = { <SetMate /> } />
+                <Route path = "/SetChat" element = { <SetChat /> } />
+                <Route path = "/SetBoard" element = { <SetBoard /> } />
+                <Route path = "/SetProfile" element = { <SetProfile /> } />
+                <Route path = "/SetCustomer" element = { <SetCustomer /> } />
+                <Route path = "/InChat" element = { <InChat /> } />
             </Routes>
         </Router>
     );

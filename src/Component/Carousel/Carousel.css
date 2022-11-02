@@ -1,0 +1,30 @@
+#me{
+    display:block;
+    text-align:center;
+    text-align:center;
+    padding:5px;
+    font-size:1.2em;
+  }
+  
+  .swiper-container{
+    width:100%;
+    overflow:hidden;
+    height:100vh;
+  }
+  
+  .swiper-slide{
+    
+    overflow:hidden;
+    width:100%;
+  }
+  img{
+    width:100%;
+  }
+  
+  @media (max-width:576px){
+    
+   
+    .swiper-container{
+     height:100%;
+    }
+  }

@@ -82,24 +82,24 @@ function SignUp() {
                                 <span>PW</span>
                                 <i></i>
                             </div>
-                            <div class="box" style = {{ width: "100%" }}>
-                                <input type="text" name = "mpw" required onChange = { saveMember } />
+                            {/* <div class="box" style = {{ width: "100%" }}>
+                                <input type="text" name = "mpw2" required onChange = { saveMember } />
                                 <span>Re:PW</span>
                                 <i></i>
-                            </div>
+                            </div> */}
                             <div class="box" style = {{ width: "100%" }}>
-                                <input type="text" name = "mpw" required onChange = { saveMember } />
+                                <input type="text" name = "mname" required onChange = { saveMember } />
                                 <span>NAME</span>
                                 <i></i>
                             </div>
                             <div class="box" style = {{ width: "100%" }}>
-                                <input type="text" name = "mpw" required onChange = { saveMember } />
+                                <input type="text" name = "mnickname" required onChange = { saveMember } />
                                 <span>NICK</span>
                                 <i></i>
                             </div>
                         </div>
                     </div>
-                    <Link to = "/Login"><button type = "button" className = "btn btn-light" style = {{ position: "relative", zIndex: "1", marginTop: window.innerWidth <= 767 ? "10vh" :"13vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>SignUp</button></Link>
+                    <button type = "button" onClick = { sendSignUp } className = "btn btn-light" style = {{ position: "relative", zIndex: "1", marginTop: window.innerWidth <= 767 ? "10vh" :"13vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>SignUp</button>
                     <button type = "button" className = "btn btn-outline-light" style = {{ position: "relative", zIndex: "1", marginTop: "1vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>Google</button>
                 </div>
                 <img alt = "SubMate" src = { require('../../IMG/Train.jpg') } style = {{ width: "100%", height: "100vh", zIndex: "-1", position: "relative" }} />

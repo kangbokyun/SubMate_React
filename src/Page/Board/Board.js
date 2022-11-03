@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../Header';
 import Menu from '../Menu';
 
@@ -22,7 +23,7 @@ function Board() {
         <div>
             <Header />
             { window.innerWidth <= 767 ? 
-                <div><h1 style = {{ marginLeft: "3vw", marginTop: "10vh" }}>Board</h1></div> : 
+                <div><h1 style = {{ marginLeft: "3vw", marginTop: "10vh" }}>Board</h1><Link to = "/BoardWrite"><button type = "button" className = "btn btn-success" style = {{  }}>Write</button></Link></div> : 
                 <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>Board</h1> 
             }
             <div className = "container" style = {{ marginTop: "1.5vh" }}>

@@ -1,11 +1,11 @@
-import { LoginAPI } from '../../Service/APIService';
+import { KakaoAPI, LoginAPI } from '../../Service/APIService';
 import React, { useEffect, useState } from 'react';
 import Marquee from "react-fast-marquee";
 import { Link, useNavigate } from 'react-router-dom';
 import '../../App.css';
 import './Login.css';
 import KakaoLogin from 'react-kakao-login';
-import GoogleLogin from 'react-google-login';
+import { KAKAO_AUTH_URL } from './OAuth2';
 
 function Login() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -46,6 +46,45 @@ function Login() {
         LoginAPI(minfo)
     };
 
+    const kakaoLogin = (result) => {
+        const kakaoAccess = result.response['id_token'];
+        const kakaoAge_Range = result.profile['kakao_account']['age_range'];
+        const kakaoBirth = result.profile['kakao_account']['birthday'];
+        const kakaoEmail = result.profile['kakao_account']['email'];
+        const kakaoGender = result.profile['kakao_account']['gender'];
+        const kakaoNickname = result.profile['kakao_account']['profile']['nickname'];
+        const kakaoProfileIMG = result.profile['kakao_account']['profile']['profile_image_url'];
+        const kakaoThumbnail = result.profile['kakao_account']['profile']['thumbnail_image_url'];
+        const platForm = "Kakao";
+
+        const kInfo = [{
+            "Access_Token" : kakaoAccess,
+            "Ageange" : kakaoAge_Range,
+            "Birth" : kakaoBirth,
+            "Email" : kakaoEmail,
+            "Gender" : kakaoGender,
+            "Nickname" : kakaoNickname,
+            "ProfileIMG" : kakaoProfileIMG,
+            "Thumbnail" : kakaoThumbnail,
+            "PlatForm" : platForm
+        }];
+
+        // alert("stringify : " + JSON.stringify(kInfo));
+        fetch("http://localhost:8080/Auth/KakaoLogin", {
+            headers: {'Content-Type' : 'application/json'},
+            method : "POST",
+            body : JSON.stringify(kInfo)
+        })
+        .then((res) => {
+            localStorage.setItem("Access_Token", kakaoAccess);
+            window.location.href = "/Home";
+        })
+    };
+
+    // sendKakao = () => {
+    //     console.log(kakaoInfo);
+    // };
+
     return(
         <div className = "row" style = {{ width: "100%", margin: "auto" }}>
             <div className = "col-md-6 offset-md-3 col-sm-6 offset-sm-3 col-12" style = {{ margin: "auto", padding: "0" }}>
@@ -82,41 +121,14 @@ function Login() {
                         </div>
                     </div>
                     <button  onClick = { clickBtn } type = "button" className = "btn btn-light" style = {{ position: "relative", zIndex: "1", marginTop: window.innerWidth <= 767 ? "17vh" :"20vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>Login</button>
-                    <GoogleLogin
-                        clientId='39342264028-eu6iqv41a0db4ub1asvql5g8fhrm146l.apps.googleusercontent.com'
-                        buttonText='Google'
-                        onSuccess={(result) => console.log(result)}
-                        onFailure={(result) => console.log(result)}
-                        // cookiePolicy={'single_host_origin'}
-                        isSignedIn={true}
-                        className = "btn btn-outline-light" 
-                        style = {{ 
-                            position: "relative", 
-                            zIndex: "1", 
-                            marginTop: "1vh", 
-                            width: window.innerWidth <= 767 ? "90%" :"60%", 
-                            marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", 
-                            fontSize: "1.5rem" 
-                        }}
-                    />
                     <KakaoLogin
                         token="a4f2c5ae0c7d781058ce2872976b922e"
-                        buttonText='Kakao'
-                        onSuccess={(result) => console.log(result)}
-                        onFail={(result) => console.log(result)}
+                        onSuccess={ kakaoLogin }
+                        onFail={ kakaoLogin }
                         needProfile={true}
                         useLoginForm={true}
                         persistAccessToken={true}
                         throughTalk={true}
-                        className = "btn btn-outline-warning" 
-                        style = {{ 
-                            position: "relative", 
-                            zIndex: "1", 
-                            marginTop: "1vh", 
-                            width: window.innerWidth <= 767 ? "90%" :"60%", 
-                            marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", 
-                            fontSize: "1.5rem" 
-                        }}
                     />
                     <button type = "button" className = "btn btn-outline-success" style = {{ position: "relative", zIndex: "1", marginTop: "1vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>Naver</button>
                     <Link to = "/SignUp"><p style = {{ position: "relative", zIndex: "1", marginTop: window.innerWidth <= 767 ? "3vh" :"2.5vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", color: "white", fontSize: "0.8rem" }}>아직 회원이 아니신가요?</p></Link>

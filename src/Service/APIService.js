@@ -80,8 +80,7 @@ export const LoginAPI = (memberDTO) => {
       }
     })
 };
-
-export const KakaoLoginAPI = (kakaoDTO) => {
+export const KakaoAPI = (kakaoDTO) => {
   return call('/Auth/KakaoLogin', 'POST', kakaoDTO)
   .then((res) => {
     if(res.status === 200) {
@@ -91,6 +90,9 @@ export const KakaoLoginAPI = (kakaoDTO) => {
     }
   })
 };
+
+// export const KakaoLoginAPI = (kakaoDTO) => {
+// };
 
 export const LogoutAPI = () => {
   localStorage.setItem(Access_Token, null);

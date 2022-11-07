@@ -57,17 +57,17 @@ function Login() {
         const kakaoThumbnail = result.profile['kakao_account']['profile']['thumbnail_image_url'];
         const platForm = "Kakao";
 
-        const kInfo = [{
+        const kInfo = {
             "Access_Token" : kakaoAccess,
-            "Ageange" : kakaoAge_Range,
-            "Birth" : kakaoBirth,
-            "Email" : kakaoEmail,
-            "Gender" : kakaoGender,
-            "Nickname" : kakaoNickname,
-            "ProfileIMG" : kakaoProfileIMG,
-            "Thumbnail" : kakaoThumbnail,
-            "PlatForm" : platForm
-        }];
+            "mager" : kakaoAge_Range,
+            "mbirth" : kakaoBirth,
+            "mid" : kakaoEmail,
+            "mgender" : kakaoGender,
+            "mnickname" : kakaoNickname,
+            "mprofileimg" : kakaoProfileIMG,
+            "mthumbnail" : kakaoThumbnail,
+            "platForm" : platForm
+        };
 
         // alert("stringify : " + JSON.stringify(kInfo));
         fetch("http://localhost:8080/Auth/KakaoLogin", {
@@ -77,6 +77,8 @@ function Login() {
         })
         .then((res) => {
             localStorage.setItem("Access_Token", kakaoAccess);
+            
+            localStorage.setItem("UserInfo", JSON.stringify(kInfo));
             window.location.href = "/Home";
         })
     };

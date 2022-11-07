@@ -7,6 +7,9 @@ function Profile() {
     // 윈도우 크기 변경 감지되면 리렌더링
     const [ windowWidth, setWindowWidth ] = useState(0);
     const [ windowHeight, setWindowHeight ] = useState(0);
+    
+    let userInfo = JSON.parse(localStorage.getItem("UserInfo"));
+    
     let resizeWindow = () => {
         setWindowWidth(window.innerWidth);
         setWindowHeight(window.innerHeight);
@@ -42,11 +45,11 @@ function Profile() {
                                             { window.innerWidth <= 767 ? <h4>Auth</h4> : <h4 style = {{ marginTop: "1vh" }}>Auth</h4> }
                                         </div>
                                         <div className = "col-md-8 col-8" style = {{ textAlign: "center" }}>
-                                            { window.innerWidth <= 767 ? <h4 style = {{ marginTop: "1vh" }}>아이린</h4> : <h4 style = {{ marginTop: "2vh" }}>아이린</h4> }
+                                            { window.innerWidth <= 767 ? <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mnickname }</h4> : <h4 style = {{ marginTop: "2vh" }}>아이린</h4> }
                                             { window.innerWidth <= 767 ? <h4>춤, 노래</h4> : <h4 style = {{ marginTop: "1vh" }}>춤, 노래</h4> }
-                                            { window.innerWidth <= 767 ? <h4>1991. 03. 29</h4> : <h4 style = {{ marginTop: "1vh" }}>1991. 03. 29</h4> }
+                                            { window.innerWidth <= 767 ? <h4>{ userInfo.mbirth }</h4> : <h4 style = {{ marginTop: "1vh" }}>1991. 03. 29</h4> }
                                             { window.innerWidth <= 767 ? <h4>ESTP</h4> : <h4 style = {{ marginTop: "1vh" }}>ESTP</h4> }
-                                            <h4><span style = {{ font: "bold", color: "green" }}>N</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style = {{ font: "bold", color: "yellow" }}>K</span></h4>
+                                            <h4>{ userInfo.platForm === "Kakao" ? <span style = {{ font: "bold", color: "yellow" }}>K</span> : <span style = {{ font: "bold", color: "green" }}>N</span> }</h4>
                                         </div>
                                     </div>
                                 </div>

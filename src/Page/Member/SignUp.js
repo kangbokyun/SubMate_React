@@ -70,7 +70,7 @@ function SignUp() {
                     <div style = {{ position: "relative", zIndex: "1", marginTop: window.innerWidth <= 767 ? "5vh" :"10vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>
                         <div class="card" style = {{ width: "100%" }}>
                             <section>
-                                <h1>Login</h1>
+                                <h1>SignUp</h1>
                             </section>
                             <div class="box" style = {{ width: "100%" }}>
                                 <input type="text" name = "mid" required onChange = { saveMember } />
@@ -92,9 +92,41 @@ function SignUp() {
                                 <span>NAME</span>
                                 <i></i>
                             </div>
+                            <div className = "row" style = {{ marginLeft: "0.2vw" }}>
+                                <div class="box" style = {{ width: "37%" }}>
+                                    <input type="text" name = "mbirth" required onChange = { saveMember } />
+                                    <span>BIRTH</span>
+                                    <i></i>
+                                </div>
+                                <div class="box" style = {{ width: "10%", marginLeft: "5vw" }}>
+                                    <input type="text" name = "mgender" required onChange = { saveMember } />
+                                    <i></i>
+                                </div>
+                                ●●●●●●
+                            </div>
                             <div class="box" style = {{ width: "100%" }}>
                                 <input type="text" name = "mnickname" required onChange = { saveMember } />
                                 <span>NICK</span>
+                                <i></i>
+                            </div>
+                            <div className = "row" style = {{ marginLeft: "0.1vw" }}>
+                                <div class="box" style = {{ width: "30%" }}>
+                                    <input type="text" name = "mnickname" required onChange = { saveMember } />
+                                    <span>PHONE</span>
+                                    <i></i>
+                                </div>
+                                <div class="box" style = {{ width: "33%", marginLeft: "1vw" }}>
+                                    <input type="text" name = "mnickname" required onChange = { saveMember } />
+                                    <i></i>
+                                </div>
+                                <div class="box" style = {{ width: "33%", marginLeft: "1vw" }}>
+                                    <input type="text" name = "mnickname" required onChange = { saveMember } />
+                                    <i></i>
+                                </div>
+                            </div>
+                            <div class="box" style = {{ width: "100%" }}>
+                                <input type="text" name = "mnickname" required onChange = { saveMember } />
+                                <span>MBTI</span>
                                 <i></i>
                             </div>
                         </div>

@@ -27,7 +27,59 @@ function SignUp() {
     };
 
     const [ signUp, setSignUp ] = useState([]);
+    const [ confirmEmail, setConfirmEmail ] = useState("ID");
+    const [ confirmPassword, setConfirmPassword ] = useState("PW");
+    const [ confirmPw2, setConfirmPw2 ] = useState("PW:Re");
+    const [ confirmName, setConfirmName ] = useState("NAME");
+    const [ confirmBirth, setConfirmBirth ] = useState("BIRTH");
+
+    const checkEmail = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const checkPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    const checkBirth = /(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1])/;
+
     const saveMember = (e) => {
+        if([e.target.name].includes('mid')) { // 아이디
+            if(checkEmail.test(e.target.value)) {
+                setConfirmEmail('ID : 올바른 이메일 형식입니다.');
+            } else if(e.target.value.length <= 0) {
+                setConfirmEmail('ID');
+            } else {
+                setConfirmEmail('ID : 이메일 형식을 입력해주세요.');
+            }
+        }
+        if([e.target.name].includes('mpw')) { // 비밀번호
+            if(checkPassword.test(e.target.value)) {
+                setConfirmPassword('PW : 올바른 비밀번호 형식입니다.');
+            } else if(e.target.value.length <= 0) {
+                setConfirmPassword('PW');
+            } else {
+                setConfirmPassword('PW: 숫자+영문자+특수문자 8자리 이상');
+            }
+        } 
+        if([e.target.name].includes('mpw2')) { // 비밀번호확인
+            if(checkPassword.test(e.target.value)) {
+                setConfirmPw2('PW:Re : 비밀번호가 일치합니다.');
+            } else if(e.target.value.length <= 0) {
+                setConfirmPw2('PW:Re');
+            } else {
+                setConfirmPw2('PW:Re: 비밀번호를 확인해주세요.');
+            }
+        }
+        if([e.target.name].includes('mname')) { // 이름
+            if(e.target.value.length >= 2 && e.target.value.length <= 15) {
+                setConfirmName('NAME: 올바른 이름 형식입니다.');
+            } else {
+                setConfirmName('NAME : 2자 이상, 15자 이하');
+            }
+        }
+        if([e.target.name].includes('mbirth')) { // 생년월일
+            if(checkBirth.test(e.target.value)) {
+                setConfirmBirth("√");
+            } else {
+                setConfirmBirth("6자리");
+            }
+        }
+
         setSignUp({
             ...signUp, [ e.target.name ] : e.target.value
         })
@@ -74,28 +126,28 @@ function SignUp() {
                             </section>
                             <div class="box" style = {{ width: "100%" }}>
                                 <input type="text" name = "mid" required onChange = { saveMember } />
-                                <span>ID</span>
+                                <span>{ confirmEmail }</span>
                                 <i></i>
                             </div>
                             <div class="box" style = {{ width: "100%" }}>
-                                <input type="text" name = "mpw" required onChange = { saveMember } />
-                                <span>PW</span>
+                                <input type="password" name = "mpw" required onChange = { saveMember } />
+                                <span style = {{ fontSize: confirmPassword.length >= 3 ? "1rem" : "" }}>{ confirmPassword }</span>
                                 <i></i>
                             </div>
-                            {/* <div class="box" style = {{ width: "100%" }}>
+                            <div class="box" style = {{ width: "100%" }}>
                                 <input type="text" name = "mpw2" required onChange = { saveMember } />
-                                <span>Re:PW</span>
+                                <span>{ confirmPw2 }</span>
                                 <i></i>
-                            </div> */}
+                            </div>
                             <div class="box" style = {{ width: "100%" }}>
                                 <input type="text" name = "mname" required onChange = { saveMember } />
-                                <span>NAME</span>
+                                <span>{ confirmName }</span>
                                 <i></i>
                             </div>
                             <div className = "row" style = {{ marginLeft: "0.2vw" }}>
                                 <div class="box" style = {{ width: "37%" }}>
                                     <input type="text" name = "mbirth" required onChange = { saveMember } />
-                                    <span>BIRTH</span>
+                                    <span>{ confirmBirth }</span>
                                     <i></i>
                                 </div>
                                 <div class="box" style = {{ width: "10%", marginLeft: "5vw" }}>

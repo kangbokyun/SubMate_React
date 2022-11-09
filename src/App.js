@@ -3,18 +3,20 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Marquee from "react-fast-marquee";
 import { Link } from 'react-router-dom';
 import './App.css';
+import isLogin from './isLogin';
 
 function App() {
-    // const clickBtn = (e) => {
-    //   alert("aa");
-    // };
 
     // 윈도우 크기 변경 감지되면 리렌더링
     const [ windowWidth, setWindowWidth ] = useState(0);
     const [ windowHeight, setWindowHeight ] = useState(0);
     let resizeWindow = () => {
-    setWindowWidth(window.innerWidth);
-    setWindowHeight(window.innerHeight);
+        setWindowWidth(window.innerWidth);
+        setWindowHeight(window.innerHeight);
+
+        if(isLogin()) {
+            window.location.href = "/Home";
+        } 
     };
 
     useEffect(() => {

@@ -31,15 +31,57 @@ function SignUp() {
     const [ confirmEmail, setConfirmEmail ] = useState("ID");
     const [ confirmPassword, setConfirmPassword ] = useState("PW");
     const [ confirmPw2, setConfirmPw2 ] = useState("PW:Re");
+    const [ savePw, setSavePw ] = useState("");
     const [ confirmName, setConfirmName ] = useState("NAME");
     const [ confirmBirth, setConfirmBirth ] = useState("BIRTH");
     const [ confirmAddr_Post, setConfirmAddr_Post ] = useState("Addr_Post");
     const [ confirmAddr_Road, setConfirmAddr_Road ] = useState("Addr_Road");
     const [ confirmAddr, setConfirmAddr ] = useState("Addr");
+    const [ confirmPhone, setConfirmPhone ] = useState("Phone");
+    const [ confirmMBTI, setConfirmMBTI ] = useState("MBTI");
+    let test1 = "010";
+    let test2 = "0000";
+    let test3 = "1111";
+
+    let flag = {
+        idF : false, pwF : false, nameF : false, birthF : false, nickF : false,
+        genderF : false, addrF : false, p1: false, p2: false, p3: false, mbti: false
+    };
 
     const checkEmail = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const checkPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    const checkBirth = /(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1])/;
+    const checkBirth = /([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/;
+    const checkp1 = /01[016789]/;
+    const checkp2 = /[^0][0-9]{3,4}/;
+    const checkp3 = /[0-9]{4}/;
+
+    // 다음 주소 API
+    const open = useDaumPostcodePopup('CURRENT_URL'); 
+    
+    const handleComplete = (data) => {
+    let fullAddress = data.address;
+    let extraAddress = '';
+
+    if (data.addressType === 'R') {
+        if (data.bname !== '') {
+        extraAddress += data.bname;
+        }
+        if (data.buildingName !== '') {
+        extraAddress += extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+        }
+        fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+    }
+    
+    setConfirmAddr_Post(data.zonecode);
+    setConfirmAddr_Road(data.roadAddress);
+    flag.addrPF = true;
+    flag.addrRF = true;
+    };
+
+    const handleClick = () => {
+    open({ onComplete: handleComplete });
+    };
+    // -/다음 주소 API
 
     const saveMember = (e) => {
         // memberDTO  
@@ -48,16 +90,24 @@ function SignUp() {
         // 유효성검사
         if([e.target.name].includes('mid')) { // 아이디
             if(checkEmail.test(e.target.value)) {
+                flag.idF = true;
                 setConfirmEmail('ID : 올바른 이메일 형식입니다.');
+                setSignUp({ ...signUp, [ e.target.name ] : e.target.value })
+                console.log("signUp : ", signUp);
             } else if(e.target.value.length <= 0) {
+                flag.idF = false;
                 setConfirmEmail('ID');
             } else {
+                flag.idF = false;
                 setConfirmEmail('ID : 이메일 형식으로 입력');
             }
         }
         if([e.target.name].includes('mpw')) { // 비밀번호
             if(checkPassword.test(e.target.value)) {
+                setSavePw(e.target.value);
                 setConfirmPassword('PW : 올바른 비밀번호 형식입니다.');
+                setSignUp({ ...signUp, [ e.target.name ] : e.target.value })
+                console.log("signUp : ", signUp);
             } else if(e.target.value.length <= 0) {
                 setConfirmPassword('PW');
             } else {
@@ -65,93 +115,142 @@ function SignUp() {
             }
         } 
         if([e.target.name].includes('mpw2')) { // 비밀번호확인
-            if(checkPassword.test(e.target.value)) {
+            console.log("savePw : ", savePw, " e : ", e.target.value);
+            if(savePw === e.target.value) {
+                flag.pwF = true;
                 setConfirmPw2('PW:Re : 비밀번호가 일치합니다.');
+                setSignUp({ ...signUp, [ e.target.name ] : e.target.value })
+                console.log("signUp : ", signUp);
             } else if(e.target.value.length <= 0) {
+                flag.pwF = false;
                 setConfirmPw2('PW:Re');
             } else {
+                flag.pwF = false;
                 setConfirmPw2('PW:Re: 비밀번호를 확인해주세요.');
             }
         }
         if([e.target.name].includes('mname')) { // 이름
             if(e.target.value.length >= 2 && e.target.value.length <= 15) {
+                flag.nameF = true;
                 setConfirmName('NAME: 올바른 이름 형식입니다.');
+                setSignUp({ ...signUp, [ e.target.name ] : e.target.value })
+                console.log("signUp : ", signUp);
             } else {
+                flag.nameF = false;
                 setConfirmName('NAME : 2자 이상, 15자 이하');
             }
         }
         if([e.target.name].includes('mbirth')) { // 생년월일
             if(checkBirth.test(e.target.value)) {
+                flag.birthF = true;
                 setConfirmBirth("√");
+                setSignUp({ ...signUp, [ e.target.name ] : e.target.value })
+                console.log("signUp : ", signUp);
             } else {
+                flag.birthF = false;
                 setConfirmBirth("6자리");
             }
         }
         if([e.target.name].includes('mnickname')) { // 닉네임
             if(e.target.value.length >= 2 && e.target.value.length <= 15) {
+                flag.nickF = true;
                 setConfirmName('NICK: 올바른 닉네임 형식입니다.');
+                setSignUp({ ...signUp, [ e.target.name ] : e.target.value })
+                console.log("signUp : ", signUp);
             } else {
+                flag.nickF = false;
                 setConfirmName('NICK : 2자 이상, 15자 이하');
             }
         }
         if([e.target.name].includes('mgender')) {
-            if(e.target.value % 2 === 0) {
-                alert("Woman");
+            if(e.target.value.length !== 0 && e.target.value % 2 === 0) {
+                flag.genderF = true;
+                console.log("Woman");
+                setSignUp({ ...signUp, [ e.target.name ] : "Woman" })
+                console.log("signUp : ", signUp);
+            } else if(e.target.value.length === 0) {
+                flag.genderF = false;
             } else {
-                alert("Man");
+                flag.genderF = true;
+                console.log("Man");
+                setSignUp({ ...signUp, [ e.target.name ] : "Man" })
+                console.log("signUp : ", signUp);
             }
         }
-        // -/유효성검사
-
-        setSignUp({
-            ...signUp, [ e.target.name ] : e.target.value
-        })
+        if([e.target.name].includes('mphone1')) {
+            if(checkp1.test(e.target.value)) {
+                flag.p1 = true;
+                test1 = e.target.value;
+            } else {
+                flag.p1 = false;
+            }
+        }
+        if([e.target.name].includes('mphone2')) {
+            if(checkp2.test(e.target.value)) {
+                flag.p2 = true;
+                test2 = e.target.value;
+            } else {
+                flag.p2 = false;
+            }
+        }
+        if([e.target.name].includes('mphone3')) {
+            if(checkp3.test(e.target.value)) {
+                flag.p3 = true;
+                test3 = test1 + test2 + e.target.value;
+            } else {
+                flag.p3 = false;
+            }
+        }
+        if(flag.p1 && flag.p2 && flag.p3) {
+            setConfirmPhone("√");
+            setSignUp({ ...signUp, 'mphone' : test3 })
+            console.log("signUp : ", signUp);
+        } else {
+            setConfirmPhone("X");
+        }
+        if([e.target.name].includes('mbti')) {
+            if(e.target.value.length === 4) {
+                flag.mbti = true;
+                setSignUp({ ...signUp, 'mbti' : e.target.value });
+                setConfirmMBTI("MBTI : 올바른 형식입니다.");
+            } else {
+                flag.mbti = false;
+                setConfirmMBTI("MBTI : 다시 확인해주세요.");
+            }
+        }
     };
 
     const sendSignUp = () => {
-        fetch("http://localhost:8080/Auth/SignUp", {
-            headers: {'Content-Type': 'application/json'},
-            method : "POST",
-            body : JSON.stringify(signUp)
-        })
-        .then((res) => res.json())
-        .then((data) => {
-            if(data) {
-                alert("회원가입 되었습니다.");
-                window.location.href = "/Login";
-            } else {
-                alert("회원가입 실패 :: 관리자에게 문의")
-            }
-        })
-    };
-
-    // 다음 주소 API
-    const open = useDaumPostcodePopup('CURRENT_URL'); 
-  
-    const handleComplete = (data) => {
-      let fullAddress = data.address;
-      let extraAddress = '';
-  
-      if (data.addressType === 'R') {
-        if (data.bname !== '') {
-          extraAddress += data.bname;
+        console.log(
+            "flag.idF : ", flag.idF, 
+            "flag.idF : ", flag.nameF, 
+            "flag.idF : ", flag.pwF, 
+            "flag.idF : ", flag.birthF, 
+            "flag.idF : ", flag.nickF, 
+            "flag.idF : ", flag.mbti, 
+            "flag.idF : ", flag.genderF, 
+        )
+        if(flag.idF && flag.nameF && flag.pwF && flag.birthF
+            && flag.nickF && flag.mbti && flag.genderF) {
+            console.log("confirmAddr_Post : ", confirmAddr_Post);
+        } else {
+            console.log("ss");
         }
-        if (data.buildingName !== '') {
-          extraAddress += extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
-        }
-        fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
-      }
-      
-      setConfirmAddr_Post(data.zonecode);
-      setConfirmAddr_Road(data.roadAddress);
-    //   console.log("data.zonecode : ", data.zonecode); // 13536
-    //   console.log("data.loadAddress : ", data.roadAddress); // 경기 성남시 분당구 판교역로 4
+        // fetch("http://localhost:8080/Auth/SignUp", {
+        //     headers: {'Content-Type': 'application/json'},
+        //     method : "POST",
+        //     body : JSON.stringify(signUp)
+        // })
+        // .then((res) => res.json())
+        // .then((data) => {
+        //     if(data) {
+        //         alert("회원가입 되었습니다.");
+        //         window.location.href = "/Login";
+        //     } else {
+        //         alert("회원가입 실패 :: 관리자에게 문의")
+        //     }
+        // })
     };
-  
-    const handleClick = () => {
-      open({ onComplete: handleComplete });
-    };
-    // -/다음 주소 API
 
     return(
         <div className = "row" style = {{ width: "100%", margin: "auto" }}>
@@ -172,7 +271,7 @@ function SignUp() {
                         지하철에서 스치듯 지나간 그 사람.. 서브메이트에서 만나자!　　　　　　　　　
                     </Marquee>
                     <div style = {{ position: "relative", zIndex: "1", marginTop: window.innerWidth <= 767 ? "5vh" :"10vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>
-                        <div className="card" style = {{ width: "100%", height: window.innerWidth <= 767 ? "60vh" : "", border: "solid 5px aqua", overflowY : "auto" }}>
+                        <div className="card" style = {{ width: "100%", height: window.innerWidth <= 767 ? "60vh" : "50vh", border: "solid 5px aqua", overflowY : "auto" }}>
                             <section>
                                 <h1>SignUp</h1>
                             </section>
@@ -187,8 +286,8 @@ function SignUp() {
                                 <i></i>
                             </div>
                             <div className="box" style = {{ width: "100%" }}>
-                                <input type="text" name = "mpw2" required onChange = { saveMember } />
-                                <span>{ confirmPw2 }</span>
+                                <input type="password" name = "mpw2" required onChange = { saveMember } />
+                                <span style = {{ fontSize: confirmPassword.length >= 3 ? "1rem" : "" }}>{ confirmPw2 }</span>
                                 <i></i>
                             </div>
                             <div className="box" style = {{ width: "100%" }}>
@@ -226,7 +325,7 @@ function SignUp() {
                                 <div className = "col-2">
                                     <div className="box" style = {{ width: "100%" }}>
                                         <input type="text" name = "mphone1" required onChange = { saveMember } style = {{ textAlign: "center" }} />
-                                        <span>PHONE</span>
+                                        <span>{ confirmPhone }</span>
                                         <i></i>
                                     </div>
                                 </div>

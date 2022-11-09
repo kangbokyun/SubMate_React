@@ -91,16 +91,15 @@ export const KakaoAPI = (kakaoDTO) => {
   })
 };
 
-// export const KakaoLoginAPI = (kakaoDTO) => {
-// };
-
 export const LogoutAPI = () => {
-  localStorage.setItem(Access_Token, null);
-  localStorage.setItem(UserInfo, null);
+  // localStorage.setItem(Access_Token, null);
+  localStorage.clear(Access_Token);
+  // localStorage.setItem(UserInfo, null);
+  localStorage.clear(UserInfo);
   if(!!localStorage.getItem(Access_Token)) {
-    alert("로그아웃 되었습니다.");
-    window.location.href = "/Login";
-  } else {
     alert("오류 :: 관리자에게 문의하세요.");
+  } else {
+    alert("로그아웃 되었습니다.");
+    window.location.href = "/";
   }
 };

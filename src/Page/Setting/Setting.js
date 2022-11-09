@@ -1,9 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { LogoutAPI } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
 
 function Setting() {
+    const logoutClick = () => {
+        LogoutAPI();
+    };
+
     return(
         <div>
             <Header />
@@ -29,6 +34,12 @@ function Setting() {
                     <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
                         <td style = {{ fontSize: "1.2rem" }}><Link to = "/SetCustomer" style = {{ textDecoration: "none", color: "black" }}>고객센터</Link></td>
                     </tr>
+                    <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
+                        <td style = {{ fontSize: "1.2rem" }}><Link to = "/SetCustomer" style = {{ textDecoration: "none", color: "black" }}>회원</Link></td>
+                    </tr>
+                    <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
+                        <td style = {{ fontSize: "1.2rem" }}><div onClick = { logoutClick } style = {{ textDecoration: "none", color: "black" }}>로그아웃</div></td>
+                    </tr>
                 </table>
                 :
                 <div className = "container">
@@ -47,6 +58,12 @@ function Setting() {
                         </tr>
                         <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
                             <td style = {{ fontSize: "1.2rem" }}><Link to = "/SetCustomer" style = {{ textDecoration: "none", color: "black" }}>고객센터</Link></td>
+                        </tr>
+                        <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
+                            <td style = {{ fontSize: "1.2rem" }}><Link to = "/SetCustomer" style = {{ textDecoration: "none", color: "black" }}>회원</Link></td>
+                        </tr>
+                        <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
+                            <td style = {{ fontSize: "1.2rem" }}><div onClick = { logoutClick } style = {{ textDecoration: "none", color: "black" }}>로그아웃</div></td>
                         </tr>
                     </table>
                 </div>

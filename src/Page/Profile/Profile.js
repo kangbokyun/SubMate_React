@@ -21,12 +21,17 @@ function Profile() {
         return () => window.removeEventListener("resize", resizeWindow);
     }, []);
     // /윈도우 크기 변경 감지되면 리렌더링
+    // 뒤로가기
+    const history = useNavigate();
+    const GoBack = () => {
+        return history(-1) // 한 페이지 뒤로
+    };
 
     return(
         <div>
             <Header />
             { window.innerWidth <= 767 ? 
-                <div><h1 style = {{ marginLeft: "3vw", marginTop: "10vh" }}>Profile</h1></div> : 
+                <div><h1 style = {{ marginLeft: "1vw", marginTop: "10vh" }}><span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>Profile</h1></div> :
                 <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>Profile</h1> 
             }
             <div className = "container">

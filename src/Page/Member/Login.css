@@ -63,7 +63,7 @@
     overflow: hidden;
   }
   
-  .box i::before {
+  /* .box i::before {
     content: "";
     position: absolute;
     width: 100%;
@@ -84,7 +84,7 @@
     );
     animation: animate 0.9s linear infinite;
     transition: 0.5s;
-  }
+  } */
   
   .box input:valid ~ i::before,
   .box input:focus ~ i::before {

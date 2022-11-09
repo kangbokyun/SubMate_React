@@ -1,0 +1,54 @@
+:root {
+    --color-bg: #458;
+    --color-switch-thumb: #ccc;
+    --color-switch-bg: #777;
+    --color-switch-bg-active: #245;
+    
+    --switch-size: 60px;
+  }
+  .switch-input {
+    display: none;
+  }
+  .switch {
+    --switch-width: var(--switch-size);
+    --switch-height: calc(var(--switch-width) / 2);
+    --switch-border: calc(var(--switch-height) / 10);
+    --switch-thumb-size: calc(var(--switch-height) - var(--switch-border) * 2);
+    --switch-width-inside: calc(var(--switch-width) - var(--switch-border) * 2);
+    display: block;
+    box-sizing: border-box;
+    width: var(--switch-width);
+    height: var(--switch-height);
+    border: var(--switch-border) solid var(--color-switch-bg);
+    border-radius: var(--switch-height);
+    background-color: var(--color-switch-bg);
+    cursor: pointer;
+    margin: var(--switch-margin) 0;
+    transition: 300ms 100ms;
+    
+    position: relative;
+  }
+  .switch::before {
+    content: '';
+    background-color: var(--color-switch-thumb);
+    height: var(--switch-thumb-size);
+    width: var(--switch-thumb-size);
+    border-radius: var(--switch-thumb-size);
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    transition: 300ms, width 600ms;
+  }
+  .switch-input:checked + .switch {
+    background-color: var(--color-switch-bg-active);
+    border-color: var(--color-switch-bg-active);
+  }
+  .switch:active::before {
+    width: 80%;
+  }
+  .switch-input:checked + .switch::before {
+    left: 100%;
+    transform: translateX(-100%);
+  }

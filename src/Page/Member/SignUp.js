@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Marquee from "react-fast-marquee";
 import { Link, useNavigate } from 'react-router-dom';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
 import '../../App.css';
 import './Login.css';
 
@@ -32,19 +33,26 @@ function SignUp() {
     const [ confirmPw2, setConfirmPw2 ] = useState("PW:Re");
     const [ confirmName, setConfirmName ] = useState("NAME");
     const [ confirmBirth, setConfirmBirth ] = useState("BIRTH");
+    const [ confirmAddr_Post, setConfirmAddr_Post ] = useState("Addr_Post");
+    const [ confirmAddr_Road, setConfirmAddr_Road ] = useState("Addr_Road");
+    const [ confirmAddr, setConfirmAddr ] = useState("Addr");
 
     const checkEmail = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const checkPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
     const checkBirth = /(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1])/;
 
     const saveMember = (e) => {
+        // memberDTO  
+        // mno mid mpw mname mnickname mbirth mgender mphone 
+	    // maddress mrole createddate mplatform mager mbti token
+        // 유효성검사
         if([e.target.name].includes('mid')) { // 아이디
             if(checkEmail.test(e.target.value)) {
                 setConfirmEmail('ID : 올바른 이메일 형식입니다.');
             } else if(e.target.value.length <= 0) {
                 setConfirmEmail('ID');
             } else {
-                setConfirmEmail('ID : 이메일 형식을 입력해주세요.');
+                setConfirmEmail('ID : 이메일 형식으로 입력');
             }
         }
         if([e.target.name].includes('mpw')) { // 비밀번호
@@ -79,11 +87,27 @@ function SignUp() {
                 setConfirmBirth("6자리");
             }
         }
+        if([e.target.name].includes('mnickname')) { // 닉네임
+            if(e.target.value.length >= 2 && e.target.value.length <= 15) {
+                setConfirmName('NICK: 올바른 닉네임 형식입니다.');
+            } else {
+                setConfirmName('NICK : 2자 이상, 15자 이하');
+            }
+        }
+        if([e.target.name].includes('mgender')) {
+            if(e.target.value % 2 === 0) {
+                alert("Woman");
+            } else {
+                alert("Man");
+            }
+        }
+        // -/유효성검사
 
         setSignUp({
             ...signUp, [ e.target.name ] : e.target.value
         })
     };
+
     const sendSignUp = () => {
         fetch("http://localhost:8080/Auth/SignUp", {
             headers: {'Content-Type': 'application/json'},
@@ -100,6 +124,34 @@ function SignUp() {
             }
         })
     };
+
+    // 다음 주소 API
+    const open = useDaumPostcodePopup('CURRENT_URL'); 
+  
+    const handleComplete = (data) => {
+      let fullAddress = data.address;
+      let extraAddress = '';
+  
+      if (data.addressType === 'R') {
+        if (data.bname !== '') {
+          extraAddress += data.bname;
+        }
+        if (data.buildingName !== '') {
+          extraAddress += extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+        }
+        fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+      }
+      
+      setConfirmAddr_Post(data.zonecode);
+      setConfirmAddr_Road(data.roadAddress);
+    //   console.log("data.zonecode : ", data.zonecode); // 13536
+    //   console.log("data.loadAddress : ", data.roadAddress); // 경기 성남시 분당구 판교역로 4
+    };
+  
+    const handleClick = () => {
+      open({ onComplete: handleComplete });
+    };
+    // -/다음 주소 API
 
     return(
         <div className = "row" style = {{ width: "100%", margin: "auto" }}>
@@ -120,70 +172,110 @@ function SignUp() {
                         지하철에서 스치듯 지나간 그 사람.. 서브메이트에서 만나자!　　　　　　　　　
                     </Marquee>
                     <div style = {{ position: "relative", zIndex: "1", marginTop: window.innerWidth <= 767 ? "5vh" :"10vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>
-                        <div class="card" style = {{ width: "100%" }}>
+                        <div className="card" style = {{ width: "100%", height: window.innerWidth <= 767 ? "60vh" : "", border: "solid 5px aqua", overflowY : "auto" }}>
                             <section>
                                 <h1>SignUp</h1>
                             </section>
-                            <div class="box" style = {{ width: "100%" }}>
+                            <div className="box" style = {{ width: "100%" }}>
                                 <input type="text" name = "mid" required onChange = { saveMember } />
                                 <span>{ confirmEmail }</span>
                                 <i></i>
                             </div>
-                            <div class="box" style = {{ width: "100%" }}>
+                            <div className="box" style = {{ width: "100%" }}>
                                 <input type="password" name = "mpw" required onChange = { saveMember } />
                                 <span style = {{ fontSize: confirmPassword.length >= 3 ? "1rem" : "" }}>{ confirmPassword }</span>
                                 <i></i>
                             </div>
-                            <div class="box" style = {{ width: "100%" }}>
+                            <div className="box" style = {{ width: "100%" }}>
                                 <input type="text" name = "mpw2" required onChange = { saveMember } />
                                 <span>{ confirmPw2 }</span>
                                 <i></i>
                             </div>
-                            <div class="box" style = {{ width: "100%" }}>
+                            <div className="box" style = {{ width: "100%" }}>
                                 <input type="text" name = "mname" required onChange = { saveMember } />
                                 <span>{ confirmName }</span>
                                 <i></i>
                             </div>
-                            <div className = "row" style = {{ marginLeft: "0.2vw" }}>
-                                <div class="box" style = {{ width: "37%" }}>
-                                    <input type="text" name = "mbirth" required onChange = { saveMember } />
-                                    <span>{ confirmBirth }</span>
-                                    <i></i>
+                            <div className = "row gx-0">
+                                <div className = "col-5">
+                                    <div className="box" style = {{ width: "100%" }}>
+                                        <input type="text" name = "mbirth" required onChange = { saveMember } />
+                                        <span>{ confirmBirth }</span>
+                                        <i></i>
+                                    </div>
                                 </div>
-                                <div class="box" style = {{ width: "10%", marginLeft: "5vw" }}>
-                                    <input type="text" name = "mgender" required onChange = { saveMember } />
-                                    <i></i>
+                                <div className = "col-1" style = {{ marginTop: "1.2vh" }}>
+                                    <span>-</span>
                                 </div>
-                                ●●●●●●
+                                <div className = "col-2">
+                                    <div className="box" style = {{ width: "100%" }}>
+                                        <input type="text" name = "mgender" required onChange = { saveMember } style = {{ textAlign: "center" }} />
+                                        <i></i>
+                                    </div>
+                                </div>
+                                <div className = "col-4" style = {{ marginTop: "1vh" }}>
+                                    <span style = {{ fontSize: "0.9rem" }}>●●●●●●</span>
+                                </div>
                             </div>
-                            <div class="box" style = {{ width: "100%" }}>
+                            <div className="box" style = {{ width: "100%" }}>
                                 <input type="text" name = "mnickname" required onChange = { saveMember } />
                                 <span>NICK</span>
                                 <i></i>
                             </div>
-                            <div className = "row" style = {{ marginLeft: "0.1vw" }}>
-                                <div class="box" style = {{ width: "30%" }}>
-                                    <input type="text" name = "mnickname" required onChange = { saveMember } />
-                                    <span>PHONE</span>
-                                    <i></i>
+                            <div className = "row gx-0">
+                                <div className = "col-2">
+                                    <div className="box" style = {{ width: "100%" }}>
+                                        <input type="text" name = "mphone1" required onChange = { saveMember } style = {{ textAlign: "center" }} />
+                                        <span>PHONE</span>
+                                        <i></i>
+                                    </div>
                                 </div>
-                                <div class="box" style = {{ width: "33%", marginLeft: "1vw" }}>
-                                    <input type="text" name = "mnickname" required onChange = { saveMember } />
-                                    <i></i>
+                                <div className = "col-1" style = {{ textAlign: "center", marginTop: "1.2vh" }}>
+                                    <span>-</span>
                                 </div>
-                                <div class="box" style = {{ width: "33%", marginLeft: "1vw" }}>
-                                    <input type="text" name = "mnickname" required onChange = { saveMember } />
-                                    <i></i>
+                                <div className = "col-4">
+                                    <div className="box" style = {{ width: "100%" }}>
+                                        <input type="text" name = "mphone2" required onChange = { saveMember } style = {{ textAlign: "center" }} />
+                                        <i></i>
+                                    </div>
+                                </div>
+                                <div className = "col-1" style = {{ textAlign: "center", marginTop: "1.2vh" }}>
+                                    <span>-</span>
+                                </div>
+                                <div className = "col-4">
+                                    <div className="box" style = {{ width: "100%" }}>
+                                        <input type="text" name = "mphone3" required onChange = { saveMember } style = {{ textAlign: "center" }} />
+                                        <i></i>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="box" style = {{ width: "100%" }}>
-                                <input type="text" name = "mnickname" required onChange = { saveMember } />
+                            <div className="box" style = {{ width: "100%" }}>
+                                <input type="text" name = "mbti" required onChange = { saveMember } />
                                 <span>MBTI</span>
                                 <i></i>
                             </div>
+                            <div className = "row">
+                                <div className = "col-6">
+                                    <button type = "button" className = "form-control" onClick = { handleClick } style = {{ marginTop: "1vh" }}>우편번호 찾기</button>
+                                </div>
+                                <div className = "col-6">
+                                    <div className="box" style = {{ width: "100%" }}>
+                                        <input type="text" name = "addr_post" required onChange = { saveMember } value = { confirmAddr_Post === 'Addr_Post' ? "" : confirmAddr_Post } />
+                                        <span>Post</span>
+                                        <i></i>
+                                    </div>
+                                </div>
+                                <div className = "col-12">
+                                    <div className="box" style = {{ width: "100%" }}>
+                                        <input type="text" name = "addr_road" required onChange = { saveMember } value = { confirmAddr_Road === 'Addr_Road' ? "" : confirmAddr_Road } />
+                                        <span>Road</span>
+                                        <i></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <button type = "button" onClick = { sendSignUp } className = "btn btn-light" style = {{ position: "relative", zIndex: "1", marginTop: window.innerWidth <= 767 ? "10vh" :"13vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>SignUp</button>
+                    <button type = "button" onClick = { sendSignUp } className = "btn btn-light" style = {{ position: "relative", zIndex: "1", marginTop: window.innerWidth <= 767 ? "3vh" :"13vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>SignUp</button>
                     <button type = "button" className = "btn btn-outline-light" style = {{ position: "relative", zIndex: "1", marginTop: "1vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>Google</button>
                 </div>
                 <img alt = "SubMate" src = { require('../../IMG/Train.jpg') } style = {{ width: "100%", height: "100vh", zIndex: "-1", position: "relative" }} />

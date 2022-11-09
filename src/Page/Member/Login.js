@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../../App.css';
 import './Login.css';
 import KakaoLogin from 'react-kakao-login';
-import { KAKAO_AUTH_URL } from './OAuth2';
 
 function Login() {
     // 윈도우 크기 변경 감지되면 리렌더링

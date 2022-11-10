@@ -220,7 +220,7 @@ function SignUp() {
             } else {
                 const division = "_";
                 let addr = confirmAddr_Post + division + confirmAddr_Road;
-                setSignUp({ ...signUp, 'maddress' : addr });
+                setSignUp({ ...signUp, 'maddress' : addr, 'mplatform' : "SubMate" });
                 fetch("http://localhost:8080/Auth/SignUp", {
                     headers: {'Content-Type': 'application/json'},
                     method : "POST",

@@ -51,10 +51,10 @@ function Profile() {
                                         </div>
                                         <div className = "col-md-8 col-8" style = {{ textAlign: "center" }}>
                                             { window.innerWidth <= 767 ? <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mnickname }</h4> : <h4 style = {{ marginTop: "2vh" }}>아이린</h4> }
-                                            { window.innerWidth <= 767 ? <h4>춤, 노래</h4> : <h4 style = {{ marginTop: "1vh" }}>춤, 노래</h4> }
-                                            { window.innerWidth <= 767 ? <h4>{ userInfo.mbirth }</h4> : <h4 style = {{ marginTop: "1vh" }}>1991. 03. 29</h4> }
+                                            { window.innerWidth <= 767 ? <h4 style = {{ fontSize: window.innerWidth <= 767 ? "0.9rem" : "", marginTop: window.innerWidth <= 767 ? "1.5vh" : "" }}>{ userInfo.mhobby === null ? "취미를 설정해주세요." : userInfo.mhobby }</h4> : <h4 style = {{ marginTop: "1vh" }}>춤, 노래</h4> }
+                                            { window.innerWidth <= 767 ? <h4>{ userInfo.mbirth === null ? "1991. 03. 29" : userInfo.mbirth }</h4> : <h4 style = {{ marginTop: "1vh" }}>1991. 03. 29</h4> }
                                             { window.innerWidth <= 767 ? <h4>ESTP</h4> : <h4 style = {{ marginTop: "1vh" }}>ESTP</h4> }
-                                            <h4>{ userInfo.platForm === "Kakao" ? <span style = {{ font: "bold", color: "yellow" }}>K</span> : <span style = {{ font: "bold", color: "green" }}>N</span> }</h4>
+                                            <h4>{ userInfo.platForm === "Kakao" ? <span style = {{ font: "bold", color: "yellow" }}>K</span> : userInfo.mplatform === "SubMate" || null || "" ? <span style = {{ font: "bold", color: "green" }}>SubMate</span> : <span style = {{ font: "bold", color: "green" }}>N</span> }</h4>
                                         </div>
                                     </div>
                                 </div>

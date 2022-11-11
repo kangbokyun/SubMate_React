@@ -34,7 +34,7 @@ function Board() {
                         Board
                         <span style = {{ float: "right", marginRight: "2vw" }}>
                             <Link to = "/BoardWrite">
-                                <button type = "button" className = "btn btn-success" style = {{  }}>Write</button>
+                                <button type = "button" className = "btn btn-success">Write</button>
                             </Link>
                         </span>
                     </h1>
@@ -51,15 +51,28 @@ function Board() {
                                     <img alt = "Setting" src = { require('../../IMG/임시프사.png') } style = {{ width: "15vw", height: "7vh", borderRadius: "50%" }} />
                                 </td>
                                 <td className = "col-9">
-                                    <div className = "row">
-                                        <div className = "col-10" style = {{ marginTop: "0.7vh", fontSize: "1.3rem" }}>
+                                    <div className = "row" style = {{ width: "100%" }}>
+                                        <div className = "col-12" style = {{ marginTop: "0.7vh", fontSize: "1.3rem" }}>
                                             <label>Temp_Title</label><br />
-                                            <label>Temp_Contents</label>
-                                        </div>
-                                        <div className = "col-2">
-                                            <label>좋</label><br />
-                                            <label>댓</label><br />
-                                            <label>이</label>
+                                            <div className = "row">
+                                                <div className = "col-5" style = {{ marginTop: "0.8vh" }}>
+                                                    <label style = {{ fontSize: "1rem" }}>1분 전</label>
+                                                </div>
+                                                <div className = "col-7" style = {{ marginTop: "0.8vh", paddingRight: "0", marginRight: "0" }}>
+                                                    <label style = {{ float: "right" }}>
+                                                        <img alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                    </label>
+                                                    <label style = {{ float: "right" }}>
+                                                        <img alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                    </label>
+                                                    <label style = {{ float: "right" }}>
+                                                        <img alt = "Picture" src = { require('../../IMG/BoardPicture_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                    </label>
+                                                    <label style = {{ float: "right" }}>
+                                                        <img alt = "Timer" src = { require('../../IMG/BoardTimer_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </td>

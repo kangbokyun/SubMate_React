@@ -3,6 +3,7 @@ import Header from '../Header';
 import Menu from '../Menu';
 import '../../Component/Switch/Switch.css';
 import { useNavigate } from 'react-router';
+import { BoardWriteAPI } from '../../Service/APIService';
 
 function BoardWrite() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -29,8 +30,10 @@ function BoardWrite() {
     const checkedSwitch = (e) => { // 스위치 제어
         if(e.target.value === '1') { // 스위치 꺼짐
             setCehcked("2");
+            setWrite({ ...write, 'becho' : checked });
         } else { // 켜짐
             setCehcked("1");
+            setWrite({ ...write, 'becho' : checked });
         }
     };
 
@@ -43,6 +46,7 @@ function BoardWrite() {
             if(e.target.value.length >= 0) {
                 setCheckTitle(true);
                 setWrite({ ...write, [e.target.name] : e.target.value });
+                console.log("write : ", write);
             } else {
                 setCheckTitle(false);
             }
@@ -51,6 +55,7 @@ function BoardWrite() {
             if(e.target.value.length >= 0) {
                 setCheckContents(true);
                 setWrite({ ...write, [e.target.name] : e.target.value });
+                console.log("write : ", write);
             } else {
                 setCheckContents(false);
             }
@@ -58,7 +63,7 @@ function BoardWrite() {
         if([e.target.name].includes("bimg")) {
             if(e.target.value.length >= 0) {
                 setCheckImg(true);
-                setWrite({ ...write, [e.target.name] : e.target.value });
+                setWrite({ ...write, [e.target.name] : e.target.files[0].name });
             } else {
                 setCheckImg(false);
             }
@@ -67,8 +72,16 @@ function BoardWrite() {
     const sendBoardWrite = () => {
         // 글등록
         if(checkTitle && checkContents) {
-            if(checked === '2') {
+            const userInfo = localStorage.getItem("UserInfo");
+            setWrite({ ...write, 'mno' : userInfo.mno });
+            if(checked === '1') {
                 alert(checked);
+                console.log("sendWrite : ", write);
+                BoardWriteAPI(write);
+            } else {
+                alert(checked);
+                console.log("sendWrite : ", write);
+                BoardWriteAPI(write);
             }
         }
     };

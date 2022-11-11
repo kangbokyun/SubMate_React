@@ -80,14 +80,12 @@ export const LoginAPI = (memberDTO) => {
       }
     })
 };
-export const KakaoAPI = (kakaoDTO) => {
-  return call('/Auth/KakaoLogin', 'POST', kakaoDTO)
-  .then((res) => {
-    if(res.status === 200) {
-      alert("LoginSuccess");
-    } else {
-      alert("LoginFailed");
-    }
+
+export const BoardWriteAPI = (boardDTO) => {
+  return call("/Board/BoardWrite", "POST", boardDTO)
+  .then((response) => {
+    console.log("response : ", response);
+    console.log("response.status : ", response.status);
   })
 };
 

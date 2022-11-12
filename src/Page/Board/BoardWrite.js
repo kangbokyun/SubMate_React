@@ -26,6 +26,7 @@ function BoardWrite() {
         return history(-1) // 한 페이지 뒤로
     };
 
+   
     const [ checked, setCehcked ] = useState("1");
     const checkedSwitch = (e) => { // 스위치 제어
         if(e.target.value === '1') { // 스위치 꺼짐
@@ -37,6 +38,18 @@ function BoardWrite() {
         }
     };
 
+
+
+    const [data,setData] = useState({
+        btitle:'',
+        bcontents:'',
+        becho:'',
+        bimg:''
+      });
+
+
+
+
     const [ checkTitle, setCheckTitle ] = useState(false);
     const [ checkContents, setCheckContents ] = useState(false);
     const [ checkImg, setCheckImg ] = useState(false);
@@ -46,6 +59,7 @@ function BoardWrite() {
             if(e.target.value.length >= 0) {
                 setCheckTitle(true);
                 setWrite({ ...write, [e.target.name] : e.target.value });
+                setData({ ...data, [e.target.name] : e.target.value });
                 console.log("write : ", write);
             } else {
                 setCheckTitle(false);
@@ -55,6 +69,7 @@ function BoardWrite() {
             if(e.target.value.length >= 0) {
                 setCheckContents(true);
                 setWrite({ ...write, [e.target.name] : e.target.value });
+                setData({ ...data, [e.target.name] : e.target.value });
                 console.log("write : ", write);
             } else {
                 setCheckContents(false);
@@ -63,7 +78,8 @@ function BoardWrite() {
         if([e.target.name].includes("bimg")) {
             if(e.target.value.length >= 0) {
                 setCheckImg(true);
-                setWrite({ ...write, [e.target.name] : e.target.files[0].name });
+                setWrite({ ...write, [e.target.name] : e.target.files[0] });
+                setData({ ...data, [e.target.name] : e.target.files[0] });
             } else {
                 setCheckImg(false);
             }
@@ -73,15 +89,23 @@ function BoardWrite() {
         // 글등록
         if(checkTitle && checkContents) {
             const userInfo = localStorage.getItem("UserInfo");
+            
             setWrite({ ...write, 'mno' : userInfo.mno });
             if(checked === '1') {
-                alert(checked);
-                console.log("sendWrite : ", write);
-                BoardWriteAPI(write);
+                const formData = new FormData();
+                formData.append("bimg", data.bimg);
+                formData.append("btitle", data.btitle);
+                formData.append("bcontents", data.bcontents);
+                formData.append("becho", checked);
+                fetch("http://localhost:8080/Board/BoardWrite", {
+                    headers: { "Authorization" : "Bearer " + localStorage.getItem("Access_Token") },
+                    method: "POST",
+                    body: formData
+                }).then((res) => {console.log("resres:::::::::::::::::::::::: ", res)})
+                // BoardWriteAPI(formData);
             } else {
-                alert(checked);
                 console.log("sendWrite : ", write);
-                BoardWriteAPI(write);
+                // BoardWriteAPI(write);
             }
         }
     };
@@ -117,7 +141,7 @@ function BoardWrite() {
                     </div>
                 </div>
                 <div style = {{ border: "none", borderBottom: "solid 1px gray", height: "4vh", marginTop: "1vh" }}>
-                    <input onChange = { boardState } type = "file" style = {{ marginLeft: "2vw" }} name = "bimg" />
+                    <input className = "form-control" onChange = { boardState } type = "file" style = {{  }} name = "bimg" />
                 </div>
             </div>
             <Menu />
@@ -125,3 +149,28 @@ function BoardWrite() {
     );
 }
 export default BoardWrite;
+//   return (
+//     <div className="container-center">
+//       <div className="container">
+//         <form id="myform"onSubmit={(e) => submit(e)} >
+//           <center>
+//             <label className="form_title" htmlFor="Form">Form :</label>
+//           </center>
+//           <label htmlFor="fname">First Name</label>
+//           <input  onChange={(e)=>handle(e)} value={data.firstname} type="text" id="fname" name="firstname" placeholder="First name" required minLength="3" maxLength="15"/>
+//           <label htmlFor="lname">Last Name</label>
+//           <input  onChange={(e)=>handle(e)} value={data.lastname} type="text" id="lname" name="lastname" placeholder="last name" />
+//           <label htmlFor="email">Email</label>
+//           <input  onChange={(e)=>handle(e)} value={data.email} type="text" id="txt_email" name="email" placeholder="Email" required minLength="6"/>
+//           <div className="check_email_valid" id="check_email_valid">Email is Invalide</div>
+//           <label htmlFor="Description">Description</label>
+//           <textarea onChange={(e)=>handle(e)} value={data.description}  className='description' id="Description" name="description" placeholder="txt_Descripton.." required minLength="10"/>
+//           <div className="border_button_choose_file">
+//             <input value={data.selectedFile} className="button_choose_file" type="file" id="myFile" name="filename" onChange={window['fileValidation']}/>
+//           </div>
+//           <input type="submit" value="Submit"/>
+//         </form>
+//       </div>
+//     </div> 
+//   );
+//   }

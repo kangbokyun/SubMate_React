@@ -66,7 +66,7 @@ function Board() {
                                                         <img alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
                                                     </label>
                                                     <label style = {{ float: "right" }}>
-                                                        <img alt = "Picture" src = { require('../../IMG/BoardPicture_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                        <img alt = "PictureImg" src = { require('../../IMG/BoardPicture_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
                                                     </label>
                                                     <label style = {{ float: "right" }}>
                                                         <img alt = "Timer" src = { require('../../IMG/BoardTimer_Black.png') } style = {{ width: "7vw", height: "3vh" }} />

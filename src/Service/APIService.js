@@ -5,9 +5,19 @@ const UserInfo = "UserInfo";
 
 export const call = (api, method, request) => {
   
-  let headers = new Headers({
-    "Content-Type": "application/json",
-  });
+  let headers = "";
+
+    // alert("HeadersOnCall : " + api);
+    if(api === "/Board/BoardWrite") {
+      alert("IMGFile");
+      headers = new Headers({
+        // "Content-Type": "multipart/form-data",
+      });
+    } else {
+      headers = new Headers({
+        "Content-Type": "application/json",
+      });
+    }
 
   // 로컬 스토리지에서 ACCESS TOKEN 가져오기
   const accessToken = localStorage.getItem("Access_Token");
@@ -81,13 +91,14 @@ export const LoginAPI = (memberDTO) => {
     })
 };
 
-export const BoardWriteAPI = (boardDTO) => {
-  return call("/Board/BoardWrite", "POST", boardDTO)
+export const BoardWriteAPI = (formData) => {
+  console.log(formData.get("btitle"));
+  return call("/Board/BoardWrite", "POST", formData)
   .then((response) => {
-    console.log("response : ", response);
-    console.log("response.status : ", response.status);
+    alert("response : " + response);
   })
 };
+
 
 export const LogoutAPI = () => {
   // localStorage.setItem(Access_Token, null);

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { BoardListAPI, call } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
 
 function Board() {
+    const [ boardList, setBoardList ] = useState([]);
     // 윈도우 크기 변경 감지되면 리렌더링
     const [ windowWidth, setWindowWidth ] = useState(0);
     const [ windowHeight, setWindowHeight ] = useState(0);
@@ -13,6 +15,12 @@ function Board() {
     };
     
     useEffect(() => {
+        call("/Board/BoardList", "POST", null)
+        .then((res) => {
+            console.log(res)
+            setBoardList(res);
+        })
+        console.log("boardList : ", boardList)
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -53,7 +61,7 @@ function Board() {
                                 <td className = "col-9">
                                     <div className = "row" style = {{ width: "100%" }}>
                                         <div className = "col-12" style = {{ marginTop: "0.7vh", fontSize: "1.3rem" }}>
-                                            <label>Temp_Title</label><br />
+                                            <label>{ boardList.map((list) => {list.btitle}) }</label><br />
                                             <div className = "row">
                                                 <div className = "col-5" style = {{ marginTop: "0.8vh" }}>
                                                     <label style = {{ fontSize: "1rem" }}>1분 전</label>
@@ -80,51 +88,51 @@ function Board() {
                         </tbody>
                     </table>
                     : 
-                    <table className = "table" style = {{ height: window.innerWidth <= 767 ? "80vh" : "70vh", marginBottom: "5vh" }}>
                         <div className = "container">
+                    <table className = "table" style = {{ height: window.innerWidth <= 767 ? "80vh" : "70vh", marginBottom: "5vh" }}>
                             <tbody>
                                 <tr className = "row" style = {{ textAlign: "center" }}>
-                                    <td className = "col-md-6">제목</td>
-                                    <td className = "col-md-2">작성자</td>
+                                    <td className = "col-md-7">제목</td>
+                                    <td className = "col-md-1">작성자</td>
                                     <td className = "col-md-2">작성일</td>
                                     <td className = "col-md-1">조회수</td>
                                     <td className = "col-md-1">좋아요</td>
                                 </tr> 
                                 <tr className = "row" style = {{  }}>
                                     <td className = "col-md-5">안녕하세요</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>좋, 댓, 이</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>홍길동</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>2022-10-22</td>
+                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>좋, 댓, 이, 에</td>
+                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>홍길동</td>
+                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>22.10.22</td>
                                     <td className = "col-md-1" style = {{ textAlign: "center" }}>31</td>
                                     <td className = "col-md-1" style = {{ textAlign: "center" }}>2</td>
                                 </tr> 
                                 <tr className = "row" style = {{  }}>
                                     <td className = "col-md-5">안녕하세요</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>좋, 댓, 이</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>홍길동</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>2022-10-22</td>
+                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>좋, 댓, 이, 에</td>
+                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>홍길동</td>
+                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>22.10.22</td>
                                     <td className = "col-md-1" style = {{ textAlign: "center" }}>31</td>
                                     <td className = "col-md-1" style = {{ textAlign: "center" }}>2</td>
                                 </tr> 
                                 <tr className = "row" style = {{  }}>
                                     <td className = "col-md-5">안녕하세요</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>좋, 댓, 이</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>홍길동</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>2022-10-22</td>
+                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>좋, 댓, 이, 에</td>
+                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>홍길동</td>
+                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>22.10.22</td>
                                     <td className = "col-md-1" style = {{ textAlign: "center" }}>31</td>
                                     <td className = "col-md-1" style = {{ textAlign: "center" }}>2</td>
                                 </tr> 
                                 <tr className = "row" style = {{  }}>
                                     <td className = "col-md-5">안녕하세요</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>좋, 댓, 이</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>홍길동</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>2022-10-22</td>
+                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>좋, 댓, 이, 에</td>
+                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>홍길동</td>
+                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>22.10.22</td>
                                     <td className = "col-md-1" style = {{ textAlign: "center" }}>31</td>
                                     <td className = "col-md-1" style = {{ textAlign: "center" }}>2</td>
                                 </tr> 
                             </tbody>
-                        </div>
                     </table>
+                        </div>
                 }
                 {window.innerWidth <= 767 ? 
                     <div>무한스크롤</div> : 

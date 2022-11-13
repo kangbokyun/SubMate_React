@@ -88,7 +88,8 @@ function BoardWrite() {
     const sendBoardWrite = () => {
         // 글등록
         if(checkTitle && checkContents) {
-            const userInfo = localStorage.getItem("UserInfo");
+            const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
+            // alert(userInfo.mno);
             
             setWrite({ ...write, 'mno' : userInfo.mno });
             if(checked === '1') {
@@ -97,12 +98,13 @@ function BoardWrite() {
                 formData.append("btitle", data.btitle);
                 formData.append("bcontents", data.bcontents);
                 formData.append("becho", checked);
-                fetch("http://localhost:8080/Board/BoardWrite", {
-                    headers: { "Authorization" : "Bearer " + localStorage.getItem("Access_Token") },
-                    method: "POST",
-                    body: formData
-                }).then((res) => {console.log("resres:::::::::::::::::::::::: ", res)})
-                // BoardWriteAPI(formData);
+                formData.append("mno", userInfo.mno);
+                // fetch("http://localhost:8080/Board/BoardWrite", {
+                //     headers: { "Authorization" : "Bearer " + localStorage.getItem("Access_Token") },
+                //     method: "POST",
+                //     body: formData
+                // }).then((res) => {console.log("resres:::::::::::::::::::::::: ", res)})
+                BoardWriteAPI(formData);
             } else {
                 console.log("sendWrite : ", write);
                 // BoardWriteAPI(write);

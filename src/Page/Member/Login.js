@@ -68,7 +68,6 @@ function Login() {
             "platForm" : platForm
         };
 
-        // alert("stringify : " + JSON.stringify(kInfo));
         fetch("http://localhost:8080/Auth/KakaoLogin", {
             headers: {'Content-Type' : 'application/json'},
             method : "POST",

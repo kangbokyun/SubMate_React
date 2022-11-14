@@ -4,6 +4,7 @@ import Menu from '../Menu';
 import '../../Component/Switch/Switch.css';
 import { useNavigate } from 'react-router';
 import { BoardWriteAPI, BoardWriteNoImgAPI } from '../../Service/APIService';
+import '../../Component/Accordian/Accordian.css';
 
 function BoardWrite() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -25,6 +26,30 @@ function BoardWrite() {
     const GoBack = () => {
         return history(-1) // 한 페이지 뒤로
     };
+
+    // 스위치 아코디언
+    const items = document.querySelectorAll(".accordian-item");
+    items.forEach((item) => {
+        item.addEventListener("click", (e) => {
+            const currentlyActive = document.querySelectorAll(".accordian-item.active");
+            if (currentlyActive) {
+            currentlyActive.forEach((active) => {
+                if (active !== item) {
+                active.lastElementChild.style.maxHeight = 0;
+                active.classList.toggle("active");
+                }
+            });
+            }
+
+            item.classList.toggle("active");
+            const elementBody = item.querySelector(".accordian-body");
+            if (item.classList.contains("active")) {
+            elementBody.style.maxHeight = elementBody.scrollHeight + "px";
+            } else {
+            elementBody.style.maxHeight = 0;
+            }
+        });
+    });
 
     const [ checked, setCehcked ] = useState("1");
     const checkedSwitch = (e) => { // 스위치 제어
@@ -141,6 +166,17 @@ function BoardWrite() {
                             <input value = { checked } id="checkbox" className="switch-input" type="checkbox" onClick = { checkedSwitch } style = {{  }} />
                             <label htmlFor="checkbox" className="switch"></label>
                         </div>
+                        <div className="accordian" style = {{ width: "100%" }}>
+                            <div className="accordian-item">
+                                <div className="accordian-header">What is Html ?</div>
+                                <div id="1" className="accordian-body">
+                                <div className="accordian-body-content">
+                                    HyperText Markup Language (HTML) is the set of markup symbols or codes inserted into a file intended for display on the Internet. The markup tells web browsers how to display a web page's words and images.
+
+                                </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div style = {{ border: "none", borderBottom: "solid 1px gray", height: "4vh", marginTop: "1vh" }}>
@@ -152,28 +188,3 @@ function BoardWrite() {
     );
 }
 export default BoardWrite;
-//   return (
-//     <div className="container-center">
-//       <div className="container">
-//         <form id="myform"onSubmit={(e) => submit(e)} >
-//           <center>
-//             <label className="form_title" htmlFor="Form">Form :</label>
-//           </center>
-//           <label htmlFor="fname">First Name</label>
-//           <input  onChange={(e)=>handle(e)} value={data.firstname} type="text" id="fname" name="firstname" placeholder="First name" required minLength="3" maxLength="15"/>
-//           <label htmlFor="lname">Last Name</label>
-//           <input  onChange={(e)=>handle(e)} value={data.lastname} type="text" id="lname" name="lastname" placeholder="last name" />
-//           <label htmlFor="email">Email</label>
-//           <input  onChange={(e)=>handle(e)} value={data.email} type="text" id="txt_email" name="email" placeholder="Email" required minLength="6"/>
-//           <div className="check_email_valid" id="check_email_valid">Email is Invalide</div>
-//           <label htmlFor="Description">Description</label>
-//           <textarea onChange={(e)=>handle(e)} value={data.description}  className='description' id="Description" name="description" placeholder="txt_Descripton.." required minLength="10"/>
-//           <div className="border_button_choose_file">
-//             <input value={data.selectedFile} className="button_choose_file" type="file" id="myFile" name="filename" onChange={window['fileValidation']}/>
-//           </div>
-//           <input type="submit" value="Submit"/>
-//         </form>
-//       </div>
-//     </div> 
-//   );
-//   }

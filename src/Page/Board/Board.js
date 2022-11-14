@@ -70,6 +70,8 @@ function Board() {
                                                 <label>{ list.btitle }</label><br />
                                                 <div className = "row">
                                                     <div className = "col-5" style = {{ marginTop: "0.8vh" }}>
+                                                        <label style = {{ fontSize: "1rem" }}>{ list.bwriter }</label>
+                                                        <span style = {{ fontSize: "1rem", marginLeft: "0.4vw", marginRight: "0.4vw" }}>·</span>
                                                         <label style = {{ fontSize: "1rem" }}>1분 전</label>
                                                     </div>
                                                     <div className = "col-7" style = {{ marginTop: "0.8vh", paddingRight: "0", marginRight: "0" }}>

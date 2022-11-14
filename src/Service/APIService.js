@@ -116,13 +116,6 @@ export const LogoutAPI = () => {
 // -/Member===========================================================================================
 // Board==============================================================================================
 
-export const BoardListAPI = () => {
-    return call("/Board/BoardList", "POST", null)
-    .then((response) => {
-        return response;
-    })
-};
-
 export const BoardWriteAPI = (formData) => {
     return call("/Board/BoardWrite", "POST", formData)
     .then((response) => {
@@ -135,6 +128,14 @@ export const BoardWriteAPI = (formData) => {
     })
 };
 export const BoardWriteNoImgAPI = (boardDTO) => {
+    if(boardDTO.mno === undefined) {
+        let info = JSON.parse(localStorage.getItem("UserInfo"));
+        boardDTO.mno = info.mno;
+    }
+    if(boardDTO.bwriter === undefined) {
+        let info = JSON.parse(localStorage.getItem("UserInfo"));
+        boardDTO.bwriter = info.mid;
+    }
     return call("/Board/BoardWriteNoImg", "POST", boardDTO)
     .then((res) => {
         if(res) {

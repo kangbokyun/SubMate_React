@@ -85,8 +85,11 @@ function BoardWrite() {
             const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
             console.log("checkEcho: ", checked);
             setWrite({ ...write, 'becho' : checked });
-            
-            setWrite({ ...write, 'mno' : userInfo.mno });
+
+            let mno = userInfo.mno;
+            let mid = userInfo.mid;
+            setWrite({ ...write, 'mno' : mno });
+            setWrite({ ...write, 'bwriter' : mid });
             const formData = new FormData();
             if(data.bimg === "") { // 이미지가 없을 때
                 if(checked === '1') {

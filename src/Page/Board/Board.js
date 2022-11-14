@@ -54,37 +54,52 @@ function Board() {
                 { window.innerWidth <= 767 ? 
                     <table className = "table" style = {{ marginBottom: "5vh" }}>
                         <tbody>
-                            <tr style = {{ borderBottom: "solid 1px gray" }}>
-                                <td className = "col-3">
-                                    <img alt = "Setting" src = { require('../../IMG/임시프사.png') } style = {{ width: "15vw", height: "7vh", borderRadius: "50%" }} />
-                                </td>
-                                <td className = "col-9">
-                                    <div className = "row" style = {{ width: "100%" }}>
-                                        <div className = "col-12" style = {{ marginTop: "0.7vh", fontSize: "1.3rem" }}>
-                                            <label>{ boardList.map((list) => {list.btitle}) }</label><br />
-                                            <div className = "row">
-                                                <div className = "col-5" style = {{ marginTop: "0.8vh" }}>
-                                                    <label style = {{ fontSize: "1rem" }}>1분 전</label>
-                                                </div>
-                                                <div className = "col-7" style = {{ marginTop: "0.8vh", paddingRight: "0", marginRight: "0" }}>
-                                                    <label style = {{ float: "right" }}>
-                                                        <img alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
-                                                    </label>
-                                                    <label style = {{ float: "right" }}>
-                                                        <img alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
-                                                    </label>
-                                                    <label style = {{ float: "right" }}>
-                                                        <img alt = "PictureImg" src = { require('../../IMG/BoardPicture_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
-                                                    </label>
-                                                    <label style = {{ float: "right" }}>
-                                                        <img alt = "Timer" src = { require('../../IMG/BoardTimer_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
-                                                    </label>
+                            { boardList.map((list) => 
+                                <tr style = {{ borderBottom: "solid 1px gray" }} key = { list.bno }>
+                                    <td className = "col-3">
+                                        { list.bimg === "null" ?  
+                                            <img alt = "" src = { require('../../IMG/BoardPicture_Black.png') } style = {{ width: "15vw", height: "7vh", borderRadius: "8px", marginTop: "0.7vh" }} />
+                                            :
+                                            <img alt = "Setting" src = { require('../../BoardImg/' + list.bimg) } style = {{ width: "15vw", height: "7vh", borderRadius: "8px", marginTop: "0.7vh" }} />
+                                        }
+                                    </td>
+                                    
+                                    <td className = "col-9">
+                                        <div className = "row" style = {{ width: "100%" }}>
+                                            <div className = "col-12" style = {{ marginTop: "0.7vh", fontSize: "1.3rem" }}>
+                                                <label>{ list.btitle }</label><br />
+                                                <div className = "row">
+                                                    <div className = "col-5" style = {{ marginTop: "0.8vh" }}>
+                                                        <label style = {{ fontSize: "1rem" }}>1분 전</label>
+                                                    </div>
+                                                    <div className = "col-7" style = {{ marginTop: "0.8vh", paddingRight: "0", marginRight: "0" }}>
+                                                        <label style = {{ float: "right" }}>
+                                                            <img alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                        </label>
+                                                        <label style = {{ float: "right" }}>
+                                                            <img alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                        </label>
+                                                        <label style = {{ float: "right" }}>
+                                                            { list.bimg !== "null" ?
+                                                                <img alt = "PictureImg" src = { require('../../IMG/BoardPicture_Green.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                                : 
+                                                                <img alt = "PictureImg" src = { require('../../IMG/BoardPicture_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                            }
+                                                        </label>
+                                                        <label style = {{ float: "right" }}>
+                                                            { list.becho !== "2" ?
+                                                                <img alt = "Timer" src = { require('../../IMG/BoardTimer_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                                :
+                                                                <img alt = "Timer" src = { require('../../IMG/BoardTimer_Color.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                            }
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                     : 

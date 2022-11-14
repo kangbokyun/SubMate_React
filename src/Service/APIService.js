@@ -31,11 +31,11 @@ export const call = (api, method, request) => {
     };
 
     if(api === "/Board/BoardWrite") {
-    if (request) {
-        // GET method
-        options.body = request;
-        console.log(request);
-    }
+        if (request) {
+            // GET method
+            options.body = request;
+            console.log(request);
+        }
     } else {
         if (request) {
             // GET method
@@ -53,13 +53,13 @@ export const call = (api, method, request) => {
     })
     .then((response) =>
         response.json().then((json) => {
-            if (!response.ok) {
-                // response.ok가 true이면 정상적인 리스폰스를 받은것, 아니면 에러 리스폰스를 받은것.
-                return Promise.reject(json);
-            }
+          if (!response.ok) {
+            // response.ok가 true이면 정상적인 리스폰스를 받은것, 아니면 에러 리스폰스를 받은것.
+            return Promise.reject(json);
+          }
             console.log(response)
             temp = json;
-            return temp;
+          return temp;
         })
     )
     .catch((error) => {
@@ -117,17 +117,27 @@ export const LogoutAPI = () => {
 // Board==============================================================================================
 
 export const BoardListAPI = () => {
-    return call("/Board/BoardList", "POST")
+    return call("/Board/BoardList", "POST", null)
     .then((response) => {
         return response;
     })
 };
 
 export const BoardWriteAPI = (formData) => {
-    console.log(formData.get("btitle"));
     return call("/Board/BoardWrite", "POST", formData)
     .then((response) => {
         if(response) {
+            alert("글 등록되었습니다.");
+            window.location.href = "/Board";
+        } else {
+            alert("글 등록 실패 :: 관리자에게 문의");
+        }
+    })
+};
+export const BoardWriteNoImgAPI = (boardDTO) => {
+    return call("/Board/BoardWriteNoImg", "POST", boardDTO)
+    .then((res) => {
+        if(res) {
             alert("글 등록되었습니다.");
             window.location.href = "/Board";
         } else {

@@ -3,7 +3,7 @@ import Header from '../Header';
 import Menu from '../Menu';
 import '../../Component/Switch/Switch.css';
 import { useNavigate } from 'react-router';
-import { BoardWriteAPI } from '../../Service/APIService';
+import { BoardWriteAPI, BoardWriteNoImgAPI } from '../../Service/APIService';
 
 function BoardWrite() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -26,19 +26,16 @@ function BoardWrite() {
         return history(-1) // 한 페이지 뒤로
     };
 
-   
     const [ checked, setCehcked ] = useState("1");
     const checkedSwitch = (e) => { // 스위치 제어
         if(e.target.value === '1') { // 스위치 꺼짐
+            setWrite({ ...write, 'becho' : checked });
             setCehcked("2");
-            setWrite({ ...write, 'becho' : checked });
         } else { // 켜짐
-            setCehcked("1");
             setWrite({ ...write, 'becho' : checked });
+            setCehcked("1");
         }
     };
-
-
 
     const [data,setData] = useState({
         btitle:'',
@@ -46,9 +43,6 @@ function BoardWrite() {
         becho:'',
         bimg:''
       });
-
-
-
 
     const [ checkTitle, setCheckTitle ] = useState(false);
     const [ checkContents, setCheckContents ] = useState(false);
@@ -78,7 +72,7 @@ function BoardWrite() {
         if([e.target.name].includes("bimg")) {
             if(e.target.value.length >= 0) {
                 setCheckImg(true);
-                setWrite({ ...write, [e.target.name] : e.target.files[0] });
+                setWrite({ ...write, [e.target.name] : e.target.files[0].name });
                 setData({ ...data, [e.target.name] : e.target.files[0] });
             } else {
                 setCheckImg(false);
@@ -89,25 +83,29 @@ function BoardWrite() {
         // 글등록
         if(checkTitle && checkContents) {
             const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
-            // alert(userInfo.mno);
+            console.log("checkEcho: ", checked);
+            setWrite({ ...write, 'becho' : checked });
             
             setWrite({ ...write, 'mno' : userInfo.mno });
-            if(checked === '1') {
-                const formData = new FormData();
+            const formData = new FormData();
+            if(data.bimg === "") { // 이미지가 없을 때
+                if(checked === '1') {
+                    BoardWriteNoImgAPI(write);
+                } else {
+                    // setWrite({ ...write, 'becho' : checked });
+                    BoardWriteNoImgAPI(write);
+                }
+            } else { // 이미지가 있을 때
                 formData.append("bimg", data.bimg);
                 formData.append("btitle", data.btitle);
                 formData.append("bcontents", data.bcontents);
                 formData.append("becho", checked);
                 formData.append("mno", userInfo.mno);
-                // fetch("http://localhost:8080/Board/BoardWrite", {
-                //     headers: { "Authorization" : "Bearer " + localStorage.getItem("Access_Token") },
-                //     method: "POST",
-                //     body: formData
-                // }).then((res) => {console.log("resres:::::::::::::::::::::::: ", res)})
-                BoardWriteAPI(formData);
-            } else {
-                console.log("sendWrite : ", write);
-                // BoardWriteAPI(write);
+                if(checked === '1') {
+                    BoardWriteAPI(formData);
+                } else {
+                    BoardWriteAPI(formData);
+                }
             }
         }
     };

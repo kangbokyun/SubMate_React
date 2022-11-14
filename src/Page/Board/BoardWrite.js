@@ -4,7 +4,7 @@ import Menu from '../Menu';
 import '../../Component/Switch/Switch.css';
 import { useNavigate } from 'react-router';
 import { BoardWriteAPI, BoardWriteNoImgAPI } from '../../Service/APIService';
-import '../../Component/Accordian/Accordian.css';
+import '../../Component/Accordion/Accordion.css';
 
 function BoardWrite() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -26,30 +26,6 @@ function BoardWrite() {
     const GoBack = () => {
         return history(-1) // 한 페이지 뒤로
     };
-
-    // 스위치 아코디언
-    const items = document.querySelectorAll(".accordian-item");
-    items.forEach((item) => {
-        item.addEventListener("click", (e) => {
-            const currentlyActive = document.querySelectorAll(".accordian-item.active");
-            if (currentlyActive) {
-            currentlyActive.forEach((active) => {
-                if (active !== item) {
-                active.lastElementChild.style.maxHeight = 0;
-                active.classList.toggle("active");
-                }
-            });
-            }
-
-            item.classList.toggle("active");
-            const elementBody = item.querySelector(".accordian-body");
-            if (item.classList.contains("active")) {
-            elementBody.style.maxHeight = elementBody.scrollHeight + "px";
-            } else {
-            elementBody.style.maxHeight = 0;
-            }
-        });
-    });
 
     const [ checked, setCehcked ] = useState("1");
     const checkedSwitch = (e) => { // 스위치 제어
@@ -129,6 +105,7 @@ function BoardWrite() {
                 formData.append("bcontents", data.bcontents);
                 formData.append("becho", checked);
                 formData.append("mno", userInfo.mno);
+                formData.append("bwriter", mid);
                 if(checked === '1') {
                     BoardWriteAPI(formData);
                 } else {
@@ -137,6 +114,21 @@ function BoardWrite() {
             }
         }
     };
+
+    // 스위치 아코디언
+    const items = document.querySelectorAll(".accordian-item");
+    items.forEach((item) => {
+        item.addEventListener("click", (e) => {
+            item.classList.toggle("active");
+            const elementBody = item.querySelector(".accordian-body");
+            if (item.classList.contains("active")) {
+                elementBody.style.maxHeight = elementBody.scrollHeight + "px";
+            } else {
+                elementBody.style.maxHeight = 0;
+            }
+        });
+    });
+    // -/스위치 아코디언
 
     return(
         <div>
@@ -157,23 +149,27 @@ function BoardWrite() {
             <div className = { window.innerWidth <= 767 ? "" : "row" } style = {{ marginTop: "3vh" }}>
                 <input onChange = { boardState } name = "btitle" type = "text" style = {{ backgroundColor: "transparent", border: "none", borderBottom: "solid 1px gray", outline: "none", width: "100%", height: window.innerWidth <= 767 ? "6vh" : "", fontSize: window.innerWidth <= 767 ? "1.4rem" : "", paddingLeft: "2.5vw" }} placeholder = "Title" />
                 <textarea onChange = { boardState } name = "bcontents" placeholder = "내용을 입력하세요." style = {{ width: "100%", outline: "none", paddingTop: "1vh", paddingLeft: "2.5vw", border: "none", borderBottom: "solid 1px gray", height: "25vh" }}></textarea>
-                <div style = {{ border: "none", borderBottom: "solid 1px gray" }}>
-                    <div className = "row" style = {{ maxWidth: "100%" }}>
-                        <div className = "col-3" style = {{ textAlign: "center", fontSize: "1.5rem" }}>
+                <div className = "accordian" style = {{ border: "none", borderBottom: "solid 1px gray" }}>
+                    <div className = "row accordian-item" style = {{ maxWidth: "100%" }}>
+                        <div className = "col-3" style = {{ textAlign: "center", fontSize: "1.5rem", border: "solid 1px blue" }}>
                             <label style = {{ color: checked === '1' ? "gray" : "skyblue", fontStyle: "bold", paddingLeft: "3vw" }}>메아리</label>
                         </div>
-                        <div className = "col-2 offset-7" style = {{ paddingBottom: "1vh" }}>
-                            <input value = { checked } id="checkbox" className="switch-input" type="checkbox" onClick = { checkedSwitch } style = {{  }} />
+                        <div className = "col-2 offset-7 accordian-header" style = {{ paddingBottom: "1vh" }}>
+                            <input value = { checked } id="checkbox" className="switch-input accordian-header" type="checkbox" onClick = { checkedSwitch } style = {{  }} />
                             <label htmlFor="checkbox" className="switch"></label>
                         </div>
-                        <div className="accordian" style = {{ width: "100%" }}>
-                            <div className="accordian-item">
-                                <div className="accordian-header">What is Html ?</div>
-                                <div id="1" className="accordian-body">
-                                <div className="accordian-body-content">
-                                    HyperText Markup Language (HTML) is the set of markup symbols or codes inserted into a file intended for display on the Internet. The markup tells web browsers how to display a web page's words and images.
-
+                        <div className="accordian" style = {{ border: "solid 1px red" }}>
+                            <div className="accordian-item row">
+                                <div className = "col-4">
+                                    <div style = {{ fontSize: "1.8rem" }}>메아리</div>
                                 </div>
+                                <div className = "col-3 offset-5">
+                                    <button className="accordian-header">asdasd</button>
+                                </div>
+                                <div id="1" className="accordian-body">
+                                    <div className="accordian-body-content">
+                                        HyperText Markup Language (HTML) is the set of markup symbols or codes inserted into a file intended for display on the Internet. The markup tells web browsers how to display a web page's words and images.
+                                    </div>
                                 </div>
                             </div>
                         </div>

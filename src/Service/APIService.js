@@ -127,6 +127,7 @@ export const BoardWriteAPI = (formData) => {
         }
     })
 };
+
 export const BoardWriteNoImgAPI = (boardDTO) => {
     if(boardDTO.mno === undefined) {
         let info = JSON.parse(localStorage.getItem("UserInfo"));

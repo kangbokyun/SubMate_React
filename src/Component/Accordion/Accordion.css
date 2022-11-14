@@ -1,0 +1,40 @@
+.accordian-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s;
+}
+.accordian-body-content {
+  border-top: gray 1px solid;
+  line-height: 20px;
+  padding: 10px 0;
+}
+
+
+/*  HTML  */
+/* <div className="accordian" style = {{ width: "100%", border: "solid 1px red" }}>
+    <div className="accordian-item">
+        <div className="accordian-header">What is Html ?</div>
+        <div id="1" className="accordian-body">
+        <div className="accordian-body-content">
+            HyperText Markup Language (HTML) is the set of markup symbols or codes inserted into a file intended for display on the Internet. The markup tells web browsers how to display a web page's words and images.
+
+        </div>
+        </div>
+    </div>
+</div> */
+
+/* JS */
+/* // 스위치 아코디언
+const items = document.querySelectorAll(".accordian-item");
+items.forEach((item) => {
+    item.addEventListener("click", (e) => {
+        item.classList.toggle("active");
+        const elementBody = item.querySelector(".accordian-body");
+        if (item.classList.contains("active")) {
+            elementBody.style.maxHeight = elementBody.scrollHeight + "px";
+        } else {
+            elementBody.style.maxHeight = 0;
+        }
+    });
+});
+// -/스위치 아코디언 */

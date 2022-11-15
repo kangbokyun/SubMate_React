@@ -7,7 +7,14 @@ import Menu from '../Menu';
 
 function BoardView() {
     const boardDTO = useLocation();
-    console.log("boardDTO : ", boardDTO);
+    console.log("bno : ", boardDTO.state.bno);
+    console.log("btitle : ", boardDTO.state.btitle);
+    console.log("bcontents : ", boardDTO.state.bcontents);
+    console.log("bwriter : ", boardDTO.state.bwriter);
+    console.log("bview : ", boardDTO.state.bview);
+    console.log("becho : ", boardDTO.state.becho);
+    console.log("bechotimer : ", boardDTO.state.bechotimer);
+    console.log("bimg : ", boardDTO.state.bimg);
 
     // 윈도우 크기 변경 감지되면 리렌더링
     const [ windowWidth, setWindowWidth ] = useState(0);
@@ -18,7 +25,6 @@ function BoardView() {
     };
     
     useEffect(() => {
-        // console.log(viewData);
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);

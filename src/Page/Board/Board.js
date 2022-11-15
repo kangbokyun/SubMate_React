@@ -39,7 +39,16 @@ function Board() {
             "bview" : bview, "becho" : becho, "bechotimer" : bechotimer, "bimg" : bimg
         });
         history('/BoardView', {
-            state: {"boardDTO" : viewData}
+            state: { 
+                "bno" : bno, 
+                "btitle" : btitle, 
+                "bcontents" : bcontents, 
+                "bwriter" : bwriter,
+                "bview" : bview, 
+                "becho" : becho, 
+                "bechotimer" : bechotimer, 
+                "bimg" : bimg 
+            }
         })
     };
 

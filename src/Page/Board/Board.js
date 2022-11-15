@@ -52,7 +52,7 @@ function Board() {
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" } style = {{ marginTop: "1.5vh" }}>
                 { window.innerWidth <= 767 ? 
-                    <table className = "table" style = {{ marginBottom: "5vh" }}>
+                    <table className = "table" style = {{ marginBottom: "2.5vh" }}>
                         <tbody>
                             { boardList.map((list) => 
                                 <tr style = {{ borderBottom: "solid 1px gray" }} key = { list.bno }>
@@ -67,7 +67,7 @@ function Board() {
                                     <td className = "col-9">
                                         <div className = "row" style = {{ width: "100%" }}>
                                             <div className = "col-12" style = {{ marginTop: "0.7vh", fontSize: "1.3rem" }}>
-                                                <label>{ list.btitle }</label><br />
+                                                <label><Link to = "/BoardView" style = {{ textDecoration: "none", cursor: "pointer", color: "black" }}>{ list.btitle }</Link></label><br />
                                                 <div className = "row">
                                                     <div className = "col-5" style = {{ marginTop: "0.8vh" }}>
                                                         <label style = {{ fontSize: "1rem" }}>{ list.bwriter }</label>

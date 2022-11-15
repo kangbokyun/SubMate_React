@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
 import Board from './Page/Board/Board';
+import BoardView from './Page/Board/BoardView';
 import BoardWrite from './Page/Board/BoardWrite';
 import Chat from './Page/Chat/Chat';
 import InChat from './Page/Chat/InChat';
@@ -38,6 +39,7 @@ function AppRoute() {
                 {/* Board */}
                 <Route path = "/Board" element = { <Board /> } />
                 <Route path = "/BoardWrite" element = { <BoardWrite /> } />
+                <Route path = "/BoardView" element = { <BoardView /> } />
                 
                 {/* Profile */}
                 <Route path = "/Profile" element = { <Profile /> } />

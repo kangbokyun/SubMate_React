@@ -48,3 +48,19 @@
 .switch:checked ~ table tr.workout {
 	display: inherit;
 }
+
+/* <div class="toggleContainer">
+  <h3><label for="switch1">Section Title</label></h3>
+  <div class="trainingToggle">
+    <input type="checkbox" class="switch" id="switch1" />
+    <label for="switch1"></label>
+    <table>
+      <tr class="workout">
+        <td>this content appears when toggle is on</td>
+      </tr>
+      <tr class="workoutWrap">
+        <td>this content always appears</td>
+      </tr>
+    </table>
+  </div>
+</div> */

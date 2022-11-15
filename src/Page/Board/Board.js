@@ -32,6 +32,17 @@ function Board() {
         return history(-1) // 한 페이지 뒤로
     };
 
+    const [ viewData, setViewData ] = useState("");
+    const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg) => {
+        setViewData({
+            "bno" : bno, "btitle" : btitle, "bcontents" : bcontents, "bwriter" : bwriter,
+            "bview" : bview, "becho" : becho, "bechotimer" : bechotimer, "bimg" : bimg
+        });
+        history('/BoardView', {
+            state: {"boardDTO" : viewData}
+        })
+    };
+
     return(
         <div>
             <Header />
@@ -67,7 +78,10 @@ function Board() {
                                     <td className = "col-9">
                                         <div className = "row" style = {{ width: "100%" }}>
                                             <div className = "col-12" style = {{ marginTop: "0.7vh", fontSize: "1.3rem" }}>
-                                                <label><Link to = "/BoardView" style = {{ textDecoration: "none", cursor: "pointer", color: "black" }}>{ list.btitle }</Link></label><br />
+                                            {/* <Link to = {{pathname : "/BoardView", state : { boardDTO : viewData }}} style = {{ textDecoration: "none", cursor: "pointer", color: "black" }}>
+                                            </Link> */}
+                                            <label onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg) } }>
+                                            { list.btitle }</label><br />
                                                 <div className = "row">
                                                     <div className = "col-5" style = {{ marginTop: "0.8vh" }}>
                                                         <label style = {{ fontSize: "1rem" }}>{ list.bwriter }</label>

@@ -1,11 +1,14 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import Header from '../Header';
 import Menu from '../Menu';
 
 function BoardView() {
+    const boardDTO = useLocation();
+    console.log("boardDTO : ", boardDTO);
+
     // 윈도우 크기 변경 감지되면 리렌더링
     const [ windowWidth, setWindowWidth ] = useState(0);
     const [ windowHeight, setWindowHeight ] = useState(0);
@@ -15,6 +18,7 @@ function BoardView() {
     };
     
     useEffect(() => {
+        // console.log(viewData);
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);

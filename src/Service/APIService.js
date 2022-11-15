@@ -135,7 +135,7 @@ export const BoardWriteNoImgAPI = (boardDTO) => {
     }
     if(boardDTO.bwriter === undefined) {
         let info = JSON.parse(localStorage.getItem("UserInfo"));
-        boardDTO.bwriter = info.mid;
+        boardDTO.bwriter = info.mnickname;
     }
     return call("/Board/BoardWriteNoImg", "POST", boardDTO)
     .then((res) => {

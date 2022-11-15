@@ -34,10 +34,6 @@ function Board() {
 
     const [ viewData, setViewData ] = useState("");
     const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg) => {
-        setViewData({
-            "bno" : bno, "btitle" : btitle, "bcontents" : bcontents, "bwriter" : bwriter,
-            "bview" : bview, "becho" : becho, "bechotimer" : bechotimer, "bimg" : bimg
-        });
         history('/BoardView', {
             state: { 
                 "bno" : bno, 
@@ -87,17 +83,22 @@ function Board() {
                                     <td className = "col-9">
                                         <div className = "row" style = {{ width: "100%" }}>
                                             <div className = "col-12" style = {{ marginTop: "0.7vh", fontSize: "1.3rem" }}>
-                                            {/* <Link to = {{pathname : "/BoardView", state : { boardDTO : viewData }}} style = {{ textDecoration: "none", cursor: "pointer", color: "black" }}>
-                                            </Link> */}
-                                            <label onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg) } }>
-                                            { list.btitle }</label><br />
                                                 <div className = "row">
-                                                    <div className = "col-5" style = {{ marginTop: "0.8vh" }}>
-                                                        <label style = {{ fontSize: "1rem" }}>{ list.bwriter }</label>
+                                                    <label className = "col-9 col-md-9" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg) } }>
+                                                        { list.btitle }
+                                                    </label>
+                                                    <label className = "col-3 col-md-3" style = {{ fontSize: "0.8rem", marginTop: "0.8vh", textAlign: "right", color: "gray" }}>
+                                                        { list.bview }
+                                                    </label>
+                                                    <br />
+                                                </div>
+                                                <div className = "row">
+                                                    <div className = "col-6" style = {{ marginTop: "0.8vh" }}>
+                                                        <label style = {{ fontSize: "0.8rem" }}>{ list.bwriter }</label>
                                                         <span style = {{ fontSize: "1rem", marginLeft: "0.4vw", marginRight: "0.4vw" }}>·</span>
-                                                        <label style = {{ fontSize: "1rem" }}>1분 전</label>
+                                                        <label style = {{ fontSize: "0.8rem" }}>1분 전</label>
                                                     </div>
-                                                    <div className = "col-7" style = {{ marginTop: "0.8vh", paddingRight: "0", marginRight: "0" }}>
+                                                    <div className = "col-6" style = {{ marginTop: "0.8vh", paddingRight: "0", marginRight: "0" }}>
                                                         <label style = {{ float: "right" }}>
                                                             <img alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
                                                         </label>
@@ -128,51 +129,53 @@ function Board() {
                         </tbody>
                     </table>
                     : 
-                        <div className = "container">
-                    <table className = "table" style = {{ height: window.innerWidth <= 767 ? "80vh" : "70vh", marginBottom: "5vh" }}>
-                            <tbody>
-                                <tr className = "row" style = {{ textAlign: "center" }}>
-                                    <td className = "col-md-7">제목</td>
-                                    <td className = "col-md-1">작성자</td>
-                                    <td className = "col-md-2">작성일</td>
-                                    <td className = "col-md-1">조회수</td>
-                                    <td className = "col-md-1">좋아요</td>
-                                </tr> 
-                                <tr className = "row" style = {{  }}>
-                                    <td className = "col-md-5">안녕하세요</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>좋, 댓, 이, 에</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>홍길동</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>22.10.22</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>31</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>2</td>
-                                </tr> 
-                                <tr className = "row" style = {{  }}>
-                                    <td className = "col-md-5">안녕하세요</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>좋, 댓, 이, 에</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>홍길동</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>22.10.22</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>31</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>2</td>
-                                </tr> 
-                                <tr className = "row" style = {{  }}>
-                                    <td className = "col-md-5">안녕하세요</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>좋, 댓, 이, 에</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>홍길동</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>22.10.22</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>31</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>2</td>
-                                </tr> 
-                                <tr className = "row" style = {{  }}>
-                                    <td className = "col-md-5">안녕하세요</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>좋, 댓, 이, 에</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>홍길동</td>
-                                    <td className = "col-md-2" style = {{ textAlign: "center" }}>22.10.22</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>31</td>
-                                    <td className = "col-md-1" style = {{ textAlign: "center" }}>2</td>
-                                </tr> 
-                            </tbody>
-                    </table>
-                        </div>
+                    <div className = "container" style = {{  }}>
+                        <Link to = "/BoardWrite"><button type = "button" className = "btn btn-outline-success" style = {{ float: "right", marginBottom: "1.5vh" }}>글쓰기</button></Link>
+                        <table className = "table" style = {{ height: window.innerWidth <= 767 ? "80vh" : "70vh", marginBottom: "5vh" }}>
+                                <tbody>
+                                    <tr className = "row" style = {{ textAlign: "center" }}>
+                                        <td className = "col-md-7">제목</td>
+                                        <td className = "col-md-1">작성자</td>
+                                        <td className = "col-md-2">작성일</td>
+                                        <td className = "col-md-1">조회수</td>
+                                        <td className = "col-md-1">좋아요</td>
+                                    </tr> 
+                                    { boardList.map((list) => 
+                                        <tr className = "row" style = {{  }}>
+                                            <td className = "col-md-6" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg) } }>{ list.btitle }</td>
+                                            <td className = "col-md-1" style = {{ textAlign: "center", marginLeft: "0", paddingLeft: "0", paddingRight: "1.4vw" }}>
+                                                <div className = "row">
+                                                    <label className = "col-md-3" style = {{ float: "right" }}>
+                                                        <img alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: window.innerWidth <= 767 ? "7vw" : "2vw", height: window.innerWidth <= 767 ? "3vh" : "2vh" }} />
+                                                    </label>
+                                                    <label className = "col-md-3" style = {{ float: "right" }}>
+                                                        <img alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: window.innerWidth <= 767 ? "7vw" : "2vw", height: window.innerWidth <= 767 ? "3vh" : "2vh" }} />
+                                                    </label>
+                                                    <label className = "col-md-3" style = {{ float: "right" }}>
+                                                        { list.bimg !== "null" ?
+                                                            <img alt = "PictureImg" src = { require('../../IMG/BoardPicture_Green.png') } style = {{ width: window.innerWidth <= 767 ? "7vw" : "2vw", height: window.innerWidth <= 767 ? "3vh" : "2vh" }} />
+                                                            : 
+                                                            <img alt = "PictureImg" src = { require('../../IMG/BoardPicture_Black.png') } style = {{ width: window.innerWidth <= 767 ? "7vw" : "2vw", height: window.innerWidth <= 767 ? "3vh" : "2vh" }} />
+                                                        }
+                                                    </label>
+                                                    <label className = "col-md-3" style = {{ float: "right" }}>
+                                                        { list.becho !== "2" ?
+                                                            <img alt = "Timer" src = { require('../../IMG/BoardTimer_Black.png') } style = {{ width: window.innerWidth <= 767 ? "7vw" : "2vw", height: window.innerWidth <= 767 ? "3vh" : "2vh" }} />
+                                                            :
+                                                            <img alt = "Timer" src = { require('../../IMG/BoardTimer_Color.png') } style = {{ width: window.innerWidth <= 767 ? "7vw" : "2vw", height: window.innerWidth <= 767 ? "3vh" : "2vh" }} />
+                                                        }
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td className = "col-md-1" style = {{ textAlign: "center" }}>{ list.bwriter }</td>
+                                            <td className = "col-md-2" style = {{ textAlign: "center" }}>22.10.22</td>
+                                            <td className = "col-md-1" style = {{ textAlign: "center" }}>{ list.bview }</td>
+                                            <td className = "col-md-1" style = {{ textAlign: "center" }}>2</td>
+                                        </tr> 
+                                    )}
+                                </tbody>
+                        </table>
+                    </div>
                 }
                 {window.innerWidth <= 767 ? 
                     <div>무한스크롤</div> : 

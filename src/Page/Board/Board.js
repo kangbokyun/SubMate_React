@@ -167,7 +167,7 @@ function Board() {
                                                     </label>
                                                 </div>
                                             </td>
-                                            <td className = "col-md-1" style = {{ textAlign: "center" }}>{ list.bwriter }</td>
+                                            <td className = "col-md-1" style = {{ textAlign: "center", paddingLeft: "1.1vw" }}>{ list.bwriter }</td>
                                             <td className = "col-md-2" style = {{ textAlign: "center" }}>22.10.22</td>
                                             <td className = "col-md-1" style = {{ textAlign: "center" }}>{ list.bview }</td>
                                             <td className = "col-md-1" style = {{ textAlign: "center" }}>2</td>

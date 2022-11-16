@@ -4,6 +4,7 @@ import App from './App';
 import Board from './Page/Board/Board';
 import BoardView from './Page/Board/BoardView';
 import BoardWrite from './Page/Board/BoardWrite';
+import BoardReply from './Page/Board/Reply/BoardReply';
 import Chat from './Page/Chat/Chat';
 import InChat from './Page/Chat/InChat';
 import Main from './Page/Main';
@@ -22,10 +23,12 @@ function AppRoute() {
     return(
         <Router>
             <Routes>
+                {/* Init */}
+                <Route path = "/" element = { <App /> } />
+                
                 {/* Member */}
                 <Route path = "/Login" element = { <Login /> } />
                 <Route path = "/SignUp" element = { <SignUp /> } />
-                <Route path = "/" element = { <App /> } />
 
                 <Route path = "/Home" element = { <Main /> } />
 
@@ -40,6 +43,7 @@ function AppRoute() {
                 <Route path = "/Board" element = { <Board /> } />
                 <Route path = "/BoardWrite" element = { <BoardWrite /> } />
                 <Route path = "/BoardView" element = { <BoardView /> } />
+                <Route path = "/BoardReply" element = { <BoardReply /> } />
                 
                 {/* Profile */}
                 <Route path = "/Profile" element = { <Profile /> } />

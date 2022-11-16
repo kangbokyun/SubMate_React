@@ -43,7 +43,7 @@ function Board() {
                 "bview" : bview, 
                 "becho" : becho, 
                 "bechotimer" : bechotimer, 
-                "bimg" : bimg 
+                "bimg" : bimg
             }
         })
     };
@@ -116,7 +116,7 @@ function Board() {
                                                             { list.becho !== "2" ?
                                                                 <img alt = "Timer" src = { require('../../IMG/BoardTimer_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
                                                                 :
-                                                                <img alt = "Timer" src = { require('../../IMG/BoardTimer_Color.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                                <img alt = "Timer" src = { require('../../IMG/BoardTimer_Blue.png') } style = {{ width: "7vw", height: "3vh" }} />
                                                             }
                                                         </label>
                                                     </div>
@@ -162,7 +162,7 @@ function Board() {
                                                         { list.becho !== "2" ?
                                                             <img alt = "Timer" src = { require('../../IMG/BoardTimer_Black.png') } style = {{ width: window.innerWidth <= 767 ? "7vw" : "2vw", height: window.innerWidth <= 767 ? "3vh" : "2vh" }} />
                                                             :
-                                                            <img alt = "Timer" src = { require('../../IMG/BoardTimer_Color.png') } style = {{ width: window.innerWidth <= 767 ? "7vw" : "2vw", height: window.innerWidth <= 767 ? "3vh" : "2vh" }} />
+                                                            <img alt = "Timer" src = { require('../../IMG/BoardTimer_Blue.png') } style = {{ width: window.innerWidth <= 767 ? "7vw" : "2vw", height: window.innerWidth <= 767 ? "3vh" : "2vh" }} />
                                                         }
                                                     </label>
                                                 </div>

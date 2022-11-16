@@ -116,6 +116,7 @@ export const LogoutAPI = () => {
 // -/Member===========================================================================================
 // Board==============================================================================================
 
+// 게시글(이미지 있음) 쓰기
 export const BoardWriteAPI = (formData) => {
     return call("/Board/BoardWrite", "POST", formData)
     .then((response) => {
@@ -128,6 +129,7 @@ export const BoardWriteAPI = (formData) => {
     })
 };
 
+// 게시글(이미지없음) 쓰기
 export const BoardWriteNoImgAPI = (boardDTO) => {
     if(boardDTO.mno === undefined) {
         let info = JSON.parse(localStorage.getItem("UserInfo"));
@@ -144,6 +146,20 @@ export const BoardWriteNoImgAPI = (boardDTO) => {
             window.location.href = "/Board";
         } else {
             alert("글 등록 실패 :: 관리자에게 문의");
+        }
+    })
+};
+
+
+// 댓글쓰기
+export const ReplyWriteAPI = (replyDTO) => {
+    return call("/Board/ReplyWrite", "POST", replyDTO)
+    .then((res) => {
+        if(res) {
+            alert("댓글 등록되었습니다.");
+            window.location.href = "/BoardReply";
+        } else {
+            alert("댓글 등록 실패");
         }
     })
 };

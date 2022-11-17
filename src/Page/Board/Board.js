@@ -20,7 +20,6 @@ function Board() {
             console.log(res)
             setBoardList(res);
         })
-        console.log("boardList : ", boardList)
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -103,7 +102,11 @@ function Board() {
                                                             <img alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
                                                         </label>
                                                         <label style = {{ float: "right" }}>
-                                                            <img alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                            { list.checkreply === "1" ? 
+                                                                <img alt = "Reply" src = { require('../../IMG/BoardReply_Orange.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                                :
+                                                                <img alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                            }   
                                                         </label>
                                                         <label style = {{ float: "right" }}>
                                                             { list.bimg !== "null" ?

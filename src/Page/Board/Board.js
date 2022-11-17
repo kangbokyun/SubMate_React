@@ -67,7 +67,7 @@ function Board() {
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" } style = {{ marginTop: "1.5vh" }}>
                 { window.innerWidth <= 767 ? 
-                    <div style = {{ overflowY: "auto", border: "solid 1px red", height: window.innerWidth <= 767 ? "79.5vh" : "" }}>
+                    <div style = {{ overflowY: "auto", height: window.innerWidth <= 767 ? "79.5vh" : "" }}>
                         <table className = "table" style = {{ height: window.innerWidth <= 767 ? "79.5vh" : "" }}>
                             <tbody>
                                 { boardList.map((list) => 

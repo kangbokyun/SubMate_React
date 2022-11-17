@@ -204,7 +204,7 @@ function SignUp() {
             if(e.target.value.length === 4) {
                 setConfirmMBTI("MBTI : 올바른 형식입니다.");
                 setFlagMBTI(true);
-                setSignUp({ ...signUp, [e.target.name] : e.target.value });
+                setSignUp({ ...signUp, [e.target.name] : e.target.value, 'mplatform' : 'SubMate' });
             } else {
                 setConfirmMBTI("MBTI : 다시 확인해주세요.");
                 setFlagMBTI(false);
@@ -220,7 +220,10 @@ function SignUp() {
             } else {
                 const division = "_";
                 let addr = confirmAddr_Post + division + confirmAddr_Road;
-                setSignUp({ ...signUp, 'maddress' : addr, 'mplatform' : "SubMate" });
+                setSignUp({ ...signUp, maddress : addr });
+                setSignUp({ ...signUp, 'mplatform' : 'SubMate' });
+                console.log("@@@@@@", {...signUp});
+                alert("111");
                 fetch("http://localhost:8080/Auth/SignUp", {
                     headers: {'Content-Type': 'application/json'},
                     method : "POST",

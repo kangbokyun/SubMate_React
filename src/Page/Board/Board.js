@@ -67,8 +67,8 @@ function Board() {
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" } style = {{ marginTop: "1.5vh" }}>
                 { window.innerWidth <= 767 ? 
-                    <div style = {{ overflowY: "auto", height: window.innerWidth <= 767 ? "79.5vh" : "" }}>
-                        <table className = "table" style = {{ height: window.innerWidth <= 767 ? "79.5vh" : "" }}>
+                    <div style = {{ height: window.innerWidth <= 767 ? "79.5vh" : "" }}>
+                        <table className = "table" style = {{  }}>
                             <tbody>
                                 { boardList.map((list) => 
                                     <tr style = {{ borderBottom: "solid 1px gray" }} key = { list.bno }>

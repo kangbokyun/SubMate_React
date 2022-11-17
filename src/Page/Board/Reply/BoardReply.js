@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { ListGroup } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router';
 import { call, ReplyWriteAPI } from '../../../Service/APIService';
 import Header from '../../Header';
 import Menu from '../../Menu';
+import '../../../Component/Accordion/Accordion.css';
 
 function BoardReply() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -37,6 +37,21 @@ function BoardReply() {
     const GoBack = () => {
         return history(-1) // 한 페이지 뒤로
     };
+
+    // 스위치 아코디언
+    const items = document.querySelectorAll(".accordian-item");
+    items.forEach((item) => {
+        item.addEventListener("click", (e) => {
+            item.classList.toggle("active");
+            const elementBody = item.querySelector(".accordian-body");
+            if (item.classList.contains("active")) {
+                elementBody.style.maxHeight = elementBody.scrollHeight + "px";
+            } else {
+                elementBody.style.maxHeight = 0;
+            }
+        });
+    });
+    // -/스위치 아코디언
 
     const [ writeReply, setWriteReply ] = useState("");
     const getReply = (e) => {
@@ -71,13 +86,13 @@ function BoardReply() {
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <div style = {{ borderBottom: "solid 1px gray" }}>
                     <div className = "row" style = {{ width: "100%" }}>
-                        <div className = "col-3 col-md-3" style = {{ marginBottom: "3vh" }}>
+                        <div className = "col-3 col-md-3" style = {{ marginBottom: "1.5vh" }}>
                             <img alt = "" 
                                 src = { require('../../../IMG/임시프사2.jpg') } 
                                 style = {{ 
-                                    width: window.innerWidth <= 767 ? "20vw" : "", 
+                                    width: window.innerWidth <= 767 ? "20vw" : "10vw", 
                                     objectFit: "cover", 
-                                    height: window.innerWidth <= 767 ? "8.5vh" : "", 
+                                    height: window.innerWidth <= 767 ? "8.5vh" : "8.5vh", 
                                     borderRadius: "23px",
                                     paddingLeft: "1vh"
                                 }} 
@@ -97,7 +112,7 @@ function BoardReply() {
                                     <img alt = "" 
                                         src = { require('../../../IMG/BoardHeart_Black.png') } 
                                         style = {{ 
-                                            width: window.innerWidth <= 767 ? "6vw" : "", 
+                                            width: window.innerWidth <= 767 ? "6vw" : "3vw", 
                                             height: window.innerWidth <= 767 ? "3vh" : "",
                                             marginTop: "0.8vh"
                                         }} 
@@ -110,7 +125,7 @@ function BoardReply() {
                         </div>
                     </div>
                 </div>
-                <div style = {{ height: window.innerWidth <= 767 ? "64vh" : "", overflowY: "auto" }}>
+                <div style = {{ height: window.innerWidth <= 767 ? "65vh" : "67vh", overflowY: "auto" }}>
                     <table className = "table" style = {{  }}>
                         <tbody>
                             { replyList.map((list) => 
@@ -126,15 +141,15 @@ function BoardReply() {
                                                         {list.rwriter}
                                                     </div>
                                                     <div className = "col-7">
-                                                        <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.2vh" }}>{ boardData.state.bview }</span>
-                                                        <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.2vh", marginLeft: "0.7vw", marginRight: "0.7vw" }}>·</span>
+                                                        <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.2vh" }}>답글 n개</span>
+                                                        <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.2vh", marginLeft: "1vw", marginRight: "1vw" }}>·</span>
                                                         <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.2vh" }}>Date</span>
                                                     </div>
                                                     <div className = "col-2">
                                                         <img alt = "" 
                                                             src = { require('../../../IMG/BoardHeart_Black.png') } 
                                                             style = {{ 
-                                                                width: window.innerWidth <= 767 ? "6vw" : "", 
+                                                                width: window.innerWidth <= 767 ? "6vw" : "3vw", 
                                                                 height: window.innerWidth <= 767 ? "3vh" : "",
                                                                 marginTop: "0.7vh"
                                                             }} 
@@ -142,6 +157,18 @@ function BoardReply() {
                                                     </div>
                                                     <div className = "col-12">
                                                         { list.rcontents }
+                                                    </div>
+                                                    <div className = "col-12">
+                                                        <div className="accordian" style = {{ width: "100%" }}>
+                                                            <div className="accordian-item">
+                                                                <div className="accordian-header">답글</div>
+                                                                <div id="1" className="accordian-body">
+                                                                    <div className="accordian-body-content">
+                                                                        { list.rno }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

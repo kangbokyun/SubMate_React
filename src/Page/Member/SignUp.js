@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import '../../App.css';
 import './Login.css';
+import { SignUpAPI, SignUpNoImg, SignUpNoImgAPI } from '../../Service/APIService';
 
 function SignUp() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -51,6 +52,8 @@ function SignUp() {
     const [ flagNick, setFlagNick ] = useState(false);
     const [ flagMBTI, setFlagMBTI ] = useState(false);
     const [ flagAddr, setFlagAddr ] = useState(false);
+    const [ fileCheck, setFileCheck ] = useState("");
+    const [ checkImg, setCheckImg ] = useState("");
 
     let test1 = "";
     let test2 = "";
@@ -204,11 +207,19 @@ function SignUp() {
             if(e.target.value.length === 4) {
                 setConfirmMBTI("MBTI : 올바른 형식입니다.");
                 setFlagMBTI(true);
-                setSignUp({ ...signUp, [e.target.name] : e.target.value, 'mplatform' : 'SubMate' });
+                setSignUp({ ...signUp, [e.target.name] : e.target.value });
             } else {
                 setConfirmMBTI("MBTI : 다시 확인해주세요.");
                 setFlagMBTI(false);
             }
+        }
+        if([e.target.name].includes('profileimg')) {
+            if(e.target.value.length >= 0) {
+                setFileCheck({ [e.target.name] : e.target.files[0] });
+                console.log(fileCheck);
+                // setSignUp({ ...signUp, [e.target.name] : e.target.files[0] });
+                setCheckImg(e.target.files[0].name);
+            } 
         }
     };
 
@@ -220,24 +231,45 @@ function SignUp() {
             } else {
                 const division = "_";
                 let addr = confirmAddr_Post + division + confirmAddr_Road;
-                setSignUp({ ...signUp, maddress : addr });
-                setSignUp({ ...signUp, 'mplatform' : 'SubMate' });
-                console.log("@@@@@@", {...signUp});
-                alert("111");
-                fetch("http://localhost:8080/Auth/SignUp", {
-                    headers: {'Content-Type': 'application/json'},
-                    method : "POST",
-                    body : JSON.stringify(signUp)
-                })
-                .then((res) => res.json())
-                .then((data) => {
-                    if(data) {
-                        alert("회원가입 되었습니다.");
-                        window.location.href = "/Login";
-                    } else {
-                        alert("회원가입 실패 :: 중복된 아이디입니다.");
-                    }
-                })
+
+                const formData = new FormData();
+                formData.append("mid", signUp.mid);
+                formData.append("mpw", signUp.mpw);
+                formData.append("mname", signUp.mname);
+                formData.append("mnickname", signUp.mnickname);
+                formData.append("mbirth", signUp.mbirth);
+                formData.append("mgender", signUp.mgender);
+                formData.append("mphone", signUp.mphone);
+                formData.append("maddress", addr);
+                formData.append("mbti", signUp.mbti);
+                formData.append("profileimg", fileCheck.profileimg);
+
+                setSignUp({ ...signUp, 'maddress' : addr });
+
+                if(checkImg !== "") {
+                    SignUpAPI(formData);
+                } else {
+                    // fetch("http://localhost:8080/Auth/SignUpNoImg", {
+                    //     headers: { 'Content-Type' : "application/json" },
+                    //     method: "POST",
+                    //     body: { signUp }
+                    // }).then((res) => {console.log("RESRESRESRESRES : ", res)})
+                    console.log("signUpsignUpsignUp: " , signUp);
+                    SignUpNoImgAPI(signUp);
+                }
+                // alert(
+                //     signUp.mid + "\n" +
+                //     signUp.mpw + "\n" +
+                //     signUp.mname + "\n" +
+                //     signUp.mnickname + "\n" +
+                //     signUp.mbirth + "\n" +
+                //     signUp.mgender + "\n" +
+                //     signUp.mphone + "\n" +
+                //     signUp.addr + "\n" +
+                //     signUp.mbti + "\n" +
+                //     signUp.profileimg
+                // );
+
             }
         }
     };
@@ -341,6 +373,11 @@ function SignUp() {
                             <div className="box" style = {{ width: "100%" }}>
                                 <input type="text" name = "mbti" required onChange = { saveMember } />
                                 <span>{ confirmMBTI }</span>
+                                <i></i>
+                            </div>
+                            <div className="box" style = {{ width: "100%" }}>
+                            <input className = "form-control" onChange = { saveMember } type = "file" style = {{  }} name = "profileimg" />
+                                <span></span>
                                 <i></i>
                             </div>
                             <div className = "row">

@@ -7,8 +7,7 @@ export const call = (api, method, request) => {
 
     let headers = "";
 
-    // alert("HeadersOnCall : " + api);
-    if(api === "/Board/BoardWrite") {
+    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp") {
         headers = new Headers({
             // "Content-Type": "multipart/form-data",
         });
@@ -30,7 +29,7 @@ export const call = (api, method, request) => {
         method: method,
     };
 
-    if(api === "/Board/BoardWrite") {
+    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp") {
         if (request) {
             // GET method
             options.body = request;
@@ -82,6 +81,32 @@ export const call = (api, method, request) => {
 
 // Member=============================================================================================
 
+// 회원가입
+export const SignUpAPI = (formData) => {
+    return call("/Auth/SignUp", "POST", formData)
+    .then((res) => {
+        if(res) {
+            alert("회원가입 되었습니다.");
+            window.location.href = "/Login"
+        } else {
+            alert("회원가입에 실패했습니다.");
+        }
+    })
+};
+export const SignUpNoImgAPI = (memberDTO) => {
+    return call("/Auth/SignUpNoImg", "POST", memberDTO)
+    .then((res) => {
+        console.log(res.status);
+        if(res) {
+            alert("회원가입 되었습니다.");
+            window.location.href = "/Login";
+        } else {
+            alert("회원가입 실패 :: 관리자에게 문의");
+        }
+    })
+};
+
+// 서브메이트 로그인
 export const LoginAPI = (memberDTO) => {
     return call("/Auth/Login", "POST", memberDTO)
     .then((response) => {
@@ -100,6 +125,7 @@ export const LoginAPI = (memberDTO) => {
     })
 };
 
+// 로그아웃
 export const LogoutAPI = () => {
     // localStorage.setItem(Access_Token, null);
     localStorage.clear(Access_Token);

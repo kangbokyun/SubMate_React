@@ -5,7 +5,8 @@ import { useLocation, useNavigate } from 'react-router';
 import { call, ReplyWriteAPI } from '../../../Service/APIService';
 import Header from '../../Header';
 import Menu from '../../Menu';
-import '../../../Component/Accordion/Accordion.css';
+import '../../../Component/Accordion/AccorTest.css';
+import Re_Reply from './Re_Reply';
 
 function BoardReply() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -38,20 +39,6 @@ function BoardReply() {
         return history(-1) // 한 페이지 뒤로
     };
 
-    // 스위치 아코디언
-    const items = document.querySelectorAll(".accordian-item");
-    items.forEach((item) => {
-        item.addEventListener("click", (e) => {
-            item.classList.toggle("active");
-            const elementBody = item.querySelector(".accordian-body");
-            if (item.classList.contains("active")) {
-                elementBody.style.maxHeight = elementBody.scrollHeight + "px";
-            } else {
-                elementBody.style.maxHeight = 0;
-            }
-        });
-    });
-    // -/스위치 아코디언
 
     const [ writeReply, setWriteReply ] = useState("");
     const getReply = (e) => {
@@ -158,13 +145,33 @@ function BoardReply() {
                                                     <div className = "col-12">
                                                         { list.rcontents }
                                                     </div>
-                                                    <div className = "col-12">
-                                                        <div className="accordian" style = {{ width: "100%" }}>
-                                                            <div className="accordian-item">
-                                                                <div className="accordian-header">답글</div>
-                                                                <div id="1" className="accordian-body">
-                                                                    <div className="accordian-body-content">
-                                                                        { list.rno }
+                                                    <div className = "col-12" name = "re_reply">
+                                                        <div class="accordion">
+                                                            <div class="tab">
+                                                                <span class="title">
+                                                                    답글
+                                                                </span>
+                                                                <input type="checkbox" id={ list.rno + "one" } />
+                                                                <label htmlFor={ list.rno + "one" } style = {{ marginLeft: "0.8vw" }}>
+                                                                    <div class="mark"></div>
+                                                                </label>
+                                                                <div class="panel" style = {{ border : "solid 1px red", width: "100%" }}>
+                                                                    <div className = "row" style = {{ width: "100%" }}>
+                                                                        <div className = "col-3">
+                                                                            Img
+                                                                        </div>
+                                                                        <div className = "col-3">
+                                                                            Writer
+                                                                        </div>
+                                                                        <div className = "col-4">
+                                                                            Date
+                                                                        </div>
+                                                                        <div className = "col-2">
+                                                                            H
+                                                                        </div>
+                                                                        <div className = "col-12" style = {{ maxWidth: "100%" }}>
+                                                                            <label>가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나가나</label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>

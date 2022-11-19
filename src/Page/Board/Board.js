@@ -31,6 +31,8 @@ function Board() {
         return history(-1) // 한 페이지 뒤로
     };
 
+    // 
+
     const [ viewData, setViewData ] = useState("");
     const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg) => {
         history('/BoardView', {
@@ -154,7 +156,11 @@ function Board() {
                                                         <img alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: window.innerWidth <= 767 ? "7vw" : "2vw", height: window.innerWidth <= 767 ? "3vh" : "2vh" }} />
                                                     </label>
                                                     <label className = "col-md-3" style = {{ float: "right" }}>
-                                                        <img alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: window.innerWidth <= 767 ? "7vw" : "2vw", height: window.innerWidth <= 767 ? "3vh" : "2vh" }} />
+                                                        { list.checkreply === "1" ? 
+                                                            <img alt = "Reply" src = { require('../../IMG/BoardReply_Orange.png') } style = {{ width: "2vw", height: "2vh" }} />
+                                                            :
+                                                            <img alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: "2vw", height: "2vh" }} />
+                                                        }
                                                     </label>
                                                     <label className = "col-md-3" style = {{ float: "right" }}>
                                                         { list.bimg !== "null" ?

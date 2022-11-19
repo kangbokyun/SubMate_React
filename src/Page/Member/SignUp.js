@@ -247,10 +247,8 @@ function SignUp() {
                 setSignUp({ ...signUp, 'maddress' : addr });
 
                 if(checkImg !== "") {
-                    alert("폼데이터로");
                     SignUpAPI(formData);
                 } else {
-                    alert("안폼데이터로");
                     console.log("signUpsignUpsignUp: " , signUp);
                     SignUpNoImgAPI(signUp);
                 }

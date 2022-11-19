@@ -183,7 +183,7 @@ export const ReplyWriteAPI = (replyDTO) => {
     .then((res) => {
         if(res) {
             alert("댓글 등록되었습니다.");
-            // window.location.href = "/BoardReply";
+            window.location.href = "/BoardReply";
         } else {
             alert("댓글 등록 실패");
         }

@@ -147,7 +147,7 @@ function BoardReply() {
                                     <td>
                                         <div className = "row" style = {{ width: "100%" }}>
                                             <div className = "col-3 col-md-3">
-                                                <img alt = "" src = { require('../../../MemberImg/User_No_Img.png') } style = {{ width: window.innerWidth <= 767 ? "20vw" : "8vw", marginLeft: window.innerWidth <= 767 ? "" : "" }} />
+                                                <img alt = "" src = { require('../../../MemberImg/' + list.rwriterimg) } style = {{ width: window.innerWidth <= 767 ? "20vw" : "8vw", marginLeft: window.innerWidth <= 767 ? "" : "" }} />
                                             </div>
                                             <div className = "col-9 col-md-9">
                                                 <div className = "row">
@@ -210,11 +210,10 @@ function BoardReply() {
                                                                             </button>
                                                                         </div>
                                                                         { replyList.map((rList) => 
-                                                                            <div>
+                                                                            <div key = { rList.rno }>
                                                                                 { (rList.rdepth === "2" && rList.writedrno !== null && list.rno == rList.writedrno ) ? 
                                                                                 <div className = "row" style = {{ borderTop: "solid 1px gray" }}>
                                                                                     <div className = "col-3">
-                                                                                        {rList.profileimg}
                                                                                         <img alt = "" 
                                                                                             src = { require('../../../MemberImg/' + list.rwriterimg) } 
                                                                                             style = {{ 

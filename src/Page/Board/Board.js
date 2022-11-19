@@ -14,11 +14,15 @@ function Board() {
         setWindowHeight(window.innerHeight);
     };
     
+    const [ resStatus, setResStatus ] = useState("");
     useEffect(() => {
         call("/Board/BoardList", "POST", null)
         .then((res) => {
-            console.log(res)
+            console.log(res.length)
             setBoardList(res);
+            if(res.length === 0) {
+                setResStatus("null");
+            }
         })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
@@ -30,8 +34,6 @@ function Board() {
     const GoBack = () => {
         return history(-1) // 한 페이지 뒤로
     };
-
-    // 
 
     const [ viewData, setViewData ] = useState("");
     const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg) => {
@@ -98,7 +100,7 @@ function Board() {
                                                         <div className = "col-6" style = {{ marginTop: "0.8vh" }}>
                                                             <label style = {{ fontSize: "0.8rem" }}>{ list.bwriter }</label>
                                                             <span style = {{ fontSize: "1rem", marginLeft: "0.4vw", marginRight: "0.4vw" }}>·</span>
-                                                            <label style = {{ fontSize: "0.8rem" }}>1분 전</label>
+                                                            <label style = {{ fontSize: "0.8rem" }}>{ list.createdDate }</label>
                                                         </div>
                                                         <div className = "col-6" style = {{ marginTop: "0.8vh", paddingRight: "0", marginRight: "0" }}>
                                                             <label style = {{ float: "right" }}>
@@ -179,7 +181,7 @@ function Board() {
                                                 </div>
                                             </td>
                                             <td className = "col-md-1" style = {{ textAlign: "center", paddingLeft: "1.1vw" }}>{ list.bwriter }</td>
-                                            <td className = "col-md-2" style = {{ textAlign: "center" }}>22.10.22</td>
+                                            <td className = "col-md-2" style = {{ textAlign: "center" }}>{ list.createdDate }</td>
                                             <td className = "col-md-1" style = {{ textAlign: "center" }}>{ list.bview }</td>
                                             <td className = "col-md-1" style = {{ textAlign: "center" }}>2</td>
                                         </tr> 

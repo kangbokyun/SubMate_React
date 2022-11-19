@@ -88,6 +88,7 @@ function BoardWrite() {
     const setEchoTimer = (e) => {
         setEchoTime(e.target.value);
         setWrite({ ...write, "bechotimer" : e.target.value });
+        setData({ ...data, "bechotimer" : e.target.value });
     };
 
     const sendBoardWrite = () => {
@@ -95,7 +96,6 @@ function BoardWrite() {
         if(checkTitle && checkContents) {
             const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
             console.log("checkEcho: ", checked);
-            // setWrite({ ...write, 'becho' : checked });
 
             let mno = userInfo.mno;
             let mnickname = userInfo.mnickname;
@@ -123,10 +123,11 @@ function BoardWrite() {
                 formData.append("becho", checked);
                 formData.append("mno", userInfo.mno);
                 formData.append("bwriter", userInfo.mnickname);
-                if(echoTime !== null) {
-                    formData.append("bechotimer", echoTime);
+                if(checked === "1") {
+                    formData.append("bechotimer", 0);
+                } else {
+                    formData.append("bechotimer", write.bechotimer);
                 }
-                // alert(userInfo.mnickname);
                 BoardWriteAPI(formData);
             }
         }

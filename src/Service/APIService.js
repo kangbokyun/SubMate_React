@@ -177,17 +177,22 @@ export const BoardWriteNoImgAPI = (boardDTO) => {
 };
 
 
-// 댓글쓰기
+// 댓글/대댓글 쓰기
 export const ReplyWriteAPI = (replyDTO) => {
     return call("/Board/ReplyWrite", "POST", replyDTO)
     .then((res) => {
         if(res) {
             alert("댓글 등록되었습니다.");
-            window.location.href = "/BoardReply";
+            // window.location.href = "/BoardReply";
         } else {
             alert("댓글 등록 실패");
         }
     })
 };
+
+// 대댓글 쓰기
+// export const Re_ReplyWriteAPI = (replyDTO) => {
+//     return call("/Board/Reply")
+// };
 
 // -/Board============================================================================================

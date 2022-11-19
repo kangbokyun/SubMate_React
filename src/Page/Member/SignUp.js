@@ -247,29 +247,13 @@ function SignUp() {
                 setSignUp({ ...signUp, 'maddress' : addr });
 
                 if(checkImg !== "") {
+                    alert("폼데이터로");
                     SignUpAPI(formData);
                 } else {
-                    // fetch("http://localhost:8080/Auth/SignUpNoImg", {
-                    //     headers: { 'Content-Type' : "application/json" },
-                    //     method: "POST",
-                    //     body: { signUp }
-                    // }).then((res) => {console.log("RESRESRESRESRES : ", res)})
+                    alert("안폼데이터로");
                     console.log("signUpsignUpsignUp: " , signUp);
                     SignUpNoImgAPI(signUp);
                 }
-                // alert(
-                //     signUp.mid + "\n" +
-                //     signUp.mpw + "\n" +
-                //     signUp.mname + "\n" +
-                //     signUp.mnickname + "\n" +
-                //     signUp.mbirth + "\n" +
-                //     signUp.mgender + "\n" +
-                //     signUp.mphone + "\n" +
-                //     signUp.addr + "\n" +
-                //     signUp.mbti + "\n" +
-                //     signUp.profileimg
-                // );
-
             }
         }
     };

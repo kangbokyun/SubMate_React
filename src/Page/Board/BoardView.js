@@ -2,12 +2,14 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import { call } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
 
 function BoardView() {
     const boardDTO = useLocation();
-
+    const [ board, setBoard ] = useState([]);
+    
     // 윈도우 크기 변경 감지되면 리렌더링
     const [ windowWidth, setWindowWidth ] = useState(0);
     const [ windowHeight, setWindowHeight ] = useState(0);
@@ -16,7 +18,20 @@ function BoardView() {
         setWindowHeight(window.innerHeight);
     };
     
+    let bno = boardDTO.state.bno;
+    let bview = boardDTO.state.bview;
+
     useEffect(() => {
+        const formData = new FormData();
+        formData.append("bno", bno);
+        formData.append("bview", bview);
+        // setBoard({'bno' : bno});
+        // console.log("bno : ", bno, " bview", bview);
+        // console.log("board: ", board)
+        call("/Board/ViewUpdate", "POST", formData)
+        .then((res) => {
+            console.log(res);
+        })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);

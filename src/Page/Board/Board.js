@@ -20,9 +20,7 @@ function Board() {
         .then((res) => {
             console.log(res.length)
             setBoardList(res);
-            if(res.length === 0) {
-                setResStatus("null");
-            }
+            setResStatus(res);
         })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
@@ -37,13 +35,14 @@ function Board() {
 
     const [ viewData, setViewData ] = useState("");
     const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg) => {
+        // 글 상세보기로
         history('/BoardView', {
             state: { 
                 "bno" : bno, 
                 "btitle" : btitle, 
                 "bcontents" : bcontents, 
                 "bwriter" : bwriter,
-                "bview" : bview, 
+                "bview" : Number(bview) + 1, 
                 "becho" : becho, 
                 "bechotimer" : bechotimer, 
                 "bimg" : bimg

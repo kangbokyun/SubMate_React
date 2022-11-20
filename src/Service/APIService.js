@@ -7,7 +7,7 @@ export const call = (api, method, request) => {
 
     let headers = "";
 
-    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp") {
+    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate") {
         headers = new Headers({
             // "Content-Type": "multipart/form-data",
         });
@@ -29,7 +29,7 @@ export const call = (api, method, request) => {
         method: method,
     };
 
-    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp") {
+    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate") {
         if (request) {
             // GET method
             options.body = request;
@@ -189,10 +189,5 @@ export const ReplyWriteAPI = (replyDTO) => {
         }
     })
 };
-
-// 대댓글 쓰기
-// export const Re_ReplyWriteAPI = (replyDTO) => {
-//     return call("/Board/Reply")
-// };
 
 // -/Board============================================================================================

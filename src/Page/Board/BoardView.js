@@ -2,13 +2,12 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import { call } from '../../Service/APIService';
+import { BoardHeart, call } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
 
 function BoardView() {
     const boardDTO = useLocation();
-    const [ board, setBoard ] = useState([]);
     
     // 윈도우 크기 변경 감지되면 리렌더링
     const [ windowWidth, setWindowWidth ] = useState(0);
@@ -20,17 +19,17 @@ function BoardView() {
     
     let bno = boardDTO.state.bno;
     let bview = boardDTO.state.bview;
+    let heart = boardDTO.state.heart;
 
     useEffect(() => {
         const formData = new FormData();
         formData.append("bno", bno);
         formData.append("bview", bview);
-        // setBoard({'bno' : bno});
-        // console.log("bno : ", bno, " bview", bview);
-        // console.log("board: ", board)
         call("/Board/ViewUpdate", "POST", formData)
         .then((res) => {
-            console.log(res);
+            if(res) {
+                console.log(res);
+            }
         })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
@@ -43,6 +42,7 @@ function BoardView() {
         return history(-1) // 한 페이지 뒤로
     };
 
+    // 댓글 페이지로
     const replyWrite = (bno, bwriter, bcontents, becho, bechotimer, bview) => {
         history("/BoardReply", {
             state: {
@@ -56,6 +56,32 @@ function BoardView() {
         });
     };
 
+    const [ likeValue, setLikeValue ] = useState(boardDTO.state.heart);
+    const [ likeStatus, setLikeStatus ] = useState([]);
+    // 하트
+    const clickLike = () => {
+        const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
+        const formData = new FormData();
+        formData.append("hkind", likeValue);
+        formData.append("bno", boardDTO.state.bno);
+        formData.append("mno", userInfo.mno);
+        formData.append("htype", "1");
+        if(likeValue === "0") {
+            setLikeValue("1");
+        } else {
+            setLikeValue("0");
+            // BoardHeart(heart);
+        }
+        // BoardHeart(formData);
+        call("/Board/Heart", "POST", formData)
+        .then((res) => {
+            if(res === "") {
+                setLikeStatus(res);
+                console.log("resresres : ", res)
+            }
+        })
+    };
+
     return(
         <div>
             <Header />
@@ -64,6 +90,7 @@ function BoardView() {
                     <h1 style = {{ marginLeft: "1vw", marginTop: "10vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
                         BoardView
+                        { boardDTO.state.heart }
                     </h1>
                 </div>
                 : 
@@ -77,7 +104,7 @@ function BoardView() {
                         <label style = {{ paddingLeft: window.innerWidth <= 767 ? "1.5vw" : "", fontSize: window.innerWidth <= 767 ? "1rem" : "1.7rem", marginTop: "0" }}>{ boardDTO.state.bwriter }</label>
                     </div>
                     <div className = "col-md-6 offset-md-1 col-6 offset-1" style = {{  }}>
-                        <label style = {{ float: "right", paddingTop: window.innerWidth <= 767 ? "" : "0.6vh" }}>{ boardDTO.state.bwriter } · { boardDTO.state.bview }</label>
+                        <label style = {{ float: "right", paddingTop: window.innerWidth <= 767 ? "" : "0.6vh" }}>{ boardDTO.state.createdDate } · { boardDTO.state.bview }</label>
                     </div>
                 </div>
                 { boardDTO.state.bimg === "null" ?  
@@ -87,7 +114,11 @@ function BoardView() {
                 }
                 <div className = "row gx-0" style = {{ marginTop: "0.5vh", marginLeft: window.innerWidth <= 767 ? "1.5vw" : "", width: window.innerWidth <= 767 ? "97%" : "" }}>
                     <label className = "col-md-2" style = {{  }}>
-                        <img alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
+                        { likeValue === "0" ? 
+                            <img onClick = { clickLike } value = { likeValue } alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
+                            :
+                            <img onClick = { clickLike } value = { likeValue } alt = "Like" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
+                        }
                         <img onClick = { (e) => replyWrite(boardDTO.state.bno, boardDTO.state.bwriter, boardDTO.state.bcontents, boardDTO.state.becho, boardDTO.state.bechotimer, boardDTO.state.bview) } alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
                     </label>
                 </div>

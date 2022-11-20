@@ -7,7 +7,7 @@ export const call = (api, method, request) => {
 
     let headers = "";
 
-    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate") {
+    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate" || api === "/Board/Heart") {
         headers = new Headers({
             // "Content-Type": "multipart/form-data",
         });
@@ -29,7 +29,7 @@ export const call = (api, method, request) => {
         method: method,
     };
 
-    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate") {
+    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate" || api === "/Board/Heart") {
         if (request) {
             // GET method
             options.body = request;
@@ -191,3 +191,17 @@ export const ReplyWriteAPI = (replyDTO) => {
 };
 
 // -/Board============================================================================================
+// Like============================================================================================
+
+// 게시글 좋아요
+export const BoardHeart = (formData) => {
+    console.log("Heart : ", formData);
+    return call("/Board/Heart", "POST", formData)
+    .then((res) => {
+        if(res) {
+            console.log(res);
+        }
+    })
+};
+
+// -/Like============================================================================================

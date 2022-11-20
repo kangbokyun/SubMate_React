@@ -18,9 +18,9 @@ function Board() {
     useEffect(() => {
         call("/Board/BoardList", "POST", null)
         .then((res) => {
-            console.log(res.length)
             setBoardList(res);
             setResStatus(res);
+            console.log(res);
         })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
@@ -34,7 +34,10 @@ function Board() {
     };
 
     const [ viewData, setViewData ] = useState("");
-    const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg) => {
+    const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg, createdDate, heart) => {
+        if(heart == null) {
+            heart = "0";
+        }
         // 글 상세보기로
         history('/BoardView', {
             state: { 
@@ -45,7 +48,9 @@ function Board() {
                 "bview" : Number(bview) + 1, 
                 "becho" : becho, 
                 "bechotimer" : bechotimer, 
-                "bimg" : bimg
+                "bimg" : bimg,
+                "createdDate" : createdDate,
+                "heart" : heart
             }
         })
     };
@@ -87,7 +92,7 @@ function Board() {
                                             <div className = "row" style = {{ width: "100%" }}>
                                                 <div className = "col-12" style = {{ marginTop: "0.7vh", fontSize: "1.3rem" }}>
                                                     <div className = "row">
-                                                        <label className = "col-9 col-md-9" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg) } }>
+                                                        <label className = "col-9 col-md-9" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart) } }>
                                                             { list.btitle }
                                                         </label>
                                                         <label className = "col-3 col-md-3" style = {{ fontSize: "0.8rem", marginTop: "0.8vh", textAlign: "right", color: "gray" }}>
@@ -103,7 +108,11 @@ function Board() {
                                                         </div>
                                                         <div className = "col-6" style = {{ marginTop: "0.8vh", paddingRight: "0", marginRight: "0" }}>
                                                             <label style = {{ float: "right" }}>
-                                                                <img alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                                { list.heart === '1' ?
+                                                                    <img alt = "Like" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                                    :
+                                                                    <img alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: "7vw", height: "3vh" }} />
+                                                                }
                                                             </label>
                                                             <label style = {{ float: "right" }}>
                                                                 { list.checkreply === "1" ? 

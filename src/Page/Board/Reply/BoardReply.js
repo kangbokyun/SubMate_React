@@ -26,7 +26,7 @@ function BoardReply() {
         console.log(boardData);
         call("/Board/ReplyList", "POST", boardData.state.bno)
         .then((res) => {
-            console.log(res);
+            console.log("res : ", res);
             setReplyList(res);
         });
         resizeWindow();
@@ -82,6 +82,34 @@ function BoardReply() {
 
     const sendReply = () => {
         ReplyWriteAPI(writeReply);
+    };
+
+    const [ likeValue, setLikeValue ] = useState(boardData.state.heart);
+    const [ likeStatus, setLikeStatus ] = useState([]);
+    // 하트
+    const clickLike = (e) => {
+        // console.log("replyList.rno : ", e.target.id);
+        // alert(replyList.rno);
+        const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
+        const formData = new FormData();
+        formData.append("hkind", likeValue);
+        formData.append("bno", boardData.state.bno);
+        formData.append("mno", userInfo.mno);
+        formData.append("htype", "2");
+        formData.append("rno", e.target.id);
+        if(likeValue === "0") {
+            setLikeValue("1");
+        } else {
+            setLikeValue("0");
+            // BoardHeart(heart);
+        }
+        // BoardHeart(formData);
+        call("/Board/Heart", "POST", formData)
+        .then((res) => {
+            if(res === "") {
+                setLikeStatus(res);
+            }
+        })
     };
 
     return(
@@ -175,6 +203,8 @@ function BoardReply() {
                                                     <div className = "col-2">
                                                         { list.heart }
                                                         <img alt = "" 
+                                                            onClick = { clickLike }
+                                                            id = { list.rno }
                                                             src = { require('../../../IMG/BoardHeart_Black.png') } 
                                                             style = {{ 
                                                                 width: window.innerWidth <= 767 ? "6vw" : "3vw", 

@@ -68,6 +68,7 @@ function BoardView() {
         formData.append("bno", boardDTO.state.bno);
         formData.append("mno", userInfo.mno);
         formData.append("htype", "1");
+        formData.append("rno", null);
         if(likeValue === "0") {
             setLikeValue("1");
         } else {
@@ -91,7 +92,6 @@ function BoardView() {
                     <h1 style = {{ marginLeft: "1vw", marginTop: "10vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
                         BoardView
-                        { boardDTO.state.heart }
                     </h1>
                 </div>
                 : 

@@ -43,7 +43,7 @@ function BoardView() {
     };
 
     // 댓글 페이지로
-    const replyWrite = (bno, bwriter, bcontents, becho, bechotimer, bview) => {
+    const replyWrite = (bno, bwriter, bcontents, becho, bechotimer, bview, createdDate, heart) => {
         history("/BoardReply", {
             state: {
                 "bno" : bno,
@@ -51,7 +51,9 @@ function BoardView() {
                 "bcontents" : bcontents,
                 "becho" : becho,
                 "bechotimer" : bechotimer,
-                "bview" : bview
+                "bview" : bview,
+                "createdDate" : createdDate,
+                "heart" : heart
             }
         });
     };
@@ -77,7 +79,6 @@ function BoardView() {
         .then((res) => {
             if(res === "") {
                 setLikeStatus(res);
-                console.log("resresres : ", res)
             }
         })
     };
@@ -119,7 +120,7 @@ function BoardView() {
                             :
                             <img onClick = { clickLike } value = { likeValue } alt = "Like" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
                         }
-                        <img onClick = { (e) => replyWrite(boardDTO.state.bno, boardDTO.state.bwriter, boardDTO.state.bcontents, boardDTO.state.becho, boardDTO.state.bechotimer, boardDTO.state.bview) } alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
+                        <img onClick = { (e) => replyWrite(boardDTO.state.bno, boardDTO.state.bwriter, boardDTO.state.bcontents, boardDTO.state.becho, boardDTO.state.bechotimer, boardDTO.state.bview, boardDTO.state.createdDate, boardDTO.state.heart) } alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
                     </label>
                 </div>
                 <div style = {{ marginTop: "", marginLeft: window.innerWidth <= 767 ? "1.5vw" : "", height: window.innerWidth <= 767 ? "31.5vh" : "35vh", width: window.innerWidth <= 767 ? "97%" : "", fontSize: window.innerWidth <= 767 ? "1.7rem" : "1.2rem" }}>{ boardDTO.state.bcontents }</div>

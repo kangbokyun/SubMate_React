@@ -16,12 +16,14 @@ function BoardReply() {
         setWindowHeight(window.innerHeight);
     };
     
-    // bno, bwriter, bcontents, becho, bechotimer
+    // bno, bwriter, bcontents, becho, 
+    // bechotimer, createdDate, heart
     const boardData = useLocation();
     // let bno = boardData.state.bno;
 
     const [ replyList, setReplyList ] = useState([]);
     useEffect(() => {
+        console.log(boardData);
         call("/Board/ReplyList", "POST", boardData.state.bno)
         .then((res) => {
             console.log(res);
@@ -118,17 +120,28 @@ function BoardReply() {
                                 <div className = "col-7 col-md-7" style = {{ textAlign: "center" }}>
                                     <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.4vh" }}>{ boardData.state.bview }</span>
                                     <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.4vh", marginLeft: "0.7vw", marginRight: "0.7vw" }}>·</span>
-                                    <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.4vh" }}>Date</span>
+                                    <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.4vh" }}>{ boardData.state.createdDate }</span>
                                 </div>
                                 <div className = "col-2 col-md-2">
-                                    <img alt = "" 
-                                        src = { require('../../../IMG/BoardHeart_Black.png') } 
-                                        style = {{ 
-                                            width: window.innerWidth <= 767 ? "6vw" : "3vw", 
-                                            height: window.innerWidth <= 767 ? "2.5vh" : "",
-                                            marginTop: "1vh"
-                                        }} 
-                                    />      
+                                    { boardData.state.heart === "0" ? 
+                                        <img alt = "" 
+                                            src = { require('../../../IMG/BoardHeart_Black.png') } 
+                                            style = {{ 
+                                                width: window.innerWidth <= 767 ? "6vw" : "3vw", 
+                                                height: window.innerWidth <= 767 ? "2.5vh" : "",
+                                                marginTop: "1vh"
+                                            }} 
+                                        />      
+                                        :
+                                        <img alt = "" 
+                                            src = { require('../../../IMG/BoardHeart_Red.png') } 
+                                            style = {{ 
+                                                width: window.innerWidth <= 767 ? "6vw" : "3vw", 
+                                                height: window.innerWidth <= 767 ? "2.5vh" : "",
+                                                marginTop: "1vh"
+                                            }} 
+                                        />      
+                                    }
                                 </div>
                                 <div className = "col-12 col-md-12">
                                     <label style = {{ marginTop: "1vh" }}>{ boardData.state.bcontents }</label>
@@ -155,11 +168,12 @@ function BoardReply() {
                                                         { list.rwriter }
                                                     </div>
                                                     <div className = "col-7">
-                                                        <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.2vh" }}>답글 n개</span>
+                                                        <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.2vh" }}>답글 { list.rcount }개</span>
                                                         <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.2vh", marginLeft: "1vw", marginRight: "1vw" }}>·</span>
-                                                        <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.2vh" }}>Date</span>
+                                                        <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.2vh" }}>{ list.createdDate }</span>
                                                     </div>
                                                     <div className = "col-2">
+                                                        { list.heart }
                                                         <img alt = "" 
                                                             src = { require('../../../IMG/BoardHeart_Black.png') } 
                                                             style = {{ 

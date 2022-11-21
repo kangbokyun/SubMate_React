@@ -158,12 +158,17 @@ function Board() {
                                         <td className = "col-md-1">좋아요</td>
                                     </tr> 
                                     { boardList.map((list) => 
-                                        <tr className = "row" style = {{  }}>
-                                            <td className = "col-md-6" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg) } }>{ list.btitle }</td>
+                                        <tr key = { list.bno } className = "row" style = {{  }}>
+                                            <td className = "col-md-6" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart) } }>{ list.btitle }</td>
                                             <td className = "col-md-1" style = {{ textAlign: "center", marginLeft: "0", paddingLeft: "0", paddingRight: "1.4vw" }}>
                                                 <div className = "row">
                                                     <label className = "col-md-3" style = {{ float: "right" }}>
-                                                        <img alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: window.innerWidth <= 767 ? "7vw" : "2vw", height: window.innerWidth <= 767 ? "3vh" : "2vh" }} />
+                                                        { list.heart === '1' ?
+                                                            <img alt = "Like" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: window.innerWidth <= 767 ? "7vw" : "2vw", height: window.innerWidth <= 767 ? "3vh" : "2vh" }} />
+                                                            :
+                                                            <img alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: window.innerWidth <= 767 ? "7vw" : "2vw", height: window.innerWidth <= 767 ? "3vh" : "2vh" }} />
+                                                        }
+                                                        
                                                     </label>
                                                     <label className = "col-md-3" style = {{ float: "right" }}>
                                                         { list.checkreply === "1" ? 

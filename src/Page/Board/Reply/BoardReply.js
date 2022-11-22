@@ -22,6 +22,7 @@ function BoardReply() {
     // let bno = boardData.state.bno;
 
     const [ replyList, setReplyList ] = useState([]);
+    const [ likeList, setLikeList ] = useState([]);
     useEffect(() => {
         console.log(boardData);
         call("/Board/ReplyList", "POST", boardData.state.bno)
@@ -29,6 +30,11 @@ function BoardReply() {
             console.log("res : ", res);
             setReplyList(res);
         });
+        call("/Board/HeartList", "POST", null)
+        .then((res) => {
+            console.log("HeartList : ", res);
+            setLikeList(res);
+        })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -84,7 +90,7 @@ function BoardReply() {
         ReplyWriteAPI(writeReply);
     };
 
-    const [ likeValue, setLikeValue ] = useState(boardData.state.heart);
+    const [ likeValue, setLikeValue ] = useState("0");
     const [ likeStatus, setLikeStatus ] = useState([]);
     // 하트
     const clickLike = (e) => {
@@ -101,14 +107,11 @@ function BoardReply() {
             setLikeValue("1");
         } else {
             setLikeValue("0");
-            // BoardHeart(heart);
         }
-        // BoardHeart(formData);
         call("/Board/Heart", "POST", formData)
         .then((res) => {
-            if(res === "") {
-                setLikeStatus(res);
-            }
+            setLikeStatus(res);
+            console.log("likeStatus: ", res);
         })
     };
 
@@ -151,18 +154,18 @@ function BoardReply() {
                                     <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.4vh" }}>{ boardData.state.createdDate }</span>
                                 </div>
                                 <div className = "col-2 col-md-2">
-                                    { boardData.state.heart === "0" ? 
+                                    { boardData.state.heart === "1" && boardData.state.hrno == null ? 
                                         <img alt = "" 
-                                            src = { require('../../../IMG/BoardHeart_Black.png') } 
+                                            src = { require('../../../IMG/BoardHeart_Red.png') } 
                                             style = {{ 
                                                 width: window.innerWidth <= 767 ? "6vw" : "3vw", 
                                                 height: window.innerWidth <= 767 ? "2.5vh" : "",
                                                 marginTop: "1vh"
                                             }} 
-                                        />      
+                                        />   
                                         :
                                         <img alt = "" 
-                                            src = { require('../../../IMG/BoardHeart_Red.png') } 
+                                            src = { require('../../../IMG/BoardHeart_Black.png') } 
                                             style = {{ 
                                                 width: window.innerWidth <= 767 ? "6vw" : "3vw", 
                                                 height: window.innerWidth <= 767 ? "2.5vh" : "",
@@ -200,19 +203,35 @@ function BoardReply() {
                                                         <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.2vh", marginLeft: "1vw", marginRight: "1vw" }}>·</span>
                                                         <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.2vh" }}>{ list.createdDate }</span>
                                                     </div>
-                                                    <div className = "col-2">
-                                                        { list.heart }
-                                                        <img alt = "" 
-                                                            onClick = { clickLike }
-                                                            id = { list.rno }
-                                                            src = { require('../../../IMG/BoardHeart_Black.png') } 
-                                                            style = {{ 
-                                                                width: window.innerWidth <= 767 ? "6vw" : "3vw", 
-                                                                height: window.innerWidth <= 767 ? "2.5vh" : "",
-                                                                marginTop: window.innerWidth <= 767 ? "1vh" : "0.4vh"
-                                                            }} 
-                                                        /> 
-                                                    </div>
+                                                    { likeList.map((likeList) =>
+                                                        <div className = "col-2" key = { likeList.rno }>
+                                                            {/* rno로 비교해서 누른 rno만 변하게 */}
+                                                            {/* list.rno : { list.rno } likeList.rno : { likeList.rno } */}
+                                                            { (likeValue === "1" && list.rdepth === "1" && list.htype === "2" && targetId == list.rno) ?
+                                                                <img alt = "" 
+                                                                    onClick = { clickLike }
+                                                                    id = { list.rno }
+                                                                    src = { require('../../../IMG/BoardHeart_Red.png') } 
+                                                                    style = {{ 
+                                                                        width: window.innerWidth <= 767 ? "6vw" : "3vw", 
+                                                                        height: window.innerWidth <= 767 ? "2.5vh" : "",
+                                                                        marginTop: window.innerWidth <= 767 ? "1vh" : "0.4vh"
+                                                                    }} 
+                                                                /> 
+                                                                :
+                                                                <img alt = "" 
+                                                                    onClick = { clickLike }
+                                                                    id = { list.rno }
+                                                                    src = { require('../../../IMG/BoardHeart_Black.png') } 
+                                                                    style = {{ 
+                                                                        width: window.innerWidth <= 767 ? "6vw" : "3vw", 
+                                                                        height: window.innerWidth <= 767 ? "2.5vh" : "",
+                                                                        marginTop: window.innerWidth <= 767 ? "1vh" : "0.4vh"
+                                                                    }} 
+                                                                /> 
+                                                            }
+                                                        </div>
+                                                    ) }
                                                     <div className = "col-12">
                                                         { list.rcontents }
                                                     </div>
@@ -286,7 +305,7 @@ function BoardReply() {
                                                                                             </label>
                                                                                     </div>
                                                                                     <div className = "col-10" style = {{  paddingTop: window.innerWidth <= 767 ? "0.5vh" : "1.5vh", marginLeft: window.innerWidth <= 767 ? "1.5vw" : "1vw" }}>
-                                                                                        <label>1분전</label>
+                                                                                        <label>{ boardData.state.createdDate }</label>
                                                                                     </div>
                                                                                 </div>
                                                                                 : ""}

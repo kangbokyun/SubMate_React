@@ -97,14 +97,17 @@ function BoardReply() {
     const clickLike = (e) => {
         // console.log("replyList.rno : ", e.target.id);
         // alert(replyList.rno);
+        console.log("likeList : ", likeList);
+        console.log("ObjectKeys : ", Object.values(replyList));
         setHeartFalg(e.target.id);
         const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
         const formData = new FormData();
-        formData.append("hkind", likeValue);
+        formData.append("hkind", replyList.rheart);
         formData.append("bno", boardData.state.bno);
         formData.append("mno", userInfo.mno);
         formData.append("htype", "2");
         formData.append("rno", e.target.id);
+        setLikeValue(replyList.rheart);
         if(likeValue === "0") {
             setLikeValue("1");
         } else {
@@ -209,6 +212,7 @@ function BoardReply() {
                                                     <div className = "col-2">
                                                         {/* rno로 비교해서 누른 rno만 변하게 */}
                                                         {/* list.rno : { list.rno } likeList.rno : { likeList.rno } */}
+                                                        likeValue : {list.rheart}
                                                         { String(likeValue) === "1" ?
                                                             <img alt = "" 
                                                                 onClick = { clickLike }

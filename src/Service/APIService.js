@@ -195,7 +195,6 @@ export const ReplyWriteAPI = (replyDTO) => {
 
 // 게시글 좋아요
 export const BoardHeart = (formData) => {
-    console.log("Heart : ", formData);
     return call("/Board/Heart", "POST", formData)
     .then((res) => {
         if(res) {

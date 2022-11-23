@@ -31,6 +31,7 @@ function BoardView() {
                 console.log(res);
             }
         })
+        console.log("boardDTO: ", boardDTO);
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);

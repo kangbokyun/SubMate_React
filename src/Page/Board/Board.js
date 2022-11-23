@@ -15,12 +15,18 @@ function Board() {
     };
     
     const [ resStatus, setResStatus ] = useState("");
+    const [ likeList, setLikeList ] = useState([]);
     useEffect(() => {
         call("/Board/BoardList", "POST", null)
         .then((res) => {
             setBoardList(res);
             setResStatus(res);
             console.log(res);
+        })
+        call("/Board/HeartList", "POST", null)
+        .then((res) => {
+            console.log("HeartList : ", res);
+            setLikeList(res);
         })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
@@ -35,7 +41,7 @@ function Board() {
 
     const [ viewData, setViewData ] = useState("");
     const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg, createdDate, heart, hrno) => {
-        if(heart == null) { heart = "0"; }
+        if(heart === "1") { heart = "1"; } else { heart = "0" }
         // 글 상세보기로
         history('/BoardView', {
             state: { 
@@ -106,8 +112,8 @@ function Board() {
                                                             <label style = {{ fontSize: "0.8rem" }}>{ list.createdDate }</label>
                                                         </div>
                                                         <div className = "col-6" style = {{ marginTop: "0.8vh", paddingRight: "0", marginRight: "0" }}>
-                                                            <label style = {{ float: "right" }}>
-                                                                { list.heart === '1' && list.hrno == null ?
+                                                            <label style = {{ float: "right" }} key = {likeList.rno}>
+                                                                { list.heart === "1" ?
                                                                     <img alt = "Like" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: "7vw", height: "3vh" }} />
                                                                     :
                                                                     <img alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: "7vw", height: "3vh" }} />

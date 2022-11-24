@@ -21,13 +21,19 @@ function Board() {
         .then((res) => {
             setBoardList(res);
             setResStatus(res);
-            console.log(res);
+            console.log("/Board/BoardList : ", res);
         })
         call("/Board/HeartList", "POST", null)
         .then((res) => {
-            console.log("HeartList : ", res);
+            console.log("/Board/HeartList : ", res);
             setLikeList(res);
         })
+        // let temp = boardList.map(function(list) {
+        //     // console.log("list.htype : ", list.heart);
+        //     if(String(list.heart) === "0") {
+        //         String(list.heart) === "1"
+        //     }
+        // })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -113,7 +119,7 @@ function Board() {
                                                         </div>
                                                         <div className = "col-6" style = {{ marginTop: "0.8vh", paddingRight: "0", marginRight: "0" }}>
                                                             <label style = {{ float: "right" }} key = {likeList.rno}>
-                                                                { list.heart === "1" ?
+                                                                { list.heart === "1" && list.hrno === "null" ?
                                                                     <img alt = "Like" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: "7vw", height: "3vh" }} />
                                                                     :
                                                                     <img alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: "7vw", height: "3vh" }} />

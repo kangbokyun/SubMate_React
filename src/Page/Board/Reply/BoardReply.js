@@ -90,29 +90,37 @@ function BoardReply() {
         ReplyWriteAPI(writeReply);
     };
 
-    const [ likeValue, setLikeValue ] = useState(replyList.rheart);
     const [ likeStatus, setLikeStatus ] = useState([]);
     const [ heartFlag, setHeartFalg ] = useState(false);
     // 하트
     const clickLike = (e) => {
-        // console.log("replyList.rno : ", e.target.id);
-        // alert(replyList.rno);
-        console.log("likeList : ", likeList);
-        console.log("ObjectKeys : ", Object.values(replyList));
         setHeartFalg(e.target.id);
         const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
         const formData = new FormData();
-        formData.append("hkind", replyList.rheart);
         formData.append("bno", boardData.state.bno);
         formData.append("mno", userInfo.mno);
         formData.append("htype", "2");
         formData.append("rno", e.target.id);
-        setLikeValue(replyList.rheart);
-        if(likeValue === "0") {
-            setLikeValue("1");
-        } else {
-            setLikeValue("0");
-        }
+        
+        let temp = replyList.map(function(list) {
+            console.log("temp_list.rno : ", list.rno);
+            console.log("temp_list.rheart : ", list.rheart);
+            console.log("temp_e.target.id : ", e.target.id);
+            if(String(list.rno) === String(e.target.id)) {
+                if(list.rheart === null || list.rheart === "null") {
+                    console.log("Rheart : ", list.rheart);
+                    list.rheart = "0";
+                } 
+                if(list.rheart === "0") {
+                    formData.append("hkind", list.rheart);
+                    list.rheart = "1";
+                } else {
+                    formData.append("hkind", list.rheart);
+                    list.rheart = "0";
+                }
+            }
+        })
+
         call("/Board/Heart", "POST", formData)
         .then((res) => {
             setLikeStatus(res);
@@ -212,11 +220,11 @@ function BoardReply() {
                                                     <div className = "col-2">
                                                         {/* rno로 비교해서 누른 rno만 변하게 */}
                                                         {/* list.rno : { list.rno } likeList.rno : { likeList.rno } */}
-                                                        likeValue : {list.rheart}
-                                                        { String(likeValue) === "1" ?
+                                                        { String(list.rheart) === "1" && String(list.htype) === "2" ?
                                                             <img alt = "" 
                                                                 onClick = { clickLike }
                                                                 id = { list.rno }
+                                                                name = { list.rheart }
                                                                 src = { require('../../../IMG/BoardHeart_Red.png') } 
                                                                 style = {{ 
                                                                     width: window.innerWidth <= 767 ? "6vw" : "3vw", 

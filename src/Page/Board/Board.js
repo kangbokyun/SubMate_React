@@ -14,9 +14,20 @@ function Board() {
         setWindowHeight(window.innerHeight);
     };
     
+    
     const [ resStatus, setResStatus ] = useState("");
     const [ likeList, setLikeList ] = useState([]);
+    let windowSize = window.innerWidth;
+    const [ pmDivision, setPmDivision ] = useState({});
     useEffect(() => {
+        // const formData = new FormData();
+        // if(windowSize <= 767) {
+        //     // 모바일환경
+        //     formData.append("pmdivision", "M");
+        // } else {
+        //     // PC 환경
+        //     formData.append("pmdivision", "P");
+        // }
         call("/Board/BoardList", "POST", null)
         .then((res) => {
             setBoardList(res);
@@ -40,20 +51,18 @@ function Board() {
     }, []);
     // /윈도우 크기 변경 감지되면 리렌더링
     // 스크롤 위치 감지
-    const [ scroll, setScroll ] = useState(0);
-    // useEffect(() => {
-    // }, []);
-    const getScroll = () => {
-        let scrollContainer = document.getElementById("ScrollContainer");
-        let yContainer = scrollContainer.scrollHeight; // 스크롤 전체 길이
-        let y = scrollContainer.scrollTop; // 스크롤 된 높이
-        let clientHeight = scrollContainer.clientHeight; // 눈에 보이는 높이
-        let leftScroll = y + clientHeight;
-        let eightyPerScroll = (yContainer * 0.95);
-        if(eightyPerScroll <= leftScroll) {
-            // 무한 스크롤 로직
-        }
-    };
+    // const [ infinityScroll, setInfinityScroll ] = useState([]);
+    // const getScroll = () => {
+    //     let scrollContainer = document.getElementById("ScrollContainer");
+    //     let yContainer = scrollContainer.scrollHeight; // 스크롤 전체 길이
+    //     let y = scrollContainer.scrollTop; // 스크롤 된 높이
+    //     let clientHeight = scrollContainer.clientHeight; // 눈에 보이는 높이
+    //     let leftScroll = y + clientHeight;
+    //     let eightyPerScroll = (yContainer * 0.95);
+    //     if(eightyPerScroll <= leftScroll) {
+    //         // 무한 스크롤 로직
+    //     }
+    // };
     // -/스크롤 위치 감지
     // 뒤로가기
     const history = useNavigate();
@@ -86,8 +95,8 @@ function Board() {
         <div>
             <Header />
             { window.innerWidth <= 767 ? 
-                <div>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "10vh" }}>
+                <div style = {{ borderBottom: "solid 1px gray" }}>
+                    <h1 style = {{ marginLeft: "1vw", marginTop: "10vh", marginBottom: "2.5vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
                         Board
                         <span style = {{ float: "right", marginRight: "2vw" }}>
@@ -96,15 +105,14 @@ function Board() {
                             </Link>
                         </span>
                     </h1>
-                    <hr />
                 </div> 
                 :
                 <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>Board</h1> 
             }
-            <div id = "ScrollContainer" onScroll = { getScroll } className = { window.innerWidth <= 767 ? "" : "container" } style = {{ marginTop: "1.5vh", overflowY: "auto", height: "77.3vh" }}>
+            <div className = { window.innerWidth <= 767 ? "" : "container" } style = {{  }}>
                 { window.innerWidth <= 767 ? 
-                    <div style = {{  }}>
-                        <table className = "table" style = {{  }}>
+                    <div style = {{ overflowY: "auto", height: "79vh" }}> {/*  id = "ScrollContainer" onScroll = { getScroll }  */}
+                        <table className = "table" style = {{ }}>
                             <tbody>
                                 { boardList.map((list) => 
                                     <tr style = {{ borderBottom: "solid 1px gray" }} key = { list.bno }>
@@ -121,7 +129,11 @@ function Board() {
                                                 <div className = "col-12" style = {{ marginTop: "0.7vh", fontSize: "1.3rem" }}>
                                                     <div className = "row">
                                                         <label className = "col-9 col-md-9" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno) } }>
-                                                            { list.btitle }
+                                                            {list.btitle.length >= 11 ?
+                                                                String(list.btitle).substring(0, 10) + "..." 
+                                                                : 
+                                                                list.btitle
+                                                            }
                                                         </label>
                                                         <label className = "col-3 col-md-3" style = {{ fontSize: "0.8rem", marginTop: "0.8vh", textAlign: "right", color: "gray" }}>
                                                             { list.bview }

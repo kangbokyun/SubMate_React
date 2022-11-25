@@ -7,7 +7,7 @@ export const call = (api, method, request) => {
 
     let headers = "";
 
-    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate" || api === "/Board/Heart") {
+    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate" || api === "/Board/Heart") { // || api === "/Board/BoardList"
         headers = new Headers({
             // "Content-Type": "multipart/form-data",
         });
@@ -29,7 +29,7 @@ export const call = (api, method, request) => {
         method: method,
     };
 
-    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate" || api === "/Board/Heart") {
+    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate" || api === "/Board/Heart") { // || api === "/Board/BoardList"
         if (request) {
             // GET method
             options.body = request;

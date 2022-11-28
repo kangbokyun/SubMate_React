@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { call } from '../../Service/APIService';
+import { call, ChangeRole } from '../../Service/APIService';
 import Header from '../Header';
 import AdminMenu from './AdminMenu';
 
@@ -35,6 +35,7 @@ function UserManage() {
     // Role 변경
     const [ role, setRole ] = useState("USER");
     const gradeUp = (e) => {
+        const formData = new FormData();
         let temp = userData.map((list) => {
             if(String(list.mno) === String(e.target.id)) {
                 if(list.mrole === "USER") {
@@ -50,6 +51,9 @@ function UserManage() {
                     list.mrole = "ADMIN";
                     console.log("list.mrole : ", list.mrole);
                 }
+                formData.append("mno", list.mno);
+                formData.append("mrole", list.mrole);
+                ChangeRole(formData);
             }
         })
     };

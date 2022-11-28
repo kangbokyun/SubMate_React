@@ -7,7 +7,7 @@ export const call = (api, method, request) => {
 
     let headers = "";
 
-    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate" || api === "/Board/Heart") { // || api === "/Board/BoardList"
+    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate" || api === "/Board/Heart" || "/Admin/ChangeRole") {
         headers = new Headers({
             // "Content-Type": "multipart/form-data",
         });
@@ -29,7 +29,7 @@ export const call = (api, method, request) => {
         method: method,
     };
 
-    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate" || api === "/Board/Heart") { // || api === "/Board/BoardList"
+    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate" || api === "/Board/Heart" || "/Admin/ChangeRole") {
         if (request) {
             // GET method
             options.body = request;
@@ -139,9 +139,9 @@ export const LogoutAPI = () => {
     }
 };
 
-// 모든 유저 데이터
-export const UserManage = () => {
-    return call("/Admin/UserManage", "POST", null)
+// 유저매니저 권한 업데이트
+export const ChangeRole = (formData) => {
+    return call("/Admin/ChangeRole", "POST", formData)
     .then((res) => {
         console.log("/Admin/UserManage, Res : ", res);
     })

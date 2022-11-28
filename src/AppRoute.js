@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
+import AdminMain from './Page/Admin/AdminMain';
+import UserManage from './Page/Admin/UserManage';
 import Board from './Page/Board/Board';
 import BoardView from './Page/Board/BoardView';
 import BoardWrite from './Page/Board/BoardWrite';
@@ -29,8 +31,9 @@ function AppRoute() {
                 {/* Member */}
                 <Route path = "/Login" element = { <Login /> } />
                 <Route path = "/SignUp" element = { <SignUp /> } />
-
                 <Route path = "/Home" element = { <Main /> } />
+                <Route path = "/AdminMain" element = { <AdminMain /> } />
+                <Route path = "/UserManage" element = { <UserManage /> } />
 
                 {/* Mate */}
                 <Route path = "/Mate" element = { <Mate /> } />

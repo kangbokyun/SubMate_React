@@ -116,8 +116,8 @@ export const LoginAPI = (memberDTO) => {
             localStorage.setItem("UserInfo", JSON.stringify(response));
 
             // 토큰이 존재하는 경우 메인 화면으로 리다이렉트
-            if(response.role === "ADMIN") {
-                window.location.href = "/"; // 추후 어드민페이지 개발예정
+            if(response.mrole === "ADMIN") {
+                window.location.href = "/AdminMain"; // 추후 어드민페이지 개발예정
             } else {
                 window.location.href = "/Home";
             }
@@ -137,6 +137,14 @@ export const LogoutAPI = () => {
         alert("로그아웃 되었습니다.");
         window.location.href = "/";
     }
+};
+
+// 모든 유저 데이터
+export const UserManage = () => {
+    return call("/Admin/UserManage", "POST", null)
+    .then((res) => {
+        console.log("/Admin/UserManage, Res : ", res);
+    })
 };
 
 // -/Member===========================================================================================

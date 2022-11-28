@@ -41,15 +41,12 @@ function UserManage() {
                 if(list.mrole === "USER") {
                     setRole("MANAGER");
                     list.mrole = "MANAGER";
-                    console.log("list.mrole : ", list.mrole);
                 } else if(list.mrole === "ADMIN") {
                     setRole("USER");
                     list.mrole = "USER";
-                    console.log("list.mrole : ", list.mrole);
                 } else {
                     setRole("ADMIN");
                     list.mrole = "ADMIN";
-                    console.log("list.mrole : ", list.mrole);
                 }
                 formData.append("mno", list.mno);
                 formData.append("mrole", list.mrole);

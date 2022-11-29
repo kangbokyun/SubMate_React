@@ -88,16 +88,18 @@ function SetMate() {
     // -/카카오맵 API
 
     const [ mateSetting, setMateSetting ] = useState([]);
+    const [ startTime, setStartTime ] = useState();
+    const [ startMinute, setStartMinute ] = useState();
     const saveMateSetting = (e) => {
-        const gwh = undefined; let gwm;
         if(e.target.name === "mategwsth") {
-            gwh = e.target.value;
-            console.log("gwh : " , gwh);
+            setStartTime(e.target.value);
+            console.log(startTime);
         }
         if(e.target.name === "mategwstm") {
-            gwh += e.target.value;
-            console.log("gwh2 : " , gwh);
+            setStartMinute(e.target.value);
+            setMateSetting({...mateSetting, "mategwt" : startTime + e.target.value});
         }
+        console.log("mateSetting: " , mateSetting);
     };
 
     return(

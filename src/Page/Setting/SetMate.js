@@ -87,6 +87,19 @@ function SetMate() {
     }, []);
     // -/카카오맵 API
 
+    const [ mateSetting, setMateSetting ] = useState([]);
+    const saveMateSetting = (e) => {
+        const gwh = undefined; let gwm;
+        if(e.target.name === "mategwsth") {
+            gwh = e.target.value;
+            console.log("gwh : " , gwh);
+        }
+        if(e.target.name === "mategwstm") {
+            gwh += e.target.value;
+            console.log("gwh2 : " , gwh);
+        }
+    };
+
     return(
         <div>
             <Header />
@@ -106,25 +119,25 @@ function SetMate() {
                         <label style = {{ fontSize: "1.5rem" }}>출근시간</label>
                         <div className = "row">
                             <div className = "col-4">
-                                <input type = "text" className = "form-control" style = {{ textAlign: "right" }} placeholder = "00" />
+                                <input onChange = { saveMateSetting } name = "mategwsth" type = "text" className = "form-control" style = {{ textAlign: "right" }} placeholder = "00" />
                             </div>
                             <div className = "col-1">
                                 <label style = {{ fontSize: "1.5rem" }}>시</label>
                             </div>
                             <div className = "col-4">
-                                <input type = "text" className = "form-control" style = {{ textAlign: "right" }} placeholder = "00" />
+                                <input onChange = { saveMateSetting } name = "mategwstm" type = "text" className = "form-control" style = {{ textAlign: "right" }} placeholder = "00" />
                             </div>
                             <div className = "col-3">
                                 <label style = {{ fontSize: "1.5rem" }}>분 부터</label>
                             </div>
                             <div className = "col-4">
-                                <input type = "text" className = "form-control" style = {{ textAlign: "right", marginTop: "0.7vh" }} placeholder = "00" />
+                                <input onChange = { saveMateSetting } name = "mategweth" type = "text" className = "form-control" style = {{ textAlign: "right", marginTop: "0.7vh" }} placeholder = "00" />
                             </div>
                             <div className = "col-1">
                                 <label style = {{ fontSize: "1.5rem", marginTop: "0.7vh" }}>시</label>
                             </div>
                             <div className = "col-4">
-                                <input type = "text" className = "form-control" style = {{ textAlign: "right", marginTop: "0.7vh" }} placeholder = "00" />
+                                <input onChange = { saveMateSetting } name = "mategwetm" type = "text" className = "form-control" style = {{ textAlign: "right", marginTop: "0.7vh" }} placeholder = "00" />
                             </div>
                             <div className = "col-3">
                                 <label style = {{ fontSize: "1.5rem", marginTop: "0.7vh" }}>분 까지</label>
@@ -135,25 +148,25 @@ function SetMate() {
                         <label style = {{ fontSize: "1.5rem" }}>퇴근시간</label>
                         <div className = "row">
                             <div className = "col-4">
-                                <input type = "text" className = "form-control" style = {{ textAlign: "right" }} placeholder = "00" />
+                                <input onChange = { saveMateSetting } name = "matelwsth" type = "text" className = "form-control" style = {{ textAlign: "right" }} placeholder = "00" />
                             </div>
                             <div className = "col-1">
                                 <label style = {{ fontSize: "1.5rem" }}>시</label>
                             </div>
                             <div className = "col-4">
-                                <input type = "text" className = "form-control" style = {{ textAlign: "right" }} placeholder = "00" />
+                                <input onChange = { saveMateSetting } name = "matelwstm" type = "text" className = "form-control" style = {{ textAlign: "right" }} placeholder = "00" />
                             </div>
                             <div className = "col-3">
                                 <label style = {{ fontSize: "1.5rem" }}>분 부터</label>
                             </div>
                             <div className = "col-4">
-                                <input type = "text" className = "form-control" style = {{ textAlign: "right", marginTop: "0.7vh" }} placeholder = "00" />
+                                <input onChange = { saveMateSetting } name = "matelweth" type = "text" className = "form-control" style = {{ textAlign: "right", marginTop: "0.7vh" }} placeholder = "00" />
                             </div>
                             <div className = "col-1">
                                 <label style = {{ fontSize: "1.5rem", marginTop: "0.7vh" }}>시</label>
                             </div>
                             <div className = "col-4">
-                                <input type = "text" className = "form-control" style = {{ textAlign: "right", marginTop: "0.7vh" }} placeholder = "00" />
+                                <input onChange = { saveMateSetting } name = "matelwetm" type = "text" className = "form-control" style = {{ textAlign: "right", marginTop: "0.7vh" }} placeholder = "00" />
                             </div>
                             <div className = "col-3">
                                 <label style = {{ fontSize: "1.5rem", marginTop: "0.7vh" }}>분 까지</label>

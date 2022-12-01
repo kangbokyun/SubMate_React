@@ -1,5 +1,7 @@
+import { calculateNewValue } from '@testing-library/user-event/dist/utils';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { call } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
 
@@ -13,6 +15,7 @@ function SetMate() {
     };
 
     useEffect(() => {
+        call("/Setting/Mate", "GET", null);
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -110,6 +113,34 @@ function SetMate() {
         // console.log("startTime : ", startTime);
         // console.log("endTime : ", endTime);
         // console.log("endTime - startTime : ", endTime - startTime);
+        if(e.target.name === "startStation") {
+            if(e.target.value.length !== 0) {
+                setMateSetting({ ...mateSetting, 'matestartstaion' : e.target.value });
+            } else {
+                alert("출발역을 입력해주세요.");
+            }
+        }
+        if(e.target.name === "endStation") {
+            if(e.target.value.length !== 0) {
+                setMateSetting({ ...mateSetting, 'mateendstation' : e.target.value });
+            } else {
+                alert("도착역을 입력해주세요.");
+            }
+        }
+    };
+
+    const saveSetting = () => {
+        call("/Setting/Mate/Station", "POST", mateSetting)
+        .then((res) => {
+            console.log("StationRes : ", res);
+        })
+    };
+
+    const [ selected, setSelected ] = useState("--선택--");
+    const selectData = ['01호선', '02호선'];
+    const selectLine = (e) => {
+        setSelected(e.target.value);
+        console.log("e.target.value: ", e.target.value)
     };
 
     return(
@@ -120,6 +151,7 @@ function SetMate() {
                     <h1 style = {{ marginLeft: "1vw", marginTop: "8vh", marginBottom: "1.5vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
                         Setting_Mate
+                        <button onClick = { saveSetting } type = "button" className = "btn btn-info" style = {{ float: "right", marginRight: "1vw", color: "white" }}>저장</button>
                     </h1>
                 </div> 
                 : 
@@ -162,18 +194,40 @@ function SetMate() {
                         </div>
                     </div>
                     <div className = "col-12" style = {{ marginTop: "1vh", borderBottom: "solid 1px gray", marginLeft: "2vw", paddingBottom: "2vh" }}>
-                        <label style = {{ fontSize: "1.5rem" }}>호선</label>
+                        <label style = {{ fontSize: "1.5rem" }}>노선</label>
                         <div className = "row">
                             <div className = "col-12" style = {{  }}>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "blue", border: "solid 1px black", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>1호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "orange", border: "solid 1px black", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>2호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "purple", border: "solid 1px black", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>3호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "pink", border: "solid 1px black", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>4호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "red", border: "solid 1px black", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>5호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "green", border: "solid 1px black", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>6호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "skyblue", border: "solid 1px black", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>7호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "aqua", border: "solid 1px black", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>8호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "gray", border: "solid 1px black", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>9호선</label>
+                                <label>출발역</label>
+                                <select className = "form-control" onChange = { selectLine } value = { selected } style = {{ width: "20vw" }}>
+                                    { selectData.map((data) =>
+                                        <option key = { data }>{ data }</option>
+                                    ) }
+                                </select>
+                                <input name = "startStation" onChange = { saveMateSetting } type = "text" className = "form-control" />
+                                <label>도착역</label><input name = "endStation" onChange = { saveMateSetting } type = "text" className = "form-control" />
+                                {/* <label style = {{ marginTop: "1.5vh", backgroundColor: "#263C96", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>1호선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#3CB44A", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>2호선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#F06E00", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>3호선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#2C9EDE", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>4호선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#996CAC", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>5호선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#CD7C2F", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>6호선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#747F00", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>7호선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#E6186C", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>8호선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#AA9872", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>9호선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#73C7A6", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>경의중앙선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#FF8C00", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>분당선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#FF8C00", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>수인선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#32C6A6", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>경춘선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#0054A6", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>경강선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#8BC53F", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>서해선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#3681B7", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>공항철도선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#8CADCB", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>인천1호선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#ED8000", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>인천2호선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#C82127", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>신분당선</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#FDA600", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>의경부경전철</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#4EA346", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>용인경전철</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#BFC932", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>우이신설경전철</label>
+                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#B38E00", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>김포도시철도</label> */}
                             </div>
                         </div>
                     </div>

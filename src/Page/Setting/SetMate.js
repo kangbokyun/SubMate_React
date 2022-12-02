@@ -93,6 +93,13 @@ function SetMate() {
     const [ mateSetting, setMateSetting ] = useState([]);
     const [ startTime, setStartTime ] = useState(0);
     const [ endTime, setEndTime ] = useState(0);
+    const [ startSelected, setStartSelected ] = useState("01호선");
+    const [ endSelected, setEndSelected ] = useState("01호선");
+    const selectData = [
+        '01호선', '02호선', '03호선', '04호선', '05호선', '06호선', '07호선', '08호선',
+        '09호선', '경의중앙선', '분당선', '수인선', '경춘선', '경강선', '서해선', '공항철도선', 
+        '인천1호선', '인천2호선', '신분당선', '의경부경전철', '용인경전철', '우이신설경전철', '김포도시철도'
+    ];
     const saveMateSetting = (e) => {
         if(e.target.name === "mategwst") { 
             if(e.target.value >= 2400) { alert("밤 12시는 00시로 입력해주세요.");
@@ -110,9 +117,6 @@ function SetMate() {
             if(e.target.value >= 2400) { alert("밤 12시는 00시로 입력해주세요.");
             } else { setMateSetting({ ...mateSetting, [e.target.name] : e.target.value}); }
         }
-        // console.log("startTime : ", startTime);
-        // console.log("endTime : ", endTime);
-        // console.log("endTime - startTime : ", endTime - startTime);
         if(e.target.name === "startStation") {
             if(e.target.value.length !== 0) {
                 setMateSetting({ ...mateSetting, 'matestartstaion' : e.target.value });
@@ -127,6 +131,15 @@ function SetMate() {
                 alert("도착역을 입력해주세요.");
             }
         }
+        if(e.target.name === "starts") {
+            setStartSelected(e.target.value);
+            console.log("e.target.value: ", e.target.value)
+            setMateSetting({ ...mateSetting, "matestartstaionname" : e.target.value });
+        } 
+        if(e.target.name === "ends") {
+            setEndSelected(e.target.value);
+            setMateSetting({ ...mateSetting, "mateendstaionname" : e.target.value });
+        }
     };
 
     const saveSetting = () => {
@@ -134,13 +147,6 @@ function SetMate() {
         .then((res) => {
             console.log("StationRes : ", res);
         })
-    };
-
-    const [ selected, setSelected ] = useState("--선택--");
-    const selectData = ['01호선', '02호선'];
-    const selectLine = (e) => {
-        setSelected(e.target.value);
-        console.log("e.target.value: ", e.target.value)
     };
 
     return(
@@ -197,37 +203,108 @@ function SetMate() {
                         <label style = {{ fontSize: "1.5rem" }}>노선</label>
                         <div className = "row">
                             <div className = "col-12" style = {{  }}>
-                                <label>출발역</label>
-                                <select className = "form-control" onChange = { selectLine } value = { selected } style = {{ width: "20vw" }}>
-                                    { selectData.map((data) =>
-                                        <option key = { data }>{ data }</option>
-                                    ) }
-                                </select>
+                                <div className = "row" style = {{  }}>
+                                    <div className = "col-3">
+                                        <label>출발역</label>
+                                    </div>
+                                    <div className = "col-3 offset-6">
+                                        <select 
+                                            name = "starts"
+                                            onChange = { saveMateSetting } 
+                                            value = { startSelected } 
+                                            style = {{ 
+                                                backgroundColor: 
+                                                    startSelected === "01호선" ? "#263C96" : 
+                                                    startSelected === "02호선" ? "#3CB44A" :
+                                                    startSelected === "03호선" ? "#F06E00" :
+                                                    startSelected === "04호선" ? "#2C9EDE" :
+                                                    startSelected === "05호선" ? "#996CAC" :
+                                                    startSelected === "06호선" ? "#CD7C2F" :
+                                                    startSelected === "07호선" ? "#747F00" :
+                                                    startSelected === "08호선" ? "#E6186C" :
+                                                    startSelected === "09호선" ? "#AA9872" :
+                                                    startSelected === "경의중앙선" ? "#73C7A6" :
+                                                    startSelected === "분당선" ? "#FF8C00" :
+                                                    startSelected === "수인선" ? "#FF8C00" :
+                                                    startSelected === "경춘선" ? "#32C6A6" :
+                                                    startSelected === "경강선" ? "#0054A6" :
+                                                    startSelected === "서해선" ? "#8BC53F" :
+                                                    startSelected === "공항철도선" ? "#3681B7" :
+                                                    startSelected === "인천1호선" ? "#8CADCB" :
+                                                    startSelected === "인천2호선" ? "#ED8000" :
+                                                    startSelected === "신분당선" ? "#C82127" :
+                                                    startSelected === "의경부경전철" ? "#FDA600" :
+                                                    startSelected === "용인경전철" ? "#4EA346" :
+                                                    startSelected === "우이신설경전철" ? "#BFC932" :
+                                                    startSelected === "김포도시철도" ? "#B38E00" : "",
+                                                color: "white", 
+                                                paddingLeft: "1.5vw", 
+                                                paddingRight: "1.5vw", 
+                                                borderRadius: "23px",
+                                                textAlign: "center",
+                                                float: "right",
+                                                marginBottom: "1vh"
+                                            }}
+                                        >
+                                            { selectData.map((data) =>
+                                                <option style = {{ backgroundColor: "white", color: "black", fontSize: "0.7rem" }} key = { data }>
+                                                    { data }
+                                                </option>
+                                            ) }
+                                        </select>
+                                    </div>
+                                </div>
                                 <input name = "startStation" onChange = { saveMateSetting } type = "text" className = "form-control" />
-                                <label>도착역</label><input name = "endStation" onChange = { saveMateSetting } type = "text" className = "form-control" />
-                                {/* <label style = {{ marginTop: "1.5vh", backgroundColor: "#263C96", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>1호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#3CB44A", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>2호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#F06E00", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>3호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#2C9EDE", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>4호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#996CAC", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>5호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#CD7C2F", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>6호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#747F00", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>7호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#E6186C", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>8호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#AA9872", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>9호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#73C7A6", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>경의중앙선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#FF8C00", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>분당선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#FF8C00", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>수인선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#32C6A6", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>경춘선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#0054A6", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>경강선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#8BC53F", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>서해선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#3681B7", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>공항철도선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#8CADCB", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>인천1호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#ED8000", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>인천2호선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#C82127", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>신분당선</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#FDA600", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>의경부경전철</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#4EA346", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>용인경전철</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#BFC932", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>우이신설경전철</label>
-                                <label style = {{ marginTop: "1.5vh", backgroundColor: "#B38E00", color: "white", marginLeft: "1.5vw", paddingLeft: "1.5vw", paddingRight: "1.5vw", borderRadius: "23px" }}>김포도시철도</label> */}
+                                <div className = "row" style = {{ marginTop: "1vh" }}>
+                                    <div className = "col-3">
+                                        <label>도착역</label>
+                                    </div>
+                                    <div className = "col-3 offset-6">
+                                        <select 
+                                            name = "ends"
+                                            onChange = { saveMateSetting } 
+                                            value = { endSelected } 
+                                            style = {{ 
+                                                backgroundColor: 
+                                                    endSelected === "01호선" ? "#263C96" : 
+                                                    endSelected === "02호선" ? "#3CB44A" :
+                                                    endSelected === "03호선" ? "#F06E00" :
+                                                    endSelected === "04호선" ? "#2C9EDE" :
+                                                    endSelected === "05호선" ? "#996CAC" :
+                                                    endSelected === "06호선" ? "#CD7C2F" :
+                                                    endSelected === "07호선" ? "#747F00" :
+                                                    endSelected === "08호선" ? "#E6186C" :
+                                                    endSelected === "09호선" ? "#AA9872" :
+                                                    endSelected === "경의중앙선" ? "#73C7A6" :
+                                                    endSelected === "분당선" ? "#FF8C00" :
+                                                    endSelected === "수인선" ? "#FF8C00" :
+                                                    endSelected === "경춘선" ? "#32C6A6" :
+                                                    endSelected === "경강선" ? "#0054A6" :
+                                                    endSelected === "서해선" ? "#8BC53F" :
+                                                    endSelected === "공항철도선" ? "#3681B7" :
+                                                    endSelected === "인천1호선" ? "#8CADCB" :
+                                                    endSelected === "인천2호선" ? "#ED8000" :
+                                                    endSelected === "신분당선" ? "#C82127" :
+                                                    endSelected === "의경부경전철" ? "#FDA600" :
+                                                    endSelected === "용인경전철" ? "#4EA346" :
+                                                    endSelected === "우이신설경전철" ? "#BFC932" :
+                                                    endSelected === "김포도시철도" ? "#B38E00" : "",
+                                                color: "white", 
+                                                paddingLeft: "1.5vw", 
+                                                paddingRight: "1.5vw", 
+                                                borderRadius: "23px",
+                                                textAlign: "center",
+                                                float: "right",
+                                                marginBottom: "1vh"
+                                            }}
+                                        >
+                                            { selectData.map((data) =>
+                                                <option style = {{ backgroundColor: "white", color: "black" }} key = { data }>{ data }</option>
+                                            ) }
+                                        </select>
+                                    </div>
+                                </div>
+                                <input name = "endStation" onChange = { saveMateSetting } type = "text" className = "form-control" />
                             </div>
                         </div>
                     </div>

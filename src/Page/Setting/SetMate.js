@@ -119,30 +119,38 @@ function SetMate() {
         }
         if(e.target.name === "startStation") {
             if(e.target.value.length !== 0) {
-                setMateSetting({ ...mateSetting, 'matestartstaion' : e.target.value });
+                setMateSetting({ ...mateSetting, 'matestartstationname' : e.target.value });
             } else {
                 alert("출발역을 입력해주세요.");
             }
         }
         if(e.target.name === "endStation") {
             if(e.target.value.length !== 0) {
-                setMateSetting({ ...mateSetting, 'mateendstation' : e.target.value });
+                setMateSetting({ ...mateSetting, 'mateendstationname' : e.target.value });
             } else {
                 alert("도착역을 입력해주세요.");
             }
         }
         if(e.target.name === "starts") {
             setStartSelected(e.target.value);
-            console.log("e.target.value: ", e.target.value)
-            setMateSetting({ ...mateSetting, "matestartstaionname" : e.target.value });
+            setMateSetting({ ...mateSetting, "matestartstation" : e.target.value });
         } 
         if(e.target.name === "ends") {
             setEndSelected(e.target.value);
-            setMateSetting({ ...mateSetting, "mateendstaionname" : e.target.value });
+            setMateSetting({ ...mateSetting, "mateendstation" : e.target.value });
         }
     };
 
     const saveSetting = () => {
+        if(mateSetting.matestartstation === undefined) {
+            setMateSetting({ ...mateSetting, 'matestartstation' : '01호선' });
+        } else if(mateSetting.mateendstation === undefined) {
+            setMateSetting({ ...mateSetting, 'mateendstation' : endSelected });
+        } else if(mateSetting.matestartstation === undefined && mateSetting.mateendstation === undefined) {
+            setMateSetting({ ...mateSetting, 'matestartstation' : '01호선' });
+            setMateSetting({ ...mateSetting, 'mateendstation' : '01호선' });
+        }
+        console.log("mateSetting.mateendstation: " , mateSetting.mateendstation);
         call("/Setting/Mate/Station", "POST", mateSetting)
         .then((res) => {
             console.log("StationRes : ", res);

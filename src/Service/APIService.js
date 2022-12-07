@@ -7,7 +7,11 @@ export const call = (api, method, request) => {
 
     let headers = "";
 
-    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate" || api === "/Board/Heart" || api === "/Admin/ChangeRole") {
+    if(
+        api === "/Board/BoardWrite" || api === "/Auth/SignUp" || 
+        api === "/Board/ViewUpdate" || api === "/Board/Heart" || 
+        api === "/Admin/ChangeRole" || api === "/Mate/Users"
+    ) {
         headers = new Headers({
             // "Content-Type": "multipart/form-data",
         });
@@ -29,7 +33,11 @@ export const call = (api, method, request) => {
         method: method,
     };
 
-    if(api === "/Board/BoardWrite" || api === "/Auth/SignUp" || api === "/Board/ViewUpdate" || api === "/Board/Heart" || api === "/Admin/ChangeRole") {
+    if(
+        api === "/Board/BoardWrite" || api === "/Auth/SignUp" || 
+        api === "/Board/ViewUpdate" || api === "/Board/Heart" || 
+        api === "/Admin/ChangeRole" || api === "/Mate/Users"
+    ) {
         if (request) {
             // GET method
             options.body = request;
@@ -99,7 +107,7 @@ export const SignUpNoImgAPI = (memberDTO) => {
         console.log(res.status);
         if(res) {
             alert("회원가입 되었습니다.");
-            window.location.href = "/Login";
+            // window.location.href = "/Login";
         } else {
             alert("회원가입 실패 :: 관리자에게 문의");
         }

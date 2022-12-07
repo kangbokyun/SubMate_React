@@ -42,6 +42,7 @@ function SignUp() {
     const [ confirmPhone, setConfirmPhone ] = useState("Phone");
     const [ savePhone, setSavePhone ] = useState("");
     const [ confirmMBTI, setConfirmMBTI ] = useState("MBTI");
+    const [ phone, setPhone ] = useState("");
 
     const [ flagEmail, setFlagEmail ] = useState(false);
     const [ flagPassword, setFlagPassword ] = useState(false);
@@ -54,10 +55,6 @@ function SignUp() {
     const [ flagAddr, setFlagAddr ] = useState(false);
     const [ fileCheck, setFileCheck ] = useState("");
     const [ checkImg, setCheckImg ] = useState("");
-
-    let test1 = "";
-    let test2 = "";
-    let test3 = "";
 
     const checkEmail = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const checkPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
@@ -92,7 +89,15 @@ function SignUp() {
     };
     // -/다음 주소 API
 
+    const mbtiData = [
+        'ISTJ', 'ISTP', 'ISFJ', 'ISFP', 'INTJ', 'INTP', 'INFJ', 'INFP', 
+        'ESTJ', 'ESTP', 'ESFJ', 'ESFP', 'ENTJ', 'ENTP', 'ENFJ', 'ENFP'
+    ]
+
     const saveMember = (e) => {
+        let test1 = "";
+        let test2 = "";
+        let test3 = "";
         // memberDTO  
         // mno mid mpw mname mnickname mbirth mgender mphone 
 	    // maddress mrole createddate mplatform mager mbti token
@@ -185,29 +190,36 @@ function SignUp() {
         if([e.target.name].includes('mphone1')) {
             if(checkp1.test(e.target.value)) {
                 test1 = e.target.value;
+                setSavePhone(test1);
+                console.log("savePhone: " , savePhone);
             } 
         }
         if([e.target.name].includes('mphone2')) {
             if(checkp2.test(e.target.value)) {
                 test2 = e.target.value;
+                setSavePhone(savePhone + test2);
+                console.log("savePhone: " , savePhone);
             } 
         }
         if([e.target.name].includes('mphone')) {
             if(checkp3.test(e.target.value)) {
-                test3 = test1 + test2 + e.target.value;
+                // test3 = test1 + "-" + test2 + + "-" + e.target.value;
+                setPhone(e.target.value);
+                setSavePhone(savePhone + e.target.value);
                 setConfirmPhone("√");
-                setSignUp({ ...signUp, [ e.target.name ] : test3 })
+                setSignUp({ ...signUp, [ e.target.name ] : savePhone + e.target.value })
                 setFlagPhone(true);
                 console.log("signUp1 : ", signUp);
+                // console.log("savePhone: " , savePhone);
             } else {
                 setConfirmPhone("X");
             }
         }
         if([e.target.name].includes('mbti')) {
-            if(e.target.value.length === 4) {
+            if(mbtiData.includes(e.target.value.toUpperCase())) {
                 setConfirmMBTI("MBTI : 올바른 형식입니다.");
                 setFlagMBTI(true);
-                setSignUp({ ...signUp, [e.target.name] : e.target.value });
+                setSignUp({ ...signUp, [e.target.name] : e.target.value.toUpperCase() });
             } else {
                 setConfirmMBTI("MBTI : 다시 확인해주세요.");
                 setFlagMBTI(false);
@@ -231,6 +243,11 @@ function SignUp() {
             } else {
                 const division = "_";
                 let addr = confirmAddr_Post + division + confirmAddr_Road;
+                console.log("savePhone : ", savePhone, " : ", phone)
+                console.log("confirmAddr_Post : ", confirmAddr_Post)
+                console.log("confirmAddr_Post : ", confirmAddr_Road)
+
+                alert("1111");
 
                 const formData = new FormData();
                 formData.append("mid", signUp.mid);
@@ -239,12 +256,15 @@ function SignUp() {
                 formData.append("mnickname", signUp.mnickname);
                 formData.append("mbirth", signUp.mbirth);
                 formData.append("mgender", signUp.mgender);
+                if(signUp.mphone.length <= 7) {
+                    setSignUp({ ...signUp, 'mphone' : savePhone + phone })
+                } 
                 formData.append("mphone", signUp.mphone);
-                formData.append("maddress", addr);
+                formData.append("maddress", confirmAddr_Post + division + confirmAddr_Road);
                 formData.append("mbti", signUp.mbti);
                 formData.append("profileimg", fileCheck.profileimg);
 
-                setSignUp({ ...signUp, 'maddress' : addr });
+                setSignUp({ ...signUp, 'maddress' : confirmAddr_Post + division + confirmAddr_Road });
 
                 if(checkImg !== "") {
                     SignUpAPI(formData);
@@ -353,7 +373,7 @@ function SignUp() {
                                 </div>
                             </div>
                             <div className="box" style = {{ width: "100%" }}>
-                                <input type="text" name = "mbti" required onChange = { saveMember } />
+                                <input type="text" name = "mbti" required onChange = { saveMember } style = {{ textTransform: "uppercase" }} />
                                 <span>{ confirmMBTI }</span>
                                 <i></i>
                             </div>

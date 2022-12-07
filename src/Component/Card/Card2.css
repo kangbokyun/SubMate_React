@@ -16,25 +16,23 @@
   transition: all 0.35s ease;
 }
 
-  /*  어두워지는 효과  */
-  .section-6 figcaption {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    opacity: 0;
-    padding: 20px 30px;
-  }
-  
-  .section-6 .figure:hover img,
-  .section-6 .figure.hover img {
-    opacity: 0.4;
-  }
-  
-  
-  .section-6 .figure:hover figcaption {
-    opacity: 1;
-  }
-  
+/*  어두워지는 효과  */
+.section-6 figcaption {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  padding: 20px 30px;
+}
+
+.section-6 .figure:hover img,
+.section-6 .figure.hover img {
+  opacity: 0.4;
+}
+
+.section-6 .figure:hover figcaption {
+  opacity: 1;
+}

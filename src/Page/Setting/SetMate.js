@@ -150,6 +150,8 @@ function SetMate() {
             setMateSetting({ ...mateSetting, 'matestartstation' : '01호선' });
             setMateSetting({ ...mateSetting, 'mateendstation' : '01호선' });
         }
+        const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
+        setMateSetting({ ...mateSetting, 'mno' : userInfo.mno });
         console.log("mateSetting.mateendstation: " , mateSetting.mateendstation);
         call("/Setting/Mate/Station", "POST", mateSetting)
         .then((res) => {

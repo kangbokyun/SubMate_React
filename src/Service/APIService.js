@@ -109,7 +109,7 @@ export const SignUpNoImgAPI = (memberDTO) => {
         console.log(res.status);
         if(res) {
             alert("회원가입 되었습니다.");
-            // window.location.href = "/Login";
+            window.location.href = "/Login";
         } else {
             alert("회원가입 실패 :: 관리자에게 문의");
         }

@@ -247,8 +247,6 @@ function SignUp() {
                 console.log("confirmAddr_Post : ", confirmAddr_Post)
                 console.log("confirmAddr_Post : ", confirmAddr_Road)
 
-                alert("1111");
-
                 const formData = new FormData();
                 formData.append("mid", signUp.mid);
                 formData.append("mpw", signUp.mpw);

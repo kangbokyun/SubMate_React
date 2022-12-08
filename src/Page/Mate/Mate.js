@@ -30,6 +30,11 @@ function Mate() {
             setUserInfos(res);
             console.log("UserRes : ", res)
         })
+        call("/Mate/Profile", "POST", formData)
+        .then((res) => {
+            setProfile(res)
+            console.log("ProfileRes : ", res);
+        })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -45,11 +50,7 @@ function Mate() {
         console.log(e.target.name);
         const formData = new FormData();
         formData.append("mno", e.target.name);
-        call("/Mate/Profile", "POST", formData)
-        .then((res) => {
-            setProfile(res)
-            console.log("ProfileRes : ", res);
-        })
+        
     };
 
     return(
@@ -72,16 +73,16 @@ function Mate() {
                                 </figcaption>
                                 <figcaption style = {{ color: "white", marginTop: "32vh", height: "25vh" }}>
                                         Hobby & Introduce<br />
-                                        { profile.pno === 0 ?
-                                            <label>프로필을 설정하지 않았습니다.</label>
-                                            :
-                                            <label>
-                                                {profile.pintro}<br /> {profile.plike1} 좋아해요<br /> {profile.plike2} 좋아해요<br />
-                                                {profile.plike3} 좋아해요<br /> {profile.punlike1} 싫어해요<br /> {profile.punlike2} 싫어해요<br />
-                                                {profile.punlike3} 싫어해요<br /> 취미는 {profile.phobby1}와 {profile.phobby2},  {profile.phobby3}랍니다.
-                                                
-                                            </label>
-                                        }
+                                        { profile.map((profileList) =>
+                                            String(profileList.mno) !== String(list.mno) ?
+                                                <label>프로필을 설정하지 않았습니다</label>
+                                                :
+                                                <label>
+                                                    {profileList.pintro}<br /> {profileList.plike1} 좋아해요<br /> {profileList.plike2} 좋아해요<br />
+                                                    {profileList.plike3} 좋아해요<br /> {profileList.punlike1} 싫어해요<br /> {profileList.punlike2} 싫어해요<br />
+                                                    {profileList.punlike3} 싫어해요<br /> 취미는 {profileList.phobby1}와 {profileList.phobby2},  {profileList.phobby3}랍니다.
+                                                </label>
+                                        ) }
                                 </figcaption>
                                 <figcaption style = {{ color: "white", marginTop: "62vh", paddingTop: "5px" }}>
                                     <div className = "row" style = {{ fontSize: "30px", marginTop: "0", padding: "0" }}>

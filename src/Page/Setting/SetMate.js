@@ -100,7 +100,10 @@ function SetMate() {
         '09호선', '경의중앙선', '분당선', '수인선', '경춘선', '경강선', '서해선', '공항철도선', 
         '인천1호선', '인천2호선', '신분당선', '의경부경전철', '용인경전철', '우이신설경전철', '김포도시철도'
     ];
+    const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
+    const mno = userInfo.mno;
     const saveMateSetting = (e) => {
+
         if(e.target.name === "mategwst") { 
             if(e.target.value >= 2400) { alert("밤 12시는 00시로 입력해주세요.");
             } else { setMateSetting({ ...mateSetting, [e.target.name] : e.target.value}); }
@@ -133,11 +136,11 @@ function SetMate() {
         }
         if(e.target.name === "starts") {
             setStartSelected(e.target.value);
-            setMateSetting({ ...mateSetting, "matestartstation" : e.target.value });
+            setMateSetting({ ...mateSetting, "matestartstation" : e.target.value, 'mno' : mno });
         } 
         if(e.target.name === "ends") {
             setEndSelected(e.target.value);
-            setMateSetting({ ...mateSetting, "mateendstation" : e.target.value });
+            setMateSetting({ ...mateSetting, "mateendstation" : e.target.value, 'mno' : mno });
         }
     };
 
@@ -150,12 +153,12 @@ function SetMate() {
             setMateSetting({ ...mateSetting, 'matestartstation' : '01호선' });
             setMateSetting({ ...mateSetting, 'mateendstation' : '01호선' });
         }
-        const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
-        setMateSetting({ ...mateSetting, 'mno' : userInfo.mno });
-        console.log("mateSetting.mateendstation: " , mateSetting.mateendstation);
+        // console.log("mno : ", mno);
+        console.log("mateSetting : " , mateSetting);
         call("/Setting/Mate/Station", "POST", mateSetting)
         .then((res) => {
             console.log("StationRes : ", res);
+            window.location.href = "/Setting";
         })
     };
 

@@ -17,16 +17,18 @@ function Mate() {
     };
 
     const [ userInfos, setUserInfos ] = useState([]);
+    const [ profile, setProfile ] = useState({});
     // const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
     // setUserInfos({ 'mno' : userInfo.mno });
     useEffect(() => {
-        let mno = JSON.parse(localStorage.getItem("UserInfo"));
+        let userInfo = JSON.parse(localStorage.getItem("UserInfo"));
         const formData = new FormData();
-        formData.append("mno", mno.mno);
+        formData.append("mno", userInfo.mno);
         // setUserInfos({"mno" : mno.mno})
         call("/Mate/Users", "POST", formData)
         .then((res) => {
             setUserInfos(res);
+            console.log("UserRes : ", res)
         })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
@@ -39,48 +41,67 @@ function Mate() {
         return history(-1) // 한 페이지 뒤로
     };
 
-    // 닉네임, 취미, mbti, heart
+    const viewProfile = (e) => {
+        console.log(e.target.name);
+        const formData = new FormData();
+        formData.append("mno", e.target.name);
+        call("/Mate/Profile", "POST", formData)
+        .then((res) => {
+            setProfile(res)
+            console.log("ProfileRes : ", res);
+        })
+    };
 
     return(
         <div>
             <Header />
             { window.innerWidth <= 767 ? 
-                <div><h1 style = {{ marginLeft: "3vw", marginTop: "10vh" }}>Mate</h1></div> : 
+                <div><h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>Mate</h1></div> : 
                 <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>Mate</h1> 
             }
             { window.innerWidth <= 767 ?
                 <section className = "section-6" style = {{ borderBottom: "none", marginTop: "3vh", marginBottom: "2vh" }}>
-                    { userInfos.map((list) => 
-                        <figure key = { list.mno } className = "figure" style = {{ backgroundColor: "black", borderRadius: "8px" }}>
-                            <img alt = "Setting" src = { require('../../MemberImg' + list.profileimg) } style = {{ width: "100%", marginLeft: "0px", height: "67.5vh", objectFit: "contain", backgroundColor: "gray" }} />
-                            <figcaption style = {{ color: "white", marginTop: "32vh", height: "5vh" }}>
-                                <h3>{ list.mnickname }({ list.mbti })</h3>
-                            </figcaption>
-                            <figcaption style = {{ color: "white", marginTop: "37vh", height: "25vh" }}>
-                                <label>
-                                    Hobby & 소개말<br />
-                                    { list.mhobby }
-                                </label>
-                            </figcaption>
-                            <figcaption style = {{ color: "white", marginTop: "62vh", paddingTop: "5px" }}>
-                                <div className = "row" style = {{ fontSize: "30px", marginTop: "0", padding: "0" }}>
-                                    <div className = "col-1" style = {{ marginLeft: "0px", paddingLeft: "0px" }}>
-                                        <img alt = "Like" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
+                    { userInfos.length === 0 ? 
+                        <div style = {{ textAlign: "center", fontSize: "1.2rem", marginTop: "25vh" }}>설정을 통해 조건에 맞는<br />새로운 사람을 만나보세요!</div>
+                        :
+                        userInfos.map((list) => 
+                            <figure key = { list.mno } className = "figure" style = {{ backgroundColor: "black", borderRadius: "8px" }} onClick = { viewProfile }>
+                                <img alt = "Setting" src = { require('../../MemberImg' + list.profileimg) } style = {{ width: "100%", marginLeft: "0px", height: "67.5vh", objectFit: "contain", backgroundColor: "gray" }} name = { list.mno } />
+                                <figcaption style = {{ color: "white", marginTop: "28vh", height: "5vh" }}>
+                                    <h3>{ list.mnickname } ( { list.mbti } )</h3>
+                                </figcaption>
+                                <figcaption style = {{ color: "white", marginTop: "32vh", height: "25vh" }}>
+                                        Hobby & Introduce<br />
+                                        { profile.pno === 0 ?
+                                            <label>프로필을 설정하지 않았습니다.</label>
+                                            :
+                                            <label>
+                                                {profile.pintro}<br /> {profile.plike1} 좋아해요<br /> {profile.plike2} 좋아해요<br />
+                                                {profile.plike3} 좋아해요<br /> {profile.punlike1} 싫어해요<br /> {profile.punlike2} 싫어해요<br />
+                                                {profile.punlike3} 싫어해요<br /> 취미는 {profile.phobby1}와 {profile.phobby2},  {profile.phobby3}랍니다.
+                                                
+                                            </label>
+                                        }
+                                </figcaption>
+                                <figcaption style = {{ color: "white", marginTop: "62vh", paddingTop: "5px" }}>
+                                    <div className = "row" style = {{ fontSize: "30px", marginTop: "0", padding: "0" }}>
+                                        <div className = "col-1" style = {{ marginLeft: "0px", paddingLeft: "0px" }}>
+                                            <img alt = "Like" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
+                                        </div>
+                                        <div className = "col-1">
+                                            <label style = {{ fontSize: "1rem" }}>
+                                                1.6K
+                                            </label>
+                                        </div>
+                                        <div className = "col-1 offset-9" style = {{ paddingLeft: "0" }}>
+                                            <label style = {{  }}>
+                                                <img alt = "Like" src = { require('../../IMG/Mate_More.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div className = "col-1">
-                                        <label style = {{ fontSize: "1rem" }}>
-                                            1.6K
-                                        </label>
-                                    </div>
-                                    <div className = "col-1 offset-9" style = {{ paddingLeft: "0" }}>
-                                        <label style = {{  }}>
-                                            <img alt = "Like" src = { require('../../IMG/Mate_More.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
-                                        </label>
-                                    </div>
-                                </div>
-                            </figcaption>
-                        </figure>
-                    ) }
+                                </figcaption>
+                            </figure>
+                        ) }
                 </section>
                 :
                 <div className = "container" style = {{ marginTop: "3vh" }}>

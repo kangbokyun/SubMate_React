@@ -16,11 +16,11 @@ function Mate() {
         setWindowHeight(window.innerHeight);
     };
 
+    const loginUser = JSON.parse(localStorage.getItem("UserInfo"));
     const [ userInfos, setUserInfos ] = useState([]);
     const [ profile, setProfile ] = useState([]);
     const [ userHeartList, setUserHeartList ] = useState([]);
-    // const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
-    // setUserInfos({ 'mno' : userInfo.mno });
+    const [ checkClickH, setCheckClickH ] = useState(false);
     useEffect(() => {
         let userInfo = JSON.parse(localStorage.getItem("UserInfo"));
         const formData = new FormData();
@@ -35,6 +35,11 @@ function Mate() {
         .then((res) => {
             setProfile(res);
             console.log("ProfileRes : ", res);
+        });
+        call("/Mate/ClickHeart", "POST", formData)
+        .then((res) => {
+            setCheckClickH(res);
+            console.log("CheckHeartRes : ", res);
         });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
@@ -52,11 +57,6 @@ function Mate() {
     const clickHeart = (e) => {
         const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
         const mno = userInfo.mno;
-        if(heart === "1") {
-            setHeart("0");
-        } else {
-            setHeart("1");
-        }
         const formData = new FormData();
         userInfos.map((list) => {
             if(String(list.mno) === String(e.target.id)) {
@@ -67,6 +67,12 @@ function Mate() {
                     list.userheart = "1";
                     formData.append("hkind", list.userheart);
                 }
+                if(list.heartclicker === "true") {
+                    list.heartclicker = "false";
+                } else {
+                    list.heartclicker = "true";
+                }
+                console.log("list.heartclicker : ", list.heartclicker, " list.userHeart : ", list.userheart);
             }
         })
         formData.append("htype", "4");
@@ -109,7 +115,7 @@ function Mate() {
                                 <figcaption style = {{ color: "white", marginTop: "62vh", paddingTop: "5px" }}>
                                     <div className = "row" style = {{ fontSize: "30px", marginTop: "0", padding: "0" }}>
                                         <div className = "col-1" style = {{ marginLeft: "0px", paddingLeft: "0px" }}>
-                                            {list.userheart === "1" ? 
+                                            { list.userheart === "1" && list.heartclicker === "true" ?
                                                 <div><img id = { list.mno } onClick = { clickHeart } alt = "Heart" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} /></div>
                                                 :
                                                 <div><img id = { list.mno } onClick = { clickHeart } alt = "Heart" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} /></div>
@@ -118,7 +124,7 @@ function Mate() {
                                         </div>
                                         <div className = "col-1">
                                             <label style = {{ fontSize: "1rem" }}>
-                                                1.6K
+                                                { list.userheartcnt }
                                             </label>
                                         </div>
                                         <div className = "col-1 offset-9" style = {{ paddingLeft: "0" }}>

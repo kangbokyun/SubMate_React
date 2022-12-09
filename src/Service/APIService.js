@@ -11,7 +11,8 @@ export const call = (api, method, request) => {
         api === "/Board/BoardWrite" || api === "/Auth/SignUp" || 
         api === "/Board/ViewUpdate" || api === "/Board/Heart" || 
         api === "/Admin/ChangeRole" || api === "/Mate/Users" || 
-        api === "/Mate/Profile" || api === "/Mate/UserHeart"
+        api === "/Mate/Profile" || api === "/Mate/UserHeart" || 
+        api === "/Mate/ClickHeart"
     ) {
         headers = new Headers({
             // "Content-Type": "multipart/form-data",
@@ -38,7 +39,8 @@ export const call = (api, method, request) => {
         api === "/Board/BoardWrite" || api === "/Auth/SignUp" || 
         api === "/Board/ViewUpdate" || api === "/Board/Heart" || 
         api === "/Admin/ChangeRole" || api === "/Mate/Users" || 
-        api === "/Mate/Profile" || api === "/Mate/UserHeart"
+        api === "/Mate/Profile" || api === "/Mate/UserHeart" || 
+        api === "/Mate/ClickHeart"
     ) {
         if (request) {
             // GET method

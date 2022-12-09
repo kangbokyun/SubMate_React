@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BoardHeart, call } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';

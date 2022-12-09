@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../Header';
 import Menu from '../Menu';
 // import '../../Component/Switch/Switch.css';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { BoardWriteAPI, BoardWriteNoImgAPI } from '../../Service/APIService';
 import '../../Component/Accordion/AccordionButton.css';
 

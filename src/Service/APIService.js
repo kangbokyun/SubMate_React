@@ -11,7 +11,7 @@ export const call = (api, method, request) => {
         api === "/Board/BoardWrite" || api === "/Auth/SignUp" || 
         api === "/Board/ViewUpdate" || api === "/Board/Heart" || 
         api === "/Admin/ChangeRole" || api === "/Mate/Users" || 
-        api === "/Mate/Profile"
+        api === "/Mate/Profile" || api === "/Mate/UserHeart"
     ) {
         headers = new Headers({
             // "Content-Type": "multipart/form-data",
@@ -38,7 +38,7 @@ export const call = (api, method, request) => {
         api === "/Board/BoardWrite" || api === "/Auth/SignUp" || 
         api === "/Board/ViewUpdate" || api === "/Board/Heart" || 
         api === "/Admin/ChangeRole" || api === "/Mate/Users" || 
-        api === "/Mate/Profile"
+        api === "/Mate/Profile" || api === "/Mate/UserHeart"
     ) {
         if (request) {
             // GET method
@@ -209,9 +209,9 @@ export const ReplyWriteAPI = (replyDTO) => {
 };
 
 // -/Board============================================================================================
-// Like============================================================================================
+// Heart============================================================================================
 
-// 게시글 좋아요
+// 게시글 하트
 export const BoardHeart = (formData) => {
     return call("/Board/Heart", "POST", formData)
     .then((res) => {
@@ -221,4 +221,12 @@ export const BoardHeart = (formData) => {
     })
 };
 
-// -/Like============================================================================================
+// 유저 하트
+export const UserHeart = (heartDTO) => {
+    return call("/Mate/UserHeart", "POST", heartDTO)
+    .then((res) => {
+        console.log(res);
+    })
+};
+
+// -/Heart============================================================================================

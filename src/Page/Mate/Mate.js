@@ -52,13 +52,13 @@ function Mate() {
         return history(-1) // 한 페이지 뒤로
     };
 
-    const [ heart, setHeart ] = useState();
+    const [ heart, setHeart ] = useState(userInfos.heartclicker);
     const [ heartData, setHeartData ] = useState();
     const clickHeart = (e) => {
         const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
         const mno = userInfo.mno;
         const formData = new FormData();
-        userInfos.map((list) => {
+        let temp = userInfos.map(function(list) {
             if(String(list.mno) === String(e.target.id)) {
                 if(list.userheart === "1") {
                     list.userheart = "0";
@@ -68,8 +68,10 @@ function Mate() {
                     formData.append("hkind", list.userheart);
                 }
                 if(list.heartclicker === "true") {
+                    // alert("list.heartClicker : " + "true");
                     list.heartclicker = "false";
                 } else {
+                    // alert("list.heartClicker : " + "false");
                     list.heartclicker = "true";
                 }
                 console.log("list.heartclicker : ", list.heartclicker, " list.userHeart : ", list.userheart);
@@ -115,16 +117,16 @@ function Mate() {
                                 <figcaption style = {{ color: "white", marginTop: "62vh", paddingTop: "5px" }}>
                                     <div className = "row" style = {{ fontSize: "30px", marginTop: "0", padding: "0" }}>
                                         <div className = "col-1" style = {{ marginLeft: "0px", paddingLeft: "0px" }}>
-                                            { list.userheart === "1" && list.heartclicker === "true" ?
-                                                <div><img id = { list.mno } onClick = { clickHeart } alt = "Heart" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} /></div>
+                                            { list.heartclicker === "true" ?
+                                                <img id = { list.mno } onClick = { clickHeart } alt = "Heart" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
                                                 :
-                                                <div><img id = { list.mno } onClick = { clickHeart } alt = "Heart" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} /></div>
+                                                <img id = { list.mno } onClick = { clickHeart } alt = "Heart" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
                                             } 
                                             
                                         </div>
                                         <div className = "col-1">
                                             <label style = {{ fontSize: "1rem" }}>
-                                                { list.userheartcnt }
+                                                { list.userheartcnt } { list.userheart } { list.heartclicker }
                                             </label>
                                         </div>
                                         <div className = "col-1 offset-9" style = {{ paddingLeft: "0" }}>

@@ -43,7 +43,9 @@ function Login() {
         setLoading(true);
         LoginAPI(minfo);
         if(minfo.length === 0) {
-            setLoading(false);
+            setTimeout(() => {
+                setLoading(false);
+            }, 1500);
         }
     };
 

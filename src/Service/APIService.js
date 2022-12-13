@@ -10,8 +10,8 @@ export const call = (api, method, request) => {
     if(
         api === "/Board/BoardWrite" || api === "/Auth/SignUp" || 
         api === "/Board/ViewUpdate" || api === "/Board/Heart" || 
-        api === "/Admin/ChangeRole" || api === "/Mate/Users" || 
-        api === "/Mate/Profile" || api === "/Mate/UserHeart" || 
+        api === "/Admin/ChangeRole" || api === "/Mate/Users"  || 
+        api === "/Mate/Profile"     || api === "/Mate/UserHeart" || 
         api === "/Mate/ClickHeart"
     ) {
         headers = new Headers({
@@ -38,8 +38,8 @@ export const call = (api, method, request) => {
     if(
         api === "/Board/BoardWrite" || api === "/Auth/SignUp" || 
         api === "/Board/ViewUpdate" || api === "/Board/Heart" || 
-        api === "/Admin/ChangeRole" || api === "/Mate/Users" || 
-        api === "/Mate/Profile" || api === "/Mate/UserHeart" || 
+        api === "/Admin/ChangeRole" || api === "/Mate/Users"  || 
+        api === "/Mate/Profile"     || api === "/Mate/UserHeart" || 
         api === "/Mate/ClickHeart"
     ) {
         if (request) {

@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../../App.css';
 import './Login.css';
 import KakaoLogin from 'react-kakao-login';
+import ClockLoader from 'react-spinners/ClockLoader';
 
 function Login() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -14,6 +15,8 @@ function Login() {
         setWindowWidth(window.innerWidth);
         setWindowHeight(window.innerHeight);
     };
+
+    const [loading, setLoading] = useState(false);
     
     useEffect(() => {
         resizeWindow();
@@ -27,11 +30,6 @@ function Login() {
     const GoBack = () => {
         return history(-1) // 한 페이지 뒤로
     };
-    
-    // 임시 메인페이지로 매핑
-    const TemporaryMain = () => {
-        window.location.href = "/Home";
-    };
 
     const [ minfo, setMinfo ] = useState([]);
 
@@ -42,10 +40,12 @@ function Login() {
         console.log(minfo);
     };
     const clickBtn = () => {
-        LoginAPI(minfo)
+        setLoading(true);
+        LoginAPI(minfo);
     };
 
     const kakaoLogin = (result) => {
+        setLoading(true);
         const kakaoAccess = result.response['id_token'];
         const kakaoAge_Range = result.profile['kakao_account']['age_range'];
         const kakaoBirth = result.profile['kakao_account']['birthday'];
@@ -77,16 +77,29 @@ function Login() {
             localStorage.setItem("Access_Token", kakaoAccess);
             
             localStorage.setItem("UserInfo", JSON.stringify(kInfo));
+            setLoading(false);
             window.location.href = "/Home";
         })
     };
 
-    // sendKakao = () => {
-    //     console.log(kakaoInfo);
-    // };
+    const override = {
+        backgroundColor: "black",
+        opacity: "1"
+    };
 
     return(
         <div className = "row" style = {{ width: "100%", margin: "auto" }}>
+            { loading ? 
+                <div style = {{ paddingTop: "50vh", position: "absolute", paddingLeft: "19vh", backgroundColor: "gray", opacity: "0.6", zIndex: "3", border: "solid 1px aqua", height: "100%" }}>
+                    <ClockLoader
+                        color = "#A7C2F7"
+                        loading = { loading }
+                        cssOverride = { override }
+                    />
+                </div>
+                :
+                <></>
+            }
             <div className = "col-md-6 offset-md-3 col-sm-6 offset-sm-3 col-12" style = {{ margin: "auto", padding: "0" }}>
                 <div style = {{ 
                     zIndex: "0", 
@@ -122,6 +135,7 @@ function Login() {
                     </div>
                     <button  onClick = { clickBtn } type = "button" className = "btn btn-light" style = {{ position: "relative", zIndex: "1", marginTop: window.innerWidth <= 767 ? "17vh" :"20vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>Login</button>
                     <KakaoLogin
+                        className = "btn btn-outline-warning"
                         token="a4f2c5ae0c7d781058ce2872976b922e"
                         onSuccess={ kakaoLogin }
                         onFail={ kakaoLogin }
@@ -129,7 +143,17 @@ function Login() {
                         useLoginForm={true}
                         persistAccessToken={true}
                         throughTalk={true}
-                    />
+                        style = {{  
+                            position: "relative", 
+                            zIndex: "1", 
+                            marginTop: "1vh", 
+                            width: window.innerWidth <= 767 ? "90%" :"60%", 
+                            marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", 
+                            fontSize: "1.5rem"
+                        }}
+                    >
+                        Kakao
+                    </KakaoLogin>
                     <button type = "button" className = "btn btn-outline-success" style = {{ position: "relative", zIndex: "1", marginTop: "1vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.5rem" }}>Naver</button>
                     <Link to = "/SignUp"><p style = {{ position: "relative", zIndex: "1", marginTop: window.innerWidth <= 767 ? "3vh" :"2.5vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", color: "white", fontSize: "0.8rem" }}>아직 회원이 아니신가요?</p></Link>
                 </div>

@@ -42,6 +42,9 @@ function Login() {
     const clickBtn = () => {
         setLoading(true);
         LoginAPI(minfo);
+        if(minfo.length === 0) {
+            setLoading(false);
+        }
     };
 
     const kakaoLogin = (result) => {

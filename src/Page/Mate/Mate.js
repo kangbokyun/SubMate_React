@@ -60,11 +60,14 @@ function Mate() {
         const formData = new FormData();
         let temp = userInfos.map(function(list) {
             if(String(list.mno) === String(e.target.id)) {
+                console.log("list.userheart : ", list.userheart);
                 if(list.userheart === "1") {
                     list.userheart = "0";
+                    setHeartData("0");
                     formData.append("hkind", list.userheart);
                 } else {
                     list.userheart = "1";
+                    setHeartData("1")
                     formData.append("hkind", list.userheart);
                 }
                 if(list.heartclicker === "true") {
@@ -117,7 +120,7 @@ function Mate() {
                                 <figcaption style = {{ color: "white", marginTop: "62vh", paddingTop: "5px" }}>
                                     <div className = "row" style = {{ fontSize: "30px", marginTop: "0", padding: "0" }}>
                                         <div className = "col-1" style = {{ marginLeft: "0px", paddingLeft: "0px" }}>
-                                            { list.heartclicker === "true" ?
+                                            { String(list.userheart) === "1" && String(list.heartclicker) === "true" ?
                                                 <img id = { list.mno } onClick = { clickHeart } alt = "Heart" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
                                                 :
                                                 <img id = { list.mno } onClick = { clickHeart } alt = "Heart" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />

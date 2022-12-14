@@ -217,10 +217,10 @@ function SetMate() {
                         <div className = "row">
                             <div className = "col-12" style = {{  }}>
                                 <div className = "row" style = {{  }}>
-                                    <div className = "col-3">
-                                        <label>출발역</label>
+                                    <div className = "col-4">
+                                        <label>출발역(집)</label>
                                     </div>
-                                    <div className = "col-3 offset-6">
+                                    <div className = "col-3 offset-5">
                                         <select 
                                             name = "starts"
                                             onChange = { saveMateSetting } 
@@ -269,10 +269,10 @@ function SetMate() {
                                 </div>
                                 <input name = "startStation" onChange = { saveMateSetting } type = "text" className = "form-control" />
                                 <div className = "row" style = {{ marginTop: "1vh" }}>
-                                    <div className = "col-3">
-                                        <label>도착역</label>
+                                    <div className = "col-4">
+                                        <label>도착역(근무지)</label>
                                     </div>
-                                    <div className = "col-3 offset-6">
+                                    <div className = "col-3 offset-5">
                                         <select 
                                             name = "ends"
                                             onChange = { saveMateSetting } 

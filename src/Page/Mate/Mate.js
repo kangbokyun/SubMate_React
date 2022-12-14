@@ -129,7 +129,7 @@ function Mate() {
                                         </div>
                                         <div className = "col-1">
                                             <label style = {{ fontSize: "1rem" }}>
-                                                { list.userheartcnt } { list.userheart } { list.heartclicker }
+                                                { list.userheartcnt }
                                             </label>
                                         </div>
                                         <div className = "col-1 offset-9" style = {{ paddingLeft: "0" }}>

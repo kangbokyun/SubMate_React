@@ -1,4 +1,5 @@
 import { API_BASE_URL } from "./App_Config";
+import { FormDataAPI } from "./CallAPI";
 
 const Access_Token = "Access_Token";
 const UserInfo = "UserInfo";
@@ -7,13 +8,7 @@ export const call = (api, method, request) => {
 
     let headers = "";
 
-    if(
-        api === "/Board/BoardWrite" || api === "/Auth/SignUp" || 
-        api === "/Board/ViewUpdate" || api === "/Board/Heart" || 
-        api === "/Admin/ChangeRole" || api === "/Mate/Users"  || 
-        api === "/Mate/Profile"     || api === "/Mate/UserHeart" || 
-        api === "/Mate/ClickHeart"
-    ) {
+    if(FormDataAPI.includes(api)) {
         headers = new Headers({
             // "Content-Type": "multipart/form-data",
         });
@@ -35,13 +30,7 @@ export const call = (api, method, request) => {
         method: method,
     };
 
-    if(
-        api === "/Board/BoardWrite" || api === "/Auth/SignUp" || 
-        api === "/Board/ViewUpdate" || api === "/Board/Heart" || 
-        api === "/Admin/ChangeRole" || api === "/Mate/Users"  || 
-        api === "/Mate/Profile"     || api === "/Mate/UserHeart" || 
-        api === "/Mate/ClickHeart"
-    ) {
+    if(FormDataAPI.includes(api)) {
         if (request) {
             // GET method
             options.body = request;

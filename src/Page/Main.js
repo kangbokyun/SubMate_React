@@ -3,8 +3,11 @@ import Carousel from 'react-bootstrap/Carousel';
 import Header from './Header';
 import Menu from './Menu';
 import '../Component/UpSlide.css';
+import { call } from '../Service/APIService';
 
 function Main() {
+    const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
+
     // 윈도우 크기 변경 감지되면 리렌더링
     const [ windowWidth, setWindowWidth ] = useState(0);
     const [ windowHeight, setWindowHeight ] = useState(0);
@@ -14,6 +17,12 @@ function Main() {
     };
     
     useEffect(() => {
+        const formData = new FormData();
+        formData.append('mno', userInfo.mno);
+        call("/Home/Rank", "POST", formData) 
+        .then((res) => {
+            console.log("/Home/Rank/Res : ", res);
+        })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);

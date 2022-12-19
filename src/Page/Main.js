@@ -15,6 +15,8 @@ function Main() {
         setWindowWidth(window.innerWidth);
         setWindowHeight(window.innerHeight);
     };
+
+    const [rankDTO, setRankDTO] = useState([]);
     
     useEffect(() => {
         const formData = new FormData();
@@ -22,6 +24,7 @@ function Main() {
         call("/Home/Rank", "POST", formData) 
         .then((res) => {
             console.log("/Home/Rank/Res : ", res);
+            setRankDTO(res);
         })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
@@ -39,15 +42,11 @@ function Main() {
             {window.innerWidth <= 767 ?
                 <div style = {{ marginBottom: "10vh", width: "100vw" }}>
                     <Carousel fade>
-                        <Carousel.Item>
-                            <img alt = "Setting" src = { require('../IMG/임시프사.png') } style = {{ width: "100%", height: "30vh", maxHeight: "30vh", objectFit: "contain", backgroundColor: "gray" }} /> 
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img alt = "Setting" src = { require('../IMG/임시프사2.jpg') } style = {{ width: "100%", height: "30vh", maxHeight: "30vh", objectFit: "contain", backgroundColor: "gray" }} /> 
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img alt = "Setting" src = { require('../IMG/임시프사3.jpg') } style = {{ width: "100%", height: "30vh", maxHeight: "30vh", objectFit: "contain", backgroundColor: "gray" }} /> 
-                        </Carousel.Item>
+                        { rankDTO.map((list) => 
+                            <Carousel.Item key = { list.mno }>
+                                <img alt = "Setting" src = { require('../MemberImg/' + list.profileImg) } style = {{ width: "100%", height: "30vh", maxHeight: "30vh", objectFit: "contain", backgroundColor: "gray" }} /> 
+                            </Carousel.Item>
+                        )}
                     </Carousel>
                     <h1 style = {{ marginTop: "1.4vh" }}>공지사항</h1>
                     <div id="showcase-dynamic" style = {{ height: "5vh", paddingTop: "0", backgroundColor: "transparent", color: "black", fontSize: "1.2rem" }}>

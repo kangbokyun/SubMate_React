@@ -88,7 +88,13 @@ function Main() {
                             </div>
                         )} */}
                         <div>
-                            <p>{ issueDTO }</p>
+                            <p>이슈크롤링</p>
+                        </div>
+                        <div>
+                            <p>이슈크롤링</p>
+                        </div>
+                        <div>
+                            <p>이슈크롤링</p>
                         </div>
                     </div>
                     <h1 style = {{ marginTop: "1.4vh", marginLeft: "2vw" }}>오늘의 날씨</h1>

@@ -51,6 +51,20 @@
     17.87% {transform: translateY(0);opacity: 0;}
     100% {transform: translateY(0);opacity: 0;}
   }
+  @keyframes group6 {
+    0% {transform: translateY(50px);opacity: 0;}
+    4.25% {transform: translateY(0);opacity: 1;}
+    17.02% {transform: translateY(0); opacity: 1;}
+    17.87% {transform: translateY(0);opacity: 0;}
+    100% {transform: translateY(0);opacity: 0;}
+  }
+  @keyframes group7 {
+    0% {transform: translateY(50px);opacity: 0;}
+    4.25% {transform: translateY(0);opacity: 1;}
+    17.02% {transform: translateY(0); opacity: 1;}
+    17.87% {transform: translateY(0);opacity: 0;}
+    100% {transform: translateY(0);opacity: 0;}
+  }
   
   /* if one item */
   body #showcase-dynamic div:nth-of-type(1){--Fdelay: calc( 1s * var(--delay) );}
@@ -97,14 +111,36 @@
   }
   /* if five items */
   body #showcase-dynamic div:nth-of-type(5){--Fdelay: calc( 1s * (var(--delay) + (var(--total) * 4)) );}
-  body #showcase-dynamic div:first-child:nth-last-child(4),
-  body #showcase-dynamic div:first-child:nth-last-child(4) ~ div {
+  body #showcase-dynamic div:first-child:nth-last-child(5),
+  body #showcase-dynamic div:first-child:nth-last-child(5) ~ div {
       --time: calc( 1s * (var(--total) * 5) );
   }
   #showcase-dynamic div:first-child:nth-last-child(5) p,
   #showcase-dynamic div:first-child:nth-last-child(5) ~ div p{
     -webkit-animation: group5 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) infinite; /* Safari 4.0 - 8.0 */
     animation: group5 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) infinite;
+  }
+  /* if six items */
+  body #showcase-dynamic div:nth-of-type(6){--Fdelay: calc( 1s * (var(--delay) + (var(--total) * 5)) );}
+  body #showcase-dynamic div:first-child:nth-last-child(6),
+  body #showcase-dynamic div:first-child:nth-last-child(6) ~ div {
+      --time: calc( 1s * (var(--total) * 6) );
+  }
+  #showcase-dynamic div:first-child:nth-last-child(6) p,
+  #showcase-dynamic div:first-child:nth-last-child(6) ~ div p{
+    -webkit-animation: group6 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) infinite; /* Safari 4.0 - 8.0 */
+    animation: group6 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) infinite;
+  }
+  /* if seven items */
+  body #showcase-dynamic div:nth-of-type(7){--Fdelay: calc( 1s * (var(--delay) + (var(--total) * 6)) );}
+  body #showcase-dynamic div:first-child:nth-last-child(7),
+  body #showcase-dynamic div:first-child:nth-last-child(7) ~ div {
+      --time: calc( 1s * (var(--total) * 7) );
+  }
+  #showcase-dynamic div:first-child:nth-last-child(7) p,
+  #showcase-dynamic div:first-child:nth-last-child(7) ~ div p{
+    -webkit-animation: group7 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) infinite; /* Safari 4.0 - 8.0 */
+    animation: group7 var(--time) ease-out calc( var(--Fdelay) + var(--row-delay) ) infinite;
   }
   
   #showcase-dynamic{

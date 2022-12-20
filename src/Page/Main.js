@@ -25,19 +25,24 @@ function Main() {
         formData.append('mno', userInfo.mno);
         call("/Home/Rank", "POST", formData) 
         .then((res) => {
-            console.log("/Home/Rank/Res : ", res);
+            console.log("/Home/Rank/Res : ", JSON.stringify(res));
             setRankDTO(res);
         });
         call("/Home/Issue", "POST", null)
         .then((res) => {
             console.log("/Home/Issue/Res : " + JSON.stringify(res));
-            setIssueDTO(JSON.stringify(res));
+            setIssueDTO(res);
         });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
     }, []);
     // /윈도우 크기 변경 감지되면 리렌더링
+
+    const newsClick = (e) => {
+        // alert(e.target.id);
+        window.location.href = e.target.id;
+    };
 
     return(
         <div className = { window.innerWidth <= 767 ? "grad" : "gra" }>
@@ -82,20 +87,17 @@ function Main() {
                     </div>
                     <h1 style = {{ marginTop: "1.4vh", marginLeft: "2vw" }}>서브뉴스</h1>
                     <div id="showcase-dynamic" style = {{ height: "5vh", paddingTop: "0", backgroundColor: "transparent", color: "black", fontSize: "1.2rem", marginLeft: "2vw" }}>
-                        {/* { issueDTO.map((list) => 
-                            <div key = {list.issueLink}>
-                                <p>{ list.issueTitle }</p>
+                        { issueDTO.map((list) => 
+                            <div key = {list.issueNo}>
+                                <p onClick = { newsClick } id = { list.issueLink }>
+                                    { list.issueTitle.length >= 25 ? 
+                                        list.issueTitle.substring(0, 25) + "..." 
+                                        : 
+                                        list.issueTitle 
+                                    }
+                                </p>
                             </div>
-                        )} */}
-                        <div>
-                            <p>이슈크롤링</p>
-                        </div>
-                        <div>
-                            <p>이슈크롤링</p>
-                        </div>
-                        <div>
-                            <p>이슈크롤링</p>
-                        </div>
+                        )}
                     </div>
                     <h1 style = {{ marginTop: "1.4vh", marginLeft: "2vw" }}>오늘의 날씨</h1>
                     <div id="showcase-dynamic" style = {{ height: "5vh", paddingTop: "0", backgroundColor: "transparent", color: "black", fontSize: "1.2rem", marginLeft: "2vw" }}>

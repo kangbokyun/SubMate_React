@@ -17,8 +17,8 @@ function Main() {
     };
 
     const [ rankDTO, setRankDTO ] = useState([]);
-    const [ issueData, setIssueData ] = useState("");
     const [ issueDTO, setIssueDTO ] = useState([]);
+    const [ weather, setWeather ] = useState({});
     
     useEffect(() => {
         const formData = new FormData();
@@ -33,6 +33,11 @@ function Main() {
             console.log("/Home/Issue/Res : " + JSON.stringify(res));
             setIssueDTO(res);
         });
+        call("/Home/Weather", "POST", null)
+        .then((res) => {
+            console.log("/Home/Weather/Res : ", res);
+            setWeather(res);
+        })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -43,6 +48,7 @@ function Main() {
         // alert(e.target.id);
         window.location.href = e.target.id;
     };
+    
 
     return(
         <div className = { window.innerWidth <= 767 ? "grad" : "gra" }>
@@ -101,6 +107,7 @@ function Main() {
                     </div>
                     <h1 style = {{ marginTop: "1.4vh", marginLeft: "2vw" }}>오늘의 날씨</h1>
                     <div id="showcase-dynamic" style = {{ height: "5vh", paddingTop: "0", backgroundColor: "transparent", color: "black", fontSize: "1.2rem", marginLeft: "2vw" }}>
+                        <div><p></p></div>
                         <div><p>-10도</p></div>
                         <div><p>추워요 롱패딩 입으세요.</p></div>
                     </div>

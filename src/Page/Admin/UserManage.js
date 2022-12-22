@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { call, ChangeRole } from '../../Service/APIService';
 import Header from '../Header';
 import AdminMenu from './AdminMenu';

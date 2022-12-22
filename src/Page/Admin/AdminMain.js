@@ -1,9 +1,9 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+import { call } from '../../Service/APIService';
 import Header from '../Header';
-import Menu from '../Menu';
 import AdminMenu from './AdminMenu';
 
 function AdminMain() {
@@ -16,6 +16,7 @@ function AdminMain() {
     };
 
     useEffect(() => {
+        call("/Admin/QnA")
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);

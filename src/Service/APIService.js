@@ -243,3 +243,7 @@ export const TendinousAPI = (tendinousDTO) => {
     })
 };
 // -/Setting-Customer====================================================================
+// Admin
+export const AdminQnAAPI = () => {};
+export const AdminTendinousAPI = () => {};
+// -/Admin

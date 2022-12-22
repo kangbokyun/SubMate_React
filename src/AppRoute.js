@@ -17,6 +17,8 @@ import Profile from './Page/Profile/Profile';
 import SetBoard from './Page/Setting/SetBoard';
 import SetChat from './Page/Setting/SetChat';
 import SetCustomer from './Page/Setting/SetCustomer';
+import QnA from './Page/Setting/SetC_QnA';
+import Tendinous from './Page/Setting/SetC_Tendinous';
 import SetMate from './Page/Setting/SetMate';
 import SetProfile from './Page/Setting/SetProfile';
 import Setting from './Page/Setting/Setting';
@@ -58,6 +60,8 @@ function AppRoute() {
                 <Route path = "/SetBoard" element = { <SetBoard /> } />
                 <Route path = "/SetProfile" element = { <SetProfile /> } />
                 <Route path = "/SetCustomer" element = { <SetCustomer /> } />
+                <Route path = "/Customer/QnA" element = { <QnA /> } />
+                <Route path = "/Customer/Tendinous" element = { <Tendinous /> } />
             </Routes>
         </Router>
     );

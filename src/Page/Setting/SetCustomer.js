@@ -33,7 +33,19 @@ function SetCustomer() {
             }
             { window.innerWidth <= 767 ?
                 <div>
-
+                    <table className = "table">
+                        <tbody>
+                            <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
+                                <td style = {{ fontSize: "1.2rem" }}><Link to = "/Customer/QnA" style = {{ textDecoration: "none", color: "black" }}>QnA</Link></td>
+                            </tr>
+                            <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
+                                <td style = {{ fontSize: "1.2rem" }}><Link to = "/Customer/Tendinous" style = {{ textDecoration: "none", color: "black" }}>건의하기</Link></td>
+                            </tr>
+                            <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
+                                <td style = {{ fontSize: "1.2rem" }}><Link to = "/" style = {{ textDecoration: "none", color: "black" }}>FAQ</Link></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 :
                 <div className = "container">

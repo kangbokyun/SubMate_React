@@ -221,3 +221,25 @@ export const UserHeart = (heartDTO) => {
 };
 
 // -/Heart============================================================================================
+// Setting-Customer======================================================================
+export const QnAAPI = (QnAData) => {
+    return call("/Set/Customer/QnA", "POST", QnAData)
+    .then((res) => {
+        console.log("/Set/Customer/QnA/Res : ", res);
+        if(res) {
+            alert("문의를 보냈습니다.\n영업일로부터 약 3일 소요됩니다.");
+            window.location.href = "/Home";
+        } 
+    });
+};
+
+export const TendinousAPI = (tendinousDTO) => {
+    return call("/Set/Customer/Tendinous", "POST", tendinousDTO)
+    .then((res) => {
+        if(res) {
+            alert("건의를 보냈습니다.");
+            window.location.href = "/Home";
+        }
+    })
+};
+// -/Setting-Customer====================================================================

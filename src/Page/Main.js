@@ -132,7 +132,7 @@ function Main() {
                                 Number(weather.tmp) > 10 && Number(weather.tmp) < 20 ? 
                                 <p>데이트하기 좋은 날씨네요!</p> :
                                 Number(weather.tmp) > 20 && Number(weather.tmp) < 30 ? 
-                                <p>활동적 데이트하기 좋게 다 풀렸어요.</p> :
+                                <p>활동적인 데이트하기 좋게 다 풀렸어요.</p> :
                                 Number(weather.tmp) > 30 ?
                                 <p>실내데이트 하세요... 너무 더워요.</p> :
                                 <p>롱패딩 입으세요... 너무 추워요.</p>

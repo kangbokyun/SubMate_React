@@ -4,6 +4,10 @@ import Header from './Header';
 import Menu from './Menu';
 import '../Component/UpSlide.css';
 import { call } from '../Service/APIService';
+import Snow from '../Component/Weather/Snow/Snow';
+import Rain from '../Component/Weather/Rain/Rain';
+import Cloud from '../Component/Weather/Cloud/Cloud';
+import Sun from '../Component/Weather/Sun/Sun';
 
 function Main() {
     const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
@@ -53,6 +57,17 @@ function Main() {
     return(
         <div className = { window.innerWidth <= 767 ? "grad" : "gra" }>
             <Header />
+            { weather.pty === "null" ? 
+                weather.sky === "구름많음" ? <Cloud /> : 
+                weather.sky === "흐림" ? <Cloud /> : 
+                <></> : 
+                weather.pty === "눈" ? <Snow /> :
+                weather.pty === "진눈깨비" ? <Snow /> :
+                weather.pty === "눈날림" ? <Snow /> :
+                weather.pty === "비" ? <Rain /> : 
+                weather.pty === "빗방울" ? <Rain /> : 
+                weather.pty === "소나기" ? <Rain /> : <></>
+            }
             { window.innerWidth <= 767 ? 
                 <div><h1 style = {{ marginLeft: "3vw", marginTop: "10vh" }}>4호선 Rank</h1></div> : 
                 <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>4호선 Rank</h1> 
@@ -107,9 +122,22 @@ function Main() {
                     </div>
                     <h1 style = {{ marginTop: "1.4vh", marginLeft: "2vw" }}>오늘의 날씨</h1>
                     <div id="showcase-dynamic" style = {{ height: "5vh", paddingTop: "0", backgroundColor: "transparent", color: "black", fontSize: "1.2rem", marginLeft: "2vw" }}>
-                        <div><p></p></div>
-                        <div><p>-10도</p></div>
-                        <div><p>추워요 롱패딩 입으세요.</p></div>
+                        <div><p>기온 : { weather.tmp }°C</p></div>
+                        <div><p>강수확률 : { weather.pop }</p></div>
+                        <div>
+                            { Number(weather.tmp) < 0 && Number(weather.tmp) > -10 ? 
+                                <p>날이 춥습니다. 감기 조심하세요.</p> :
+                                Number(weather.tmp) > 0 && Number(weather.tmp) < 10 ? 
+                                <p>날이 따듯해지고 있습니다.</p> :
+                                Number(weather.tmp) > 10 && Number(weather.tmp) < 20 ? 
+                                <p>데이트하기 좋은 날씨네요!</p> :
+                                Number(weather.tmp) > 20 && Number(weather.tmp) < 30 ? 
+                                <p>활동적 데이트하기 좋게 다 풀렸어요.</p> :
+                                Number(weather.tmp) > 30 ?
+                                <p>실내데이트 하세요... 너무 더워요.</p> :
+                                <p>롱패딩 입으세요... 너무 추워요.</p>
+                            }
+                        </div>
                     </div>
                 </div>
                 :

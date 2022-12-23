@@ -15,8 +15,13 @@ function AdminMain() {
         setWindowHeight(window.innerHeight);
     };
 
+    const [ QnA, setQnA ] = useState([]);
+    const [ tendinous, setTendinous ] = useState([]);
     useEffect(() => {
-        call("/Admin/QnA")
+        call("/Admin/QnA", "POST", null)
+        .then((res) => { console.log("/Admin/QnA/Res : ", res); setQnA(res) });
+        call("/Admin/Tendinous", "POST", null)
+        .then((res) => { console.log("/Admin/Tendinous/Res : ", res); setTendinous(res) });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -52,9 +57,9 @@ function AdminMain() {
                                     <td className = "col-4"><h4>문의</h4></td>
                                 </tr>
                                 <tr style = {{ textAlign: "center" }}>
+                                    <td className = "col-4">{ tendinous.length }건</td>
                                     <td className = "col-4">n건</td>
-                                    <td className = "col-4">n건</td>
-                                    <td className = "col-4">n건</td>
+                                    <td className = "col-4">{ QnA.length }건</td>
                                 </tr>
                             </tbody>
                         </table>

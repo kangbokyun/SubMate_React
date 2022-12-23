@@ -57,7 +57,7 @@ function Main() {
     return(
         <div className = { window.innerWidth <= 767 ? "grad" : "gra" }>
             <Header />
-            { weather.pty === "null" ? 
+            { weather.pty === "null" && window.innerWidth <= 767 ? 
                 weather.sky === "구름많음" ? <Cloud /> : 
                 weather.sky === "흐림" ? <Cloud /> : 
                 <></> : 
@@ -141,25 +141,69 @@ function Main() {
                     </div>
                 </div>
                 :
-                <div className = "container">
+                <div className = "container" style = {{  }}>
                     <Carousel fade style = {{ width: "100%" }}>
-                        <Carousel.Item>
-                            <img alt = "Setting" src = { require('../IMG/임시프사.png') } style = {{ width: "100%", height: "30vh", objectFit: "contain", backgroundColor: "gray" }} /> 
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img alt = "Setting" src = { require('../IMG/임시프사2.jpg') } style = {{ width: "100%", height: "30vh", objectFit: "contain", backgroundColor: "gray" }} /> 
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img alt = "Setting" src = { require('../IMG/임시프사3.jpg') } style = {{ width: "100%", height: "30vh", objectFit: "contain", backgroundColor: "gray" }} /> 
-                        </Carousel.Item>
+                        { rankDTO.map((list) => 
+                            <Carousel.Item key = { list.mno }>
+                                <div style = {{ width: "100%"}}>
+                                    <img alt = "Setting" src = { require('../MemberImg/' + list.profileImg) } style = {{ width: "100%", height: "30vh", maxHeight: "30vh", objectFit: "contain", backgroundColor: "gray" }} /> 
+                                    <div className = "row" style = {{ backgroundColor: "rgba(0, 0, 0, 0.2)", color: "white", width: "100%", position: "absolute", bottom: "0", left: "0", marginLeft: "0.1vw" }}>
+                                        <div className = "col-md-6">
+                                            <div className = "row">
+                                                <div className = "col-md-2">
+                                                    <img alt = "Setting" src = { require('../IMG/BoardHeart_Red.png') } style = {{ width: "5vw", paddingTop: "2px" }} />
+                                                </div>
+                                                <div className = "col-md-4 gx-0">
+                                                    <h5 style ={{ paddingTop: "1.5vh", fontSize: "1.5rem" }}>{ list.heartcount }</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className = "col-md-6">
+                                            <div>
+                                                <h5 style = {{ paddingTop: "1.5vh", float: "right", fontSize: "1.5rem" }}>{ list.rankrankernickname }님</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Carousel.Item>
+                        )}
                     </Carousel>
                     <div className = "row" style = {{ marginTop: "5vh" }}>
                         <div className = "col-md-5">
                             <h1>공지사항</h1>
-                            <div id="showcase-dynamic" style = {{ height: "5vh", paddingTop: "0.1vh", backgroundColor: "transparent", color: "black", fontSize: "1.6rem" }}>
+                            <div id="showcase-dynamic" style = {{ paddingTop: "0.1vh", backgroundColor: "transparent", color: "black", fontSize: "1.2rem" }}>
                                 <div><p>레이아웃을 잡는 중입니다.</p></div>
                                 <div><p>얼른 백엔드까지 연결하고 싶습니다.</p></div>
                                 <div><p>사실 제일 큰 문제는 JWT와 OAuth2입니다.</p></div>
+                            </div>
+                        </div>
+                        <h1 style = {{ marginTop: "1.4vh" }}>서브뉴스</h1>
+                        <div id="showcase-dynamic" style = {{ paddingTop: "0", backgroundColor: "transparent", color: "black", fontSize: "1.2rem" }}>
+                            { issueDTO.map((list) => 
+                                <div key = {list.issueNo}>
+                                    <p onClick = { newsClick } id = { list.issueLink }>
+                                        { list.issueTitle }
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                        <h1 style = {{ marginTop: "1.4vh" }}>오늘의 날씨</h1>
+                        <div id="showcase-dynamic" style = {{ paddingTop: "0", backgroundColor: "transparent", color: "black", fontSize: "1.2rem" }}>
+                            <div><p>기온 : { weather.tmp }°C</p></div>
+                            <div><p>강수확률 : { weather.pop }</p></div>
+                            <div>
+                                { Number(weather.tmp) < 0 && Number(weather.tmp) > -10 ? 
+                                    <p>날이 춥습니다. 감기 조심하세요.</p> :
+                                    Number(weather.tmp) > 0 && Number(weather.tmp) < 10 ? 
+                                    <p>날이 따듯해지고 있습니다.</p> :
+                                    Number(weather.tmp) > 10 && Number(weather.tmp) < 20 ? 
+                                    <p>데이트하기 좋은 날씨네요!</p> :
+                                    Number(weather.tmp) > 20 && Number(weather.tmp) < 30 ? 
+                                    <p>활동적인 데이트하기 좋게 다 풀렸어요.</p> :
+                                    Number(weather.tmp) > 30 ?
+                                    <p>실내데이트 하세요... 너무 더워요.</p> :
+                                    <p>롱패딩 입으세요... 너무 추워요.</p>
+                                }
                             </div>
                         </div>
                     </div>

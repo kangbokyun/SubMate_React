@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { call } from '../../Service/APIService';
 import Header from '../Header';
 import AdminMenu from './AdminMenu';
@@ -65,6 +65,24 @@ function AdminMain() {
                         </table>
                         <div className = "col-12" style = {{ width: "100%", height: "20vh", border: "solid 1px black", textAlign: "center", paddingTop: "1.5vh" }}>
                             <h4>유저 이용 추이 그래프</h4>
+                        </div>
+                    </div>
+                    <div className = "row" style = {{ width: "100%", marginTop: "1.5vh", marginLeft: "1.5vw" }}>
+                        <div className = "col-6">
+                            <h4 style = {{ marginLeft: "1vw", marginTop: "1vh" }}>Notice<span style = {{ fontSize: "0.8rem" }}> (최근 5건)</span></h4>
+                        </div>
+                        <div className = "col-4 offset-2">
+                            <Link to = "/NoticeList"><p style = {{ float: "right", marginTop: "0.2vh", color: "gray", paddingTop: "1vh" }}>더보기</p></Link>
+                        </div>
+                        <div className = "col-12">
+                            <table className = "table" style = {{ border: "solid 1px black", height: "30vh", width: "100%" }}>
+                                <tbody>
+                                    <tr><td>[ 공지 ] 안내드립니다. 이건 이렇고 저건 저렇습니다.</td></tr>
+                                    <tr><td>[ 공지 ] 안내드립니다. 이건 이렇고 저건 저렇습니다.</td></tr>
+                                    <tr><td>[ 공지 ] 안내드립니다. 이건 이렇고 저건 저렇습니다.</td></tr>
+                                    <tr><td>[ 공지 ] 안내드립니다. 이건 이렇고 저건 저렇습니다.</td></tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

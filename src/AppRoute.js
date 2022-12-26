@@ -1,7 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
+import AdminBoard from './Page/Admin/AdminBoard';
 import AdminMain from './Page/Admin/AdminMain';
+import AdminQnA from './Page/Admin/AdminQnA';
+import AdminSetting from './Page/Admin/AdminSetting';
+import AdminTendinousList from './Page/Admin/AdminTendinousList';
+import NoticeList from './Page/Admin/NoticeList';
+import NoticeWrite from './Page/Admin/NoticeWrite';
 import UserManage from './Page/Admin/UserManage';
 import Board from './Page/Board/Board';
 import BoardView from './Page/Board/BoardView';
@@ -34,8 +40,16 @@ function AppRoute() {
                 <Route path = "/Login" element = { <Login /> } />
                 <Route path = "/SignUp" element = { <SignUp /> } />
                 <Route path = "/Home" element = { <Main /> } />
+
+                {/* Admin */}
                 <Route path = "/AdminMain" element = { <AdminMain /> } />
                 <Route path = "/UserManage" element = { <UserManage /> } />
+                <Route path = "/AdminSetting" element = { <AdminSetting /> } />
+                <Route path = "/AdminBoard" element = { <AdminBoard /> } />
+                <Route path = "/TendinousList" element = { <AdminTendinousList /> } />
+                <Route path = "/QnAList" element = { <AdminQnA /> } />
+                <Route path = "/NoticeList" element = { <NoticeList /> } />
+                <Route path = "/NoticeWrite" element = { <NoticeWrite /> } />
 
                 {/* Mate */}
                 <Route path = "/Mate" element = { <Mate /> } />

@@ -21,7 +21,7 @@ function AdminMenu() {
                     </Link>
                 </div>
                 <div className = "col-md-3 col-3" style = {{ textAlign: "center" }}>
-                    <Link to = "/Setting">
+                    <Link to = "/AdminSetting">
                         <img alt = "Setting" src = { require('../../IMG/Setting.png') } style = {{ width: window.innerWidth <= 767 ? "12vw" : "5vw", height: "5vh", marginTop: "0px" }} />
                     </Link>
                 </div>

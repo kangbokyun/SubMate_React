@@ -73,10 +73,10 @@ function Main() {
                 <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>4호선 Rank</h1> 
             }
             {window.innerWidth <= 767 ?
-                <div style = {{ marginBottom: "10vh", width: "100vw" }}>
+                <div style = {{ marginBottom: "10vh", width: "100%" }}>
                     <Carousel fade>
                         { rankDTO.map((list) =>
-                            <Carousel.Item key = { list.mno }>
+                            <Carousel.Item key = { list.mno } style = {{  }}>
                                 <div style = {{ width: "100%"}}>
                                     <img alt = "Setting" src = { require('../MemberImg/' + list.profileImg) } style = {{ width: "100%", height: "30vh", maxHeight: "30vh", objectFit: "contain", backgroundColor: "gray" }} /> 
                                     <div className = "row" style = {{ backgroundColor: "rgba(0, 0, 0, 0.2)", color: "white", width: "100%", position: "absolute", bottom: "0", left: "0", marginLeft: "0.3vw" }}>
@@ -111,8 +111,8 @@ function Main() {
                         { issueDTO.map((list) => 
                             <div key = {list.issueNo}>
                                 <p onClick = { newsClick } id = { list.issueLink }>
-                                    { list.issueTitle.length >= 25 ? 
-                                        list.issueTitle.substring(0, 25) + "..." 
+                                    { list.issueTitle.length >= 20 ? 
+                                        list.issueTitle.substring(0, 20) + "..." 
                                         : 
                                         list.issueTitle 
                                     }

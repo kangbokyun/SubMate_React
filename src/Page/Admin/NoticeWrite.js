@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { NoticeWriteAPI } from '../../Service/APIService';
 import Header from '../Header';
 import AdminMenu from './AdminMenu';
 
@@ -45,13 +46,15 @@ function NoticeWrite() {
 
     const sendNotice = () => {
         const formData = new FormData();
-        formData.append("noticetitle", writeData.noticetitle);
-        formData.append("noticecontents", writeData.noticecontents);
-        formData.append("noticefile", writeData.noticefile);
-        formData.append("noticekind", writeData.noticekind);
+        formData.append("ntitle", writeData.noticetitle);
+        formData.append("ncontents", writeData.noticecontents);
+        if(writeData.noticefile != null) {
+            formData.append("nfile", writeData.noticefile);
+        }
+        formData.append("nkind", writeData.noticekind);
         formData.append("mno", userInfo.mno);
-        console.log("noticetitle : ", formData.get("noticetitle"));
-        console.log("mno : ", formData.get("mno"));
+        console.log("mno : ", userInfo.mno);
+        NoticeWriteAPI(formData);
     };
 
     return(
@@ -79,6 +82,7 @@ function NoticeWrite() {
                     </div>
                     <div className = "col-6">
                         <select name = "noticekind" onChange = { noticeWrite } className = "form-control" style = {{ marginTop: "1vh" }}>
+                            <option value = "0">선택</option>
                             <option value = "1">공지</option>
                             <option value = "2">이벤트</option>
                         </select>

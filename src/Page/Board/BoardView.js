@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { BoardHeart, call } from '../../Service/APIService';
+import { BoardHeart, BoardReportAPI, call } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
 
@@ -86,6 +86,24 @@ function BoardView() {
         })
     };
 
+    const [ reportStatus, setReportStatus ] = useState("0");
+    const report = () => {
+        console.log("bwriter : ", boardDTO.state.bwriter);
+        const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
+        const formData = new FormData();
+        if(reportStatus === "0") {
+            setReportStatus("1");
+        } else {
+            setReportStatus("0");
+        }
+        formData.append("mno", Number(userInfo.mno));
+        formData.append("reportbno", Number(boardDTO.state.bno));
+        formData.append("reportkind", 2);
+        formData.append("reportclickvalue", reportStatus);
+        // console.log(formData.get("mno"));
+        BoardReportAPI(formData);
+    };
+
     return(
         <div>
             <Header />
@@ -123,6 +141,11 @@ function BoardView() {
                             <img onClick = { clickLike } value = { likeValue } alt = "Like" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
                         }
                         <img onClick = { (e) => replyWrite(boardDTO.state.bno, boardDTO.state.bwriter, boardDTO.state.bcontents, boardDTO.state.becho, boardDTO.state.bechotimer, boardDTO.state.bview, boardDTO.state.createdDate, boardDTO.state.heart, boardDTO.state.hrno) } alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
+                        { reportStatus === "0" ? 
+                            <img onClick = { report } alt = "Siren" src = { require('../../IMG/Siren_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh", float: "right" }} />
+                            :
+                            <img onClick = { report } alt = "Siren" src = { require('../../IMG/Siren_Red.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh", float: "right" }} />
+                        }
                     </label>
                 </div>
                 <div style = {{ marginTop: "", marginLeft: window.innerWidth <= 767 ? "1.5vw" : "", height: window.innerWidth <= 767 ? "31.5vh" : "35vh", width: window.innerWidth <= 767 ? "97%" : "", fontSize: window.innerWidth <= 767 ? "1.7rem" : "1.2rem" }}>{ boardDTO.state.bcontents }</div>

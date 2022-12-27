@@ -118,7 +118,7 @@ export const LoginAPI = (memberDTO) => {
 
             // 토큰이 존재하는 경우 메인 화면으로 리다이렉트
             if(response.mrole === "ADMIN") {
-                window.location.href = "/AdminMain"; // 추후 어드민페이지 개발예정
+                window.location.href = "/AdminMain";
             } else {
                 window.location.href = "/Home";
             }
@@ -243,7 +243,28 @@ export const TendinousAPI = (tendinousDTO) => {
     })
 };
 // -/Setting-Customer====================================================================
-// Admin
-export const AdminQnAAPI = () => {};
-export const AdminTendinousAPI = () => {};
-// -/Admin
+// Admin=================================================================================
+export const NoticeWriteAPI = (formData) => {
+    return call("/Admin/NoticeWrite", "POST", formData)
+    .then((res) => {
+        if(res) {
+            alert("작성되었습니다.");
+            window.location.href = "/NoticeList";
+        } else {
+            alert(res);
+        }
+    });
+};
+// -/Admin==============================================================================
+// Report===============================================================================
+export const BoardReportAPI = (formData) => {
+    return call("/Board/Report", "POST", formData)
+    .then((res) => {
+        if(res) {
+            console.log(res);
+        } else {
+            console.log("ss");
+        }
+    });
+};
+// -/Report=============================================================================

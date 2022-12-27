@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { call } from '../../Service/APIService';
 import Header from '../Header';
 import AdminMenu from './AdminMenu';
 
@@ -14,7 +15,13 @@ function NoticeList() {
         setWindowHeight(window.innerHeight);
     };
 
+    const [ notice, setNotice ] = useState([]);
     useEffect(() => {
+        call("/Admin/NoticeList", "POST", null)
+        .then((res) => {
+            console.log("/Admin/NoticeList/Res : ", res);
+            setNotice(res);
+        });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -50,14 +57,15 @@ function NoticeList() {
                             <td className = "col-3" style = {{ textAlign: "center" }}>종류</td>
                             <td className = "col-9" style = {{ textAlign: "center" }}>제목</td>
                         </tr>
-                        <tr className = "row gx-0" style = {{ width: "100%", marginLeft: "0.1vw" }}>
-                            <td className = "col-3" style = {{ textAlign: "center" }}>[공지]</td>
-                            <td className = "col-9" style = {{ textAlign: "center" }}>공지사항 안내드립니다.</td>
-                        </tr>
-                        <tr className = "row gx-0" style = {{ width: "100%", marginLeft: "0.1vw" }}>
-                            <td className = "col-3" style = {{ textAlign: "center" }}>[이벤트]</td>
-                            <td className = "col-9" style = {{ textAlign: "center" }}>이벤트 안내드립니다.</td>
-                        </tr>
+                        { notice.map((list) => 
+                            <tr key = { list.nno } className = "row gx-0" style = {{ width: "100%", marginLeft: "0.1vw" }}>
+                                <td className = "col-3" style = {{ textAlign: "center" }}>{
+                                    list.nkind === 1 ?
+                                    "[ 공지 ]" : "[ 이벤트 ]"
+                                }</td>
+                                <td className = "col-9" style = {{ textAlign: "center" }}>{ list.ntitle }</td>
+                            </tr>
+                        ) }
                     </tbody>
                 </table>
             </div>

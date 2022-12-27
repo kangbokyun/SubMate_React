@@ -14,21 +14,15 @@ function Board() {
         setWindowHeight(window.innerHeight);
     };
     
-    
+    const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
     const [ resStatus, setResStatus ] = useState("");
     const [ likeList, setLikeList ] = useState([]);
     let windowSize = window.innerWidth;
     const [ pmDivision, setPmDivision ] = useState({});
     useEffect(() => {
-        // const formData = new FormData();
-        // if(windowSize <= 767) {
-        //     // 모바일환경
-        //     formData.append("pmdivision", "M");
-        // } else {
-        //     // PC 환경
-        //     formData.append("pmdivision", "P");
-        // }
-        call("/Board/BoardList", "POST", null)
+        const formData = new FormData();
+        formData.append("mno", userInfo.mno);
+        call("/Board/BoardList", "POST", formData)
         .then((res) => {
             setBoardList(res);
             setResStatus(res);

@@ -17,11 +17,14 @@ function AdminMain() {
 
     const [ QnA, setQnA ] = useState([]);
     const [ tendinous, setTendinous ] = useState([]);
+    const [ notice, setNotice ] = useState([]);
     useEffect(() => {
         call("/Admin/QnA", "POST", null)
         .then((res) => { console.log("/Admin/QnA/Res : ", res); setQnA(res) });
         call("/Admin/Tendinous", "POST", null)
         .then((res) => { console.log("/Admin/Tendinous/Res : ", res); setTendinous(res) });
+        call("/Admin/NoticeList", "POST", null)
+        .then((res) => { console.log("/Admin/NoticeList/Res : ", res); setNotice(res) });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -75,12 +78,18 @@ function AdminMain() {
                             <Link to = "/NoticeList"><p style = {{ float: "right", marginTop: "0.2vh", color: "gray", paddingTop: "1vh" }}>더보기</p></Link>
                         </div>
                         <div className = "col-12">
-                            <table className = "table" style = {{ border: "solid 1px black", height: "30vh", width: "100%" }}>
+                            <table className = "table" style = {{ height: "30vh", width: "100%", marginLeft: "3vw" }}>
                                 <tbody>
-                                    <tr><td>[ 공지 ] 안내드립니다. 이건 이렇고 저건 저렇습니다.</td></tr>
-                                    <tr><td>[ 공지 ] 안내드립니다. 이건 이렇고 저건 저렇습니다.</td></tr>
-                                    <tr><td>[ 공지 ] 안내드립니다. 이건 이렇고 저건 저렇습니다.</td></tr>
-                                    <tr><td>[ 공지 ] 안내드립니다. 이건 이렇고 저건 저렇습니다.</td></tr>
+                                    { notice.map((list) => 
+                                        <tr className = "row" style = {{ width: "100%" }}>
+                                            <td className = "col-3" style = {{  }}>
+                                                { list.nkind === 1 ? "[ 공지 ]" : "[ 이벤트 ]" }
+                                            </td>
+                                            <td className = "col-9 gx-0">
+                                                { list.ntitle }
+                                            </td>
+                                        </tr>
+                                    ) }
                                 </tbody>
                             </table>
                         </div>

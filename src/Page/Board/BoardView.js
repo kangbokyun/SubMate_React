@@ -121,6 +121,7 @@ function BoardView() {
                     
                     BoardReportAPI(formData);
                     // document.querySelector("#exampleModal").remove();
+                    // document.querySelector(".modal-backdrop").remove();
                 } else {
                     return;
                 }
@@ -196,7 +197,7 @@ function BoardView() {
                                     </div>
                                     <div className="modal-footer">
                                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                                        <button onClick = { report } data-bs-dismiss="modal" id = "modalBTN" type="button" className="btn btn-danger">보내기</button>
+                                        <button onClick = { report } id = "modalBTN" type="button" className="btn btn-danger">보내기</button>
                                     </div>
                                 </div>
                             </div>

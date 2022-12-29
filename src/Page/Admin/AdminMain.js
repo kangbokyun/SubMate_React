@@ -18,6 +18,7 @@ function AdminMain() {
     const [ QnA, setQnA ] = useState([]);
     const [ tendinous, setTendinous ] = useState([]);
     const [ notice, setNotice ] = useState([]);
+    const [ report, setReport ] = useState([]);
     useEffect(() => {
         call("/Admin/QnA", "POST", null)
         .then((res) => { console.log("/Admin/QnA/Res : ", res); setQnA(res) });
@@ -25,6 +26,8 @@ function AdminMain() {
         .then((res) => { console.log("/Admin/Tendinous/Res : ", res); setTendinous(res) });
         call("/Admin/NoticeList", "POST", null)
         .then((res) => { console.log("/Admin/NoticeList/Res : ", res); setNotice(res) });
+        call("/Admin/ReportList", "POST", null)
+        .then((res) => { console.log("/Admin/ReportList/Res : ", res); setReport(res) });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -78,7 +81,7 @@ function AdminMain() {
                             <Link to = "/NoticeList"><p style = {{ float: "right", marginTop: "0.2vh", color: "gray", paddingTop: "1vh" }}>더보기</p></Link>
                         </div>
                         <div className = "col-12">
-                            <table className = "table" style = {{ height: "30vh", width: "100%", marginLeft: "3vw" }}>
+                            <table className = "table" style = {{ height: "16.5vh", width: "100%", marginLeft: "3vw" }}>
                                 <tbody>
                                     { notice.map((list) => 
                                         <tr className = "row" style = {{ width: "100%" }} key = { list.nno }>
@@ -87,6 +90,33 @@ function AdminMain() {
                                             </td>
                                             <td className = "col-9 gx-0">
                                                 { list.ntitle }
+                                            </td>
+                                        </tr>
+                                    ) }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className = "col-6">
+                            <h4 style = {{ marginLeft: "1vw", marginTop: "1vh" }}>Report<span style = {{ fontSize: "0.8rem" }}> (최근 5건)</span></h4>
+                        </div>
+                        <div className = "col-4 offset-2">
+                            <Link to = "/NoticeList"><p style = {{ float: "right", marginTop: "0.2vh", color: "gray", paddingTop: "1vh" }}>더보기</p></Link>
+                        </div>
+                        <div className = "col-12">
+                            <table className = "table" style = {{ height: "16.5vh", width: "100%", marginLeft: "3vw" }}>
+                                <tbody>
+                                    { report.map((list) => 
+                                        <tr className = "row" style = {{ width: "100%" }} key = { list.reportno }>
+                                            <td className = "col-3" style = {{  }}>
+                                                { 
+                                                    list.reportkind === 1 ? "음란매체" : 
+                                                    list.reportkind === 2 ? "사진도용" :
+                                                    list.reportkind === 3 ? "명예훼손" :
+                                                    list.reportkind === 4 ? "기타" : ""
+                                                }
+                                            </td>
+                                            <td className = "col-9 gx-0">
+                                                { list.reportcontents }
                                             </td>
                                         </tr>
                                     ) }

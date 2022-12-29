@@ -1,3 +1,5 @@
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -89,29 +91,30 @@ function BoardView() {
     const [ reportStatus, setReportStatus ] = useState("0");
     const [ reportData, setReportData ] = useState({});
     const [ flag, setFalg ] = useState(false);
+    
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    
     const report = (e) => {
-        console.log("bwriter : ", boardDTO.state.bwriter);
-        const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
-        if([e.target.name].includes("reportvalue")) {
-            setReportData({ ...reportStatus, [e.target.name] : e.target.value });
-        } else if([e.target.name].includes("reportcontents")) {
-            setReportData({ ...reportStatus, [e.target.name] : e.target.value });
-        }
-        // console.log("reportData.reportvalue : ", reportData.reportvalue);
         const formData = new FormData();
+        const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
         formData.append("mno", Number(userInfo.mno));
         formData.append("reportbno", Number(boardDTO.state.bno));
         formData.append("reportkind", 2);
-        // formData.append("reportvalue", e.tar)
         if(reportStatus === "0") {
+            handleShow();
+            if([e.target.name].includes("reportvalue")) {
+                setReportData({ ...reportData, [e.target.name] : e.target.value });
+            } else if([e.target.name].includes("reportcontents")) {
+                setReportData({ ...reportData, [e.target.name] : e.target.value });
+            }
             if(e.target.id === "modalBTN") {
+                console.log("reportData : ", reportData);
                 // 모달
-                if(reportData.reportvalue === "0") {
-                    alert("신고 구분을 선택해주세요.");
-                } 
-                if(reportData.reportcontents === undefined) {
-                    alert("신고 사유를 작성해주세요.");
-                }
+                if(String(reportData.reportvalue) === "0" || reportData.reportvalue === undefined) { alert("신고 구분을 선택해주세요."); return; } 
+                if(reportData.reportcontents === undefined) { alert("신고 사유를 작성해주세요."); return; }
                 if(reportData.reportvalue !== "0" && reportData.reportcontents !== undefined) {
                     alert("신고되었습니다.\n빠른 시일 내에 내용 검토 후 조치하겠습니다.")
                     setReportStatus("1");
@@ -120,8 +123,7 @@ function BoardView() {
                     formData.append("reportcontents", reportData.reportcontents);
                     
                     BoardReportAPI(formData);
-                    // document.querySelector("#exampleModal").remove();
-                    // document.querySelector(".modal-backdrop").remove();
+                    handleClose();
                 } else {
                     return;
                 }
@@ -129,6 +131,8 @@ function BoardView() {
         } else {
             setReportStatus("0");
             formData.append("reportclickvalue", reportStatus);
+            formData.append("reportvalue", reportData.reportvalue);
+            formData.append("reportcontents", reportData.reportcontents);
             BoardReportAPI(formData);
         }
     };
@@ -171,37 +175,35 @@ function BoardView() {
                         }
                         <img onClick = { (e) => replyWrite(boardDTO.state.bno, boardDTO.state.bwriter, boardDTO.state.bcontents, boardDTO.state.becho, boardDTO.state.bechotimer, boardDTO.state.bview, boardDTO.state.createdDate, boardDTO.state.heart, boardDTO.state.hrno) } alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
                         { reportStatus === "0" ? 
-                            <img data-bs-toggle="modal" data-bs-target = "#exampleModal" onClick = { report } alt = "Siren" src = { require('../../IMG/Siren_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh", float: "right" }} />
+                            <img onClick = { report } alt = "Siren" src = { require('../../IMG/Siren_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh", float: "right" }} />
                             :
                             <img onClick = { report } alt = "Siren" src = { require('../../IMG/Siren_Red.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh", float: "right" }} />
-                            // <button type = "button" className = "btn btn-primary" data-bs-toggle="modal" data-bs-target = "#exampleModal" style = {{ float: "right", backgroundColor: "white", border: "none", padding: "0" }}>
-                            // </button>
                         }
-                        <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div className="modal-dialog">
-                                <div className="modal-content">
-                                    <div className="modal-header">
-                                        <h5 className="modal-title" id="exampleModalLabel">Report</h5>
-                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div className="modal-body">
-                                        <h5><span style = {{ color: "red" }}>신고</span>하시려는 사유를 선택해주세요.</h5>
-                                        <p>허위 신고 적발 시 법적 제재를 할 수 있습니다.</p>
-                                        <select className = "form-control" onChange = { report } name = "reportvalue">
-                                            <option value = "0">선택</option>
-                                            <option value = "1">음란매체</option>
-                                            <option value = "2">사진도용</option>
-                                            <option value = "3">명예훼손</option>
-                                        </select>
-                                        <textarea onChange = { report } name = "reportcontents" className = "form-control" placeholder = "사유 기재" style = {{ marginTop: "1.5vh", height: "20vh" }}></textarea>
-                                    </div>
-                                    <div className="modal-footer">
-                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                                        <button onClick = { report } id = "modalBTN" type="button" className="btn btn-danger">보내기</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                        <Modal show = { show } onHide = { handleClose }>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Report</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <h5><span style = {{ color: "red" }}>신고</span>하시려는 사유를 선택해주세요.</h5>
+                                <p>허위 신고 적발 시 법적 제재를 할 수 있습니다.</p>
+                                <select className = "form-control" onChange = { report } name = "reportvalue">
+                                    <option value = "0">선택</option>
+                                    <option value = "1">음란매체</option>
+                                    <option value = "2">사진도용</option>
+                                    <option value = "3">명예훼손</option>
+                                </select>
+                                <textarea onChange = { report } name = "reportcontents" className = "form-control" placeholder = "사유 기재" style = {{ marginTop: "1.5vh", height: "20vh" }}></textarea>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant = "secondary" onClick = { handleClose }>
+                                    취소
+                                </Button>
+                                <Button variant = "danger" onClick = { report } id = "modalBTN">
+                                    보내기
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </label>
                 </div>
                 <div style = {{ marginTop: "", marginLeft: window.innerWidth <= 767 ? "1.5vw" : "", height: window.innerWidth <= 767 ? "31.5vh" : "35vh", width: window.innerWidth <= 767 ? "97%" : "", fontSize: window.innerWidth <= 767 ? "1.7rem" : "1.2rem" }}>{ boardDTO.state.bcontents }</div>

@@ -263,7 +263,7 @@ export const BoardReportAPI = (formData) => {
         if(res) {
             console.log(res);
         } else {
-            console.log("ss");
+            console.log("Report Failed");
         }
     });
 };

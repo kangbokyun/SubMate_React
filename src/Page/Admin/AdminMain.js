@@ -81,7 +81,7 @@ function AdminMain() {
                             <table className = "table" style = {{ height: "30vh", width: "100%", marginLeft: "3vw" }}>
                                 <tbody>
                                     { notice.map((list) => 
-                                        <tr className = "row" style = {{ width: "100%" }}>
+                                        <tr className = "row" style = {{ width: "100%" }} key = { list.nno }>
                                             <td className = "col-3" style = {{  }}>
                                                 { list.nkind === 1 ? "[ 공지 ]" : "[ 이벤트 ]" }
                                             </td>

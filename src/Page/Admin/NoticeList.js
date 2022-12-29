@@ -53,12 +53,12 @@ function NoticeList() {
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <table className = "table" style = {{  }}>
                     <tbody>
-                        <tr className = "row" style = {{ width: "100%", marginLeft: "0.1vw" }}>
+                        <tr className = "row" style = {{ width: "100%" }}>
                             <td className = "col-3" style = {{ textAlign: "center" }}>종류</td>
                             <td className = "col-9" style = {{ textAlign: "center" }}>제목</td>
                         </tr>
                         { notice.map((list) => 
-                            <tr key = { list.nno } className = "row gx-0" style = {{ width: "100%", marginLeft: "0.1vw" }}>
+                            <tr key = { list.nno } className = "row" style = {{ width: "100%" }}>
                                 <td className = "col-3" style = {{ textAlign: "center" }}>{
                                     list.nkind === 1 ?
                                     "[ 공지 ]" : "[ 이벤트 ]"

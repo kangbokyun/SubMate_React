@@ -23,7 +23,7 @@ function Main() {
     const [ rankDTO, setRankDTO ] = useState([]);
     const [ issueDTO, setIssueDTO ] = useState([]);
     const [ weather, setWeather ] = useState({});
-    
+    const [ notice, setNotice ] = useState([]);
     useEffect(() => {
         const formData = new FormData();
         formData.append('mno', userInfo.mno);
@@ -41,7 +41,9 @@ function Main() {
         .then((res) => {
             console.log("/Home/Weather/Res : ", res);
             setWeather(res);
-        })
+        });
+        call("/Admin/NoticeList", "POST", null)
+        .then((res) => { console.log("/Home/Notice/Res : ", res); setNotice(res) });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -102,9 +104,11 @@ function Main() {
                     </Carousel>
                     <h1 style = {{ marginTop: "1.4vh", marginLeft: "2vw" }}>공지사항</h1>
                     <div id="showcase-dynamic" style = {{ height: "5vh", paddingTop: "0", backgroundColor: "transparent", color: "black", fontSize: "1.2rem", marginLeft: "2vw" }}>
-                        <div><p>공지사항1</p></div>
-                        <div><p>공지사항2</p></div>
-                        <div><p>공지사항3</p></div>
+                        { notice.map((list) => 
+                            <div key = { list.nno }>
+                                <p>{ list.nkind === 1 ? "[ 공지 ]" : "[ 이벤트 ]" }　{ list.ntitle }</p>
+                            </div>
+                        ) }
                     </div>
                     <h1 style = {{ marginTop: "1.4vh", marginLeft: "2vw" }}>서브뉴스</h1>
                     <div id="showcase-dynamic" style = {{ height: "5vh", paddingTop: "0", backgroundColor: "transparent", color: "black", fontSize: "1.2rem", marginLeft: "2vw" }}>

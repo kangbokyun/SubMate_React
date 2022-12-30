@@ -64,13 +64,13 @@ export const call = (api, method, request) => {
     )
     .catch((error) => {
         // 추가된 부분
+        console.log("error : ", error);
         if(error === null){
             console.log("에러발생")
         }
-            console.log(error)
         if (error.status === 403) {
             window.location.href = "/Login"; // redirect
-        }else if(error.error === "Login failed"){
+        }else if(error.error === "Login Failed"){
             alert("로그인에 실패하였습니다. (아이디, 비밀번호 재확인 필요)")
         }else if(error.error === "NOTUSER"){
             alert("로그인 권한이 존재하지 않습니다.(관리자 로그인 권한 수락 필요)")

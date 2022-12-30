@@ -42,11 +42,11 @@ function Login() {
     const clickBtn = () => {
         setLoading(true);
         LoginAPI(minfo);
-        if(minfo.length === 0) {
-            setTimeout(() => {
-                setLoading(false);
-            }, 1500);
-        }
+        // if(minfo.length === 0) {
+        setTimeout(() => {
+            setLoading(false);
+        }, 1500);
+        // }
     };
 
     const kakaoLogin = (result) => {

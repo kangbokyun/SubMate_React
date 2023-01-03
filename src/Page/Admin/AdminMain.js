@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { call } from '../../Service/APIService';
 import Header from '../Header';
 import AdminMenu from './AdminMenu';
+import MultiLineChart from './MultiLineChart';
 
 function AdminMain() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -70,7 +71,8 @@ function AdminMain() {
                             </tbody>
                         </table>
                         <div className = "col-12" style = {{ width: "100%", height: "20vh", border: "solid 1px black", textAlign: "center", paddingTop: "1.5vh" }}>
-                            <h4>유저 이용 추이 그래프</h4>
+                            {/* <h4>유저 이용 추이 그래프</h4> */}
+                            <MultiLineChart />
                         </div>
                     </div>
                     <div className = "row" style = {{ width: "100%", marginTop: "1.5vh", marginLeft: "1.5vw" }}>

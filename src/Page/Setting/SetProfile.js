@@ -83,7 +83,13 @@ function SetProfile() {
 
     const saveSetting = () => {
         call("/Setting/Profile", "POST", profile)
-        .then((res) => {console.log(res)})
+        .then((res) => {
+            if(res) {
+                console.log(res);
+                alert("저장되었습니다.");
+                window.location.href = "/Setting";
+            }
+        })
     };
 
     return(

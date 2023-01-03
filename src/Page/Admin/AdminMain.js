@@ -64,7 +64,7 @@ function AdminMain() {
                                 </tr>
                                 <tr style = {{ textAlign: "center" }}>
                                     <td className = "col-4">{ tendinous.length }건</td>
-                                    <td className = "col-4">n건</td>
+                                    <td className = "col-4">{ report.length }건</td>
                                     <td className = "col-4">{ QnA.length }건</td>
                                 </tr>
                             </tbody>

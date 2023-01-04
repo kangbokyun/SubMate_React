@@ -20,6 +20,7 @@ function AdminMain() {
     const [ tendinous, setTendinous ] = useState([]);
     const [ notice, setNotice ] = useState([]);
     const [ report, setReport ] = useState([]);
+    const [ chartData, setChartData ] = useState([]);
     useEffect(() => {
         call("/Admin/QnA", "POST", null)
         .then((res) => { console.log("/Admin/QnA/Res : ", res); setQnA(res) });
@@ -29,6 +30,8 @@ function AdminMain() {
         .then((res) => { console.log("/Admin/NoticeList/Res : ", res); setNotice(res) });
         call("/Admin/ReportList", "POST", null)
         .then((res) => { console.log("/Admin/ReportList/Res : ", res); setReport(res) });
+        call("/Admin/MainChart", "POST", null)
+        .then((res) => { if(res) { console.log("/Admin/MainChart/Res : ", res); setChartData(res); }});
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -70,9 +73,9 @@ function AdminMain() {
                                 </tr>
                             </tbody>
                         </table>
-                        <div className = "col-12" style = {{ width: "100%", height: "20vh", border: "solid 1px black", textAlign: "center", paddingTop: "1.5vh" }}>
+                        <div className = "col-12" style = {{ width: "100%", height: "20vh", border: "solid 1px black", textAlign: "center", paddingLeft: "0", marginLeft: "0" }}>
                             {/* <h4>유저 이용 추이 그래프</h4> */}
-                            <MultiLineChart />
+                            <MultiLineChart data = { chartData } />
                         </div>
                     </div>
                     <div className = "row" style = {{ width: "100%", marginTop: "1.5vh", marginLeft: "1.5vw" }}>

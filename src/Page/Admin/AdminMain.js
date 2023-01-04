@@ -73,7 +73,7 @@ function AdminMain() {
                                 </tr>
                             </tbody>
                         </table>
-                        <div className = "col-12" style = {{ width: "100%", height: "20vh", border: "solid 1px black", textAlign: "center", paddingLeft: "0", marginLeft: "0" }}>
+                        <div className = "col-12" style = {{ width: "100%", height: "20vh", textAlign: "center", paddingLeft: "0", marginLeft: "0" }}>
                             {/* <h4>유저 이용 추이 그래프</h4> */}
                             <MultiLineChart data = { chartData } />
                         </div>

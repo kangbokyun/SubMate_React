@@ -47,15 +47,16 @@ function MultiLineChart(chartData) {
             width={ 390 }
             height={ 200 }
             data={ chartData.data }
-            style = {{ border: "solid 1px green", marginLeft: "0", paddingLeft: "0", marginRight: "1.5vw", paddingRight: "1.5vw" }}
+            style = {{ marginLeft: "0", paddingLeft: "0", marginRight: "1.5vw", paddingRight: "1.5vw" }}
       >
-        {/* <CartesianGrid strokeDasharray="3 3" /> */}
+        <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey = "chartdate" />
         <YAxis />
-        {/* <Tooltip /> */}
-        {/* <Legend /> */}
-        <Line type="monotone" dataKey = "chartqna"  stroke="#8884d8" activeDot={{ r: 8 }} />
-        <Line type="monotone" dataKey = "charttendinous" stroke="#82ca9d" />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey = "chartqna"  stroke="#8884d8" activeDot={{ r : 8 }} />
+        <Line type="monotone" dataKey = "chartreport"  stroke="#dc143c" activeDot={{ r : 8 }} />
+        <Line type="monotone" dataKey = "charttendinous" stroke="#82ca9d" activeDot={{ r : 8 }} />
       </LineChart>
     );
 }

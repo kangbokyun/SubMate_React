@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { call, SendTalkAPI } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
 
@@ -15,7 +16,12 @@ function Profile() {
         setWindowHeight(window.innerHeight);
     };
     
+    const [ talkList, setTalkList ] = useState([]);
+    const formData = new FormData();
+    formData.append("mno", userInfo.mno);
     useEffect(() => {
+        call("/Profile/TalkList", "POST", formData)
+        .then((res) => { console.log("/Profile/TalkList/Res : ", res); setTalkList(res); console.log(res.length) });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -25,6 +31,21 @@ function Profile() {
     const history = useNavigate();
     const GoBack = () => {
         return history(-1) // 한 페이지 뒤로
+    };
+
+    const [ talkData, setTalkData ] = useState({});
+    const lineTalk = (e) => {
+        setTalkData({ 
+            ...talkData, 
+            [ e.target.name ] : e.target.value, 
+            "mno" : userInfo.mno, 
+            "ptwriter" : userInfo.mnickname,
+            "writedmno" : 0
+        });
+    };
+
+    const sendTalk = () => {
+        SendTalkAPI(talkData);
     };
 
     return(
@@ -51,9 +72,9 @@ function Profile() {
                                         </div>
                                         <div className = "col-md-8 col-8" style = {{ textAlign: "center" }}>
                                             { window.innerWidth <= 767 ? <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mnickname }</h4> : <h4 style = {{ marginTop: "2vh" }}>{ userInfo.mnickname }</h4> }
-                                            { window.innerWidth <= 767 ? <h4 style = {{ marginTop: window.innerWidth <= 767 ? "1vh" : "" }}>{ userInfo.mhobby === null ? "취미를 설정해주세요." : userInfo.mhobby }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mhobby === null ? "취미를 설정해주세요." : userInfo.mhobby }</h4> }
-                                            { window.innerWidth <= 767 ? <h4>{ userInfo.mbirth }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mbirth }</h4> }
-                                            { window.innerWidth <= 767 ? <h4>{ userInfo.mbti }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mbti }</h4> }
+                                            { window.innerWidth <= 767 ? <h4 style = {{ marginTop: window.innerWidth <= 767 ? userInfo.mhobby === null ? "1.7vh" : "1vh" : "", fontSize: userInfo.mhobby === null ? "0.9rem" : "" }}>{ userInfo.mhobby === null ? "취미를 설정해주세요." : userInfo.mhobby }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mhobby === null ? "취미를 설정해주세요." : userInfo.mhobby }</h4> }
+                                            { window.innerWidth <= 767 ? <h4 style = {{ marginTop: window.innerWidth <= 767 ? "1vh" : "" }}>{ userInfo.mbirth }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mbirth }</h4> }
+                                            { window.innerWidth <= 767 ? <h4 style = {{ marginTop: window.innerWidth <= 767 ? "1vh" : "" }}>{ userInfo.mbti }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mbti }</h4> }
                                             <h4>{ userInfo.platForm === "Kakao" ? <span style = {{ font: "bold", color: "yellow" }}>K</span> : userInfo.mplatform === "SubMate" || null || "" ? <span style = {{ font: "bold", color: "green" }}>SubMate</span> : <span style = {{ font: "bold", color: "green" }}>N</span> }</h4>
                                         </div>
                                     </div>
@@ -91,18 +112,27 @@ function Profile() {
                         <h5>한마디</h5>
                         <table className = "table"  style = {{ marginLeft: "5vw", height: "37vh" }}>
                             <tbody>
-                                <tr className = "row" style = {{ width: "100%" }}>
-                                    <td className = "col-3">nickname</td>
-                                    <td className = "col-9"><p style = {{ width: "70vw" }}>안녕하세요몇글자까지되는지궁금하고또잘내려가는지궁금해서적어봅니다.</p></td>
-                                </tr>
+                                { talkList.length === 0 ? 
+                                    <tr className = "row" style = {{ width: "100%" }}>
+                                        <td className = "col-12" style = {{ textAlign: "center" }}>첫 한마디를 남겨보세요!</td>
+                                    </tr>
+                                    :
+                                    <></>
+                                }
+                                { talkList.map((list) =>
+                                    <tr key = { list.ptno } className = "row" style = {{ width: "100%" }}>
+                                        <td className = "col-3">{ list.ptwriter }</td>
+                                        <td className = "col-9">{ list.ptcontents }</td>
+                                    </tr>
+                                ) }
                             </tbody>
                         </table>
                         <div className = "row">
                             <div className = "col-11" style = {{ paddingLeft: "5vw" }}>
-                                <input type = "text" className = "form-control" />
+                                <input type = "text" className = "form-control" onChange = { lineTalk } name = "ptcontents" />
                             </div>
                             <div className = "col-1 gx-0">
-                                <button type = "button" className = "btn btn-success">Send</button>
+                                <button type = "button" className = "btn btn-success" onClick = { sendTalk }>Send</button>
                             </div>
                         </div>
                     </div>

@@ -105,7 +105,7 @@ function AdminMain() {
                             <h4 style = {{ marginLeft: "1vw", marginTop: "1vh" }}>Report<span style = {{ fontSize: "0.8rem" }}> (최근 5건)</span></h4>
                         </div>
                         <div className = "col-4 offset-2">
-                            <Link to = "/NoticeList"><p style = {{ float: "right", marginTop: "0.2vh", color: "gray", paddingTop: "1vh" }}>더보기</p></Link>
+                            <Link to = "/ReportList"><p style = {{ float: "right", marginTop: "0.2vh", color: "gray", paddingTop: "1vh" }}>더보기</p></Link>
                         </div>
                         <div className = "col-12">
                             <table className = "table" style = {{ height: "1vh", width: "100%", marginLeft: "3vw" }}>

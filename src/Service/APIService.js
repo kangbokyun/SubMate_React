@@ -268,3 +268,16 @@ export const BoardReportAPI = (formData) => {
     });
 };
 // -/Report=============================================================================
+// Profile==============================================================================
+export const SendTalkAPI = (profileTalk) => {
+    return call("/Profile/LineTalk", "POST", profileTalk)
+    .then((res) => { 
+        if(res) { 
+            console.log("/Profile/LineTalk/Res : ", res); 
+            alert("한마디가 작성되었습니다."); 
+            window.location.href = "/Profile"
+        } else { 
+            alert("작성 실패"); 
+        } 
+    });
+};

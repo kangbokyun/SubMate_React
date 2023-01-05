@@ -27,7 +27,7 @@ function BoardReply() {
         console.log(boardData);
         call("/Board/ReplyList", "POST", boardData.state.bno)
         .then((res) => {
-            console.log("res : ", res);
+            console.log("/Board/ReplyList/Res : ", res);
             setReplyList(res);
         });
         call("/Board/HeartList", "POST", null)
@@ -287,7 +287,7 @@ function BoardReply() {
                                                                         </div>
                                                                         { replyList.map((rList) => 
                                                                             <div key = { rList.rno }>
-                                                                                { (rList.rdepth === "2" && rList.writedrno !== null && list.rno === rList.writedrno ) ? 
+                                                                                { (rList.rdepth === "2" && rList.writedrno !== null && Number(list.rno) === Number(rList.writedrno) ) ? 
                                                                                 <div className = "row" style = {{ borderTop: "solid 1px gray" }}>
                                                                                     <div className = "col-3">
                                                                                         <img alt = "" 

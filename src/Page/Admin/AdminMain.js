@@ -108,7 +108,7 @@ function AdminMain() {
                             <Link to = "/NoticeList"><p style = {{ float: "right", marginTop: "0.2vh", color: "gray", paddingTop: "1vh" }}>더보기</p></Link>
                         </div>
                         <div className = "col-12">
-                            <table className = "table" style = {{ height: "16.5vh", width: "100%", marginLeft: "3vw" }}>
+                            <table className = "table" style = {{ height: "1vh", width: "100%", marginLeft: "3vw" }}>
                                 <tbody>
                                     { report.map((list) => 
                                         <tr className = "row" style = {{ width: "100%" }} key = { list.reportno }>

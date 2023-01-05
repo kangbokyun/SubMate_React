@@ -45,23 +45,23 @@ function Profile() {
                                         <div className = "col-md-4 col-4">
                                             { window.innerWidth <= 767 ? <h4 style = {{ marginTop: "1vh" }}>Nick</h4> : <h4 style = {{ marginTop: "2vh" }}>Nick</h4> }
                                             { window.innerWidth <= 767 ? <h4>Hobby</h4> : <h4 style = {{ marginTop: "1vh" }}>Hobby</h4> }
-                                            { window.innerWidth <= 767 ? <h4>Age</h4> : <h4 style = {{ marginTop: "1vh" }}>Age</h4> }
+                                            { window.innerWidth <= 767 ? <h4>Birth</h4> : <h4 style = {{ marginTop: "1vh" }}>Birth</h4> }
                                             { window.innerWidth <= 767 ? <h4>MBTI</h4> : <h4 style = {{ marginTop: "1vh" }}>MBTI</h4> }
                                             { window.innerWidth <= 767 ? <h4>Auth</h4> : <h4 style = {{ marginTop: "1vh" }}>Auth</h4> }
                                         </div>
                                         <div className = "col-md-8 col-8" style = {{ textAlign: "center" }}>
-                                            { window.innerWidth <= 767 ? <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mnickname }</h4> : <h4 style = {{ marginTop: "2vh" }}>아이린</h4> }
-                                            { window.innerWidth <= 767 ? <h4 style = {{ fontSize: window.innerWidth <= 767 ? "0.9rem" : "", marginTop: window.innerWidth <= 767 ? "1.5vh" : "" }}>{ userInfo.mhobby === null ? "취미를 설정해주세요." : userInfo.mhobby }</h4> : <h4 style = {{ marginTop: "1vh" }}>춤, 노래</h4> }
-                                            { window.innerWidth <= 767 ? <h4>{ userInfo.mbirth === null ? "1991. 03. 29" : userInfo.mbirth }</h4> : <h4 style = {{ marginTop: "1vh" }}>1991. 03. 29</h4> }
-                                            { window.innerWidth <= 767 ? <h4>ESTP</h4> : <h4 style = {{ marginTop: "1vh" }}>ESTP</h4> }
+                                            { window.innerWidth <= 767 ? <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mnickname }</h4> : <h4 style = {{ marginTop: "2vh" }}>{ userInfo.mnickname }</h4> }
+                                            { window.innerWidth <= 767 ? <h4 style = {{ marginTop: window.innerWidth <= 767 ? "1vh" : "" }}>{ userInfo.mhobby === null ? "취미를 설정해주세요." : userInfo.mhobby }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mhobby === null ? "취미를 설정해주세요." : userInfo.mhobby }</h4> }
+                                            { window.innerWidth <= 767 ? <h4>{ userInfo.mbirth }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mbirth }</h4> }
+                                            { window.innerWidth <= 767 ? <h4>{ userInfo.mbti }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mbti }</h4> }
                                             <h4>{ userInfo.platForm === "Kakao" ? <span style = {{ font: "bold", color: "yellow" }}>K</span> : userInfo.mplatform === "SubMate" || null || "" ? <span style = {{ font: "bold", color: "green" }}>SubMate</span> : <span style = {{ font: "bold", color: "green" }}>N</span> }</h4>
                                         </div>
                                     </div>
                                 </div>
                                 <div className = "col-md-3 col-3">
                                 { window.innerWidth <= 767 ? 
-                                    <img alt = "Setting" src = { require('../../IMG/임시프사.png') } style = {{ width: "100%", height: "80%", borderRadius: "8px", objectFit: "contain" }} /> : 
-                                    <img alt = "Setting" src = { require('../../IMG/임시프사.png') } style = {{ width: "100%", height: "100%", borderRadius: "8px", objectFit: "contain" }} /> 
+                                    <div style = {{ marginTop: "4vh" }}><img alt = "Setting" src = { require('../../MemberImg' + userInfo.profileimg.split("/MemberImg")[1]) } style = {{ width: "100%", height: "80%", borderRadius: "8px", objectFit: "contain" }} /><h6 style = {{ marginLeft: "1vw" }}>{ userInfo.mager }</h6></div> : 
+                                    <div style = {{ marginTop: "4vh" }}><img alt = "Setting" src = { require('../../MemberImg' + userInfo.profileimg.split("/MemberImg")[1]) } style = {{ width: "100%", height: "80%", borderRadius: "8px", objectFit: "contain" }} /><h6 style = {{ marginLeft: "1vw" }}>{ userInfo.mager }</h6></div> 
                                 }
                                 </div>
                                 <div className = "col-md-10 col-10 offset-md-1 offset-1">
@@ -71,7 +71,7 @@ function Profile() {
                                                 <h4 style = {{ marginTop: "1vh", textAlign: "center" }}>서브메이트 개발자 일동</h4>
                                             </div>
                                             <div className = "col-md-3 col-3">
-                                                <img alt = "Setting" src = { require('../../IMG/Stamp.png') } style = {{ width: "11vw", height: "5vh" }} />
+                                                <img alt = "Setting" src = { require('../../IMG/Stamp.png') } style = {{ width: "11vw", height: "5vh", paddingTop: "0" }} />
                                             </div>
                                         </div> : 
                                         <div className = "row">
@@ -84,6 +84,25 @@ function Profile() {
                                         </div>
                                     }
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className = "row" style = {{ width: "100%", marginTop: "3vh" }}>
+                        <h5>한마디</h5>
+                        <table className = "table"  style = {{ marginLeft: "5vw", height: "37vh" }}>
+                            <tbody>
+                                <tr className = "row" style = {{ width: "100%" }}>
+                                    <td className = "col-3">nickname</td>
+                                    <td className = "col-9"><p style = {{ width: "70vw" }}>안녕하세요몇글자까지되는지궁금하고또잘내려가는지궁금해서적어봅니다.</p></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div className = "row">
+                            <div className = "col-11" style = {{ paddingLeft: "5vw" }}>
+                                <input type = "text" className = "form-control" />
+                            </div>
+                            <div className = "col-1 gx-0">
+                                <button type = "button" className = "btn btn-success">Send</button>
                             </div>
                         </div>
                     </div>

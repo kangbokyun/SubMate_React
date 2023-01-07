@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { call } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
+import AdminMenu from './AdminMenu';
 
 function ReportList() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -64,7 +65,7 @@ function ReportList() {
                     </tbody>
                 </table>
             </div>
-            <Menu />
+            <AdminMenu />
         </div>
     );
 }

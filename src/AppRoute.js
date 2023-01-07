@@ -9,6 +9,7 @@ import AdminTendinousList from './Page/Admin/AdminTendinousList';
 import NoticeList from './Page/Admin/NoticeList';
 import NoticeWrite from './Page/Admin/NoticeWrite';
 import ReportList from './Page/Admin/ReportList';
+import TendinousView from './Page/Admin/TendinousView';
 import UserManage from './Page/Admin/UserManage';
 import Board from './Page/Board/Board';
 import BoardView from './Page/Board/BoardView';
@@ -51,7 +52,8 @@ function AppRoute() {
                 <Route path = "/QnAList" element = { <AdminQnA /> } />
                 <Route path = "/NoticeList" element = { <NoticeList /> } />
                 <Route path = "/NoticeWrite" element = { <NoticeWrite /> } />
-                <Route path = "//ReportList" element = { <ReportList /> } />
+                <Route path = "/ReportList" element = { <ReportList /> } />
+                <Route path = "/TendinousView" element = { <TendinousView /> } />
 
                 {/* Mate */}
                 <Route path = "/Mate" element = { <Mate /> } />

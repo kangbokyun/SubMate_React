@@ -6,11 +6,12 @@ export const FormDataAPI = [
     "/Board/Heart", 
     "/Board/Report",
     "/Admin/ChangeRole", 
+    "/Admin/NoticeWrite",
+    "/Admin/TendinousView",
     "/Mate/Users",  
     "/Mate/Profile", 
     "/Mate/UserHeart", 
     "/Mate/ClickHeart",
     "/Home/Rank",
-    "/Admin/NoticeWrite",
     "/Profile/TalkList"
 ]

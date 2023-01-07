@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { call } from '../../Service/APIService';
 import Header from '../Header';
 import AdminMenu from './AdminMenu';
 
@@ -13,7 +14,11 @@ function AdminTendinousList() {
         setWindowWidth(window.innerWidth);
         setWindowHeight(window.innerHeight);
     };
+
+    const [ tendinousList, setTendinousList ] = useState([]);
     useEffect(() => {
+        call("/Admin/Tendinous", "POST", null)
+        .then((res) => { console.log("/Admin/Tendinous/Res : ", res); setTendinousList(res) });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -22,6 +27,12 @@ function AdminTendinousList() {
     const history = useNavigate();
     const GoBack = () => {
         return history(-1) // 한 페이지 뒤로
+    };
+
+    const navi = (tno) => {
+        history('/TendinousView', {
+            state: { "tno" : tno }
+        });
     };
 
     return(
@@ -45,11 +56,15 @@ function AdminTendinousList() {
                             <td className = "col-2" style = {{ textAlign: "center" }}>작성자</td>
                             <td className = "col-2" style = {{ textAlign: "center" }}>상태</td>
                         </tr>
-                        <tr className = "row" style = {{ width: "100%", marginLeft: "0.1px" }}>
-                            <td className = "col-8" style = {{ textAlign: "center" }}>이거 이렇게 할 수 있나요?</td>
-                            <td className = "col-2" style = {{ textAlign: "center" }}>유재석</td>
-                            <td className = "col-2" style = {{ textAlign: "center" }}>OK</td>
-                        </tr>
+                        { tendinousList.map((list) => 
+                            <tr key = { list.tno } className = "row" style = {{ width: "100%", marginLeft: "0.1px" }}>
+                                <td className = "col-8" style = {{ textAlign: "center" }} onClick = { (e) => navi(list.tno) }>
+                                    { list.tcontents }
+                                </td>
+                                <td className = "col-2" style = {{ textAlign: "center" }}>{ list.twriter }</td>
+                                <td className = "col-2" style = {{ textAlign: "center" }}>OK</td>
+                            </tr>
+                        ) }
                     </tbody>
                 </table>
             </div>

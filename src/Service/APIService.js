@@ -255,6 +255,16 @@ export const NoticeWriteAPI = (formData) => {
         }
     });
 };
+
+export const TendinousAnswerAPI = (tendinousDTO) => {
+    return call("/Admin/TendinousAnswer", "POST", tendinousDTO)
+    .then((res) => {
+        if(res) {
+            alert("답변이 등록됐습니다.");
+            window.location.href = "/TendinousList";
+        }
+    });
+};
 // -/Admin==============================================================================
 // Report===============================================================================
 export const BoardReportAPI = (formData) => {

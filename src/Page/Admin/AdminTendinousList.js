@@ -29,9 +29,10 @@ function AdminTendinousList() {
         return history(-1) // 한 페이지 뒤로
     };
 
-    const navi = (tno) => {
+    const navi = (tno, tstatus) => {
+        console.log("tstatus : ", tstatus);
         history('/TendinousView', {
-            state: { "tno" : tno }
+            state: { "tno" : tno, "tstatus" : tstatus }
         });
     };
 
@@ -58,11 +59,16 @@ function AdminTendinousList() {
                         </tr>
                         { tendinousList.map((list) => 
                             <tr key = { list.tno } className = "row" style = {{ width: "100%", marginLeft: "0.1px" }}>
-                                <td className = "col-8" style = {{ textAlign: "center" }} onClick = { (e) => navi(list.tno) }>
+                                <td className = "col-8" style = {{ textAlign: "center" }} onClick = { (e) => navi(list.tno, list.tstatus) }>
                                     { list.tcontents }
                                 </td>
                                 <td className = "col-2" style = {{ textAlign: "center" }}>{ list.twriter }</td>
-                                <td className = "col-2" style = {{ textAlign: "center" }}>OK</td>
+                                <td className = "col-2" style = {{ textAlign: "center" }}>
+                                    { list.tstatus === "2" ? "확인" : 
+                                      list.tstatus === "3" ? "보류" :
+                                      list.tstatus === "4" ? "처리" : "미처리"
+                                    }
+                                </td>
                             </tr>
                         ) }
                     </tbody>

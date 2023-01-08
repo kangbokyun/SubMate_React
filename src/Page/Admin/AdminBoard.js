@@ -55,10 +55,13 @@ function AdminBoard() {
                         <table className = "table" style = {{ height: "23vh", width: "100%" }}>
                             <tbody>
                                 { tendinous.map((list) => 
-                                    <tr className = "row" key = { list.tno } style = {{ width: "100%", marginLeft: "1vw" }}>
+                                    String(list.tstatus) === "0" ?
+                                    <tr className = "row" key = { list.tno } style = {{ width: "100%", marginLeft: "2.5vw" }}>
                                         <td className = "col-9">{ list.tcontents }</td>
-                                        <td className = "col-3" style = {{ textAlign: "center" }}>{ list.tstatus }</td>
+                                        <td className = "col-3" style = {{ textAlign: "right" }}>{ list.tstatus === "0" ? "미처리" : "" }</td>
                                     </tr>
+                                    :
+                                    <tr key = { list.tno }></tr>
                                 ) }
                             </tbody>
                         </table>

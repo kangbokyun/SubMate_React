@@ -13,5 +13,6 @@ export const FormDataAPI = [
     "/Mate/UserHeart", 
     "/Mate/ClickHeart",
     "/Home/Rank",
-    "/Profile/TalkList"
+    "/Profile/TalkList",
+    "/SendedTendinous"
 ]

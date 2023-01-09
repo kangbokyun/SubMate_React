@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import Header from '../Header';
 import Menu from '../Menu';
+import { call } from '../../Service/APIService';
 
 function SendList() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -12,7 +13,10 @@ function SendList() {
         setWindowHeight(window.innerHeight);
     };
 
+    const [ sendedTendinous, setSendedTendinous ] = useState([]);
     useEffect(() => {
+        call("/SendedTendinous", "POST", null)
+        .then((res) => { console.log(res); setSendedTendinous(res) });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);

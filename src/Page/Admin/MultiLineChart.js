@@ -44,9 +44,9 @@ function MultiLineChart(chartData) {
         // </LineChart>
         
         <LineChart
-            width={ 390 }
-            height={ 200 }
-            data={ chartData.data }
+            width = { 390 }
+            height = { 200 }
+            data = { chartData.data }
             style = {{ marginLeft: "0", paddingLeft: "0", marginRight: "1.5vw", paddingRight: "1.5vw" }}
       >
         <CartesianGrid strokeDasharray="3 3" />

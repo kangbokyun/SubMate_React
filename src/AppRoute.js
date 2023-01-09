@@ -22,6 +22,7 @@ import Mate from './Page/Mate/Mate';
 import Login from './Page/Member/Login';
 import SignUp from './Page/Member/SignUp';
 import Profile from './Page/Profile/Profile';
+import SendList from './Page/Setting/SendList';
 import SetBoard from './Page/Setting/SetBoard';
 import SetChat from './Page/Setting/SetChat';
 import SetCustomer from './Page/Setting/SetCustomer';
@@ -80,6 +81,7 @@ function AppRoute() {
                 <Route path = "/SetCustomer" element = { <SetCustomer /> } />
                 <Route path = "/Customer/QnA" element = { <QnA /> } />
                 <Route path = "/Customer/Tendinous" element = { <Tendinous /> } />
+                <Route path = "/Customer/SendList" element = { <SendList /> } />
             </Routes>
         </Router>
     );

@@ -44,6 +44,9 @@ function SetCustomer() {
                             <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
                                 <td style = {{ fontSize: "1.2rem" }}><Link to = "/" style = {{ textDecoration: "none", color: "black" }}>FAQ</Link></td>
                             </tr>
+                            <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
+                                <td style = {{ fontSize: "1.2rem" }}><Link to = "/Customer/SendList" style = {{ textDecoration: "none", color: "black" }}>내역</Link></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -58,6 +61,9 @@ function SetCustomer() {
                         </tr>
                         <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
                             <td style = {{ fontSize: "1.2rem" }}><Link to = "/" style = {{ textDecoration: "none", color: "black" }}>FAQ</Link></td>
+                        </tr>
+                        <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
+                            <td style = {{ fontSize: "1.2rem" }}><Link to = "/" style = {{ textDecoration: "none", color: "black" }}>내역</Link></td>
                         </tr>
                     </table>
                 </div>

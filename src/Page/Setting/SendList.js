@@ -26,7 +26,7 @@ function SendList() {
     const history = useNavigate();
     const GoBack = () => {
         return history(-1) // 한 페이지 뒤로
-    };
+    };// 커밋주석
 
     return(
         <div>

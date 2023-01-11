@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { call, UserHeart } from '../../Service/APIService';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 function Mate() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -55,7 +57,6 @@ function Mate() {
     const [ heart, setHeart ] = useState(userInfos.heartclicker);
     const [ heartData, setHeartData ] = useState();
     const clickHeart = (e) => {
-        alert("11")
         const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
         const mno = userInfo.mno;
         const formData = new FormData();
@@ -86,6 +87,11 @@ function Mate() {
         formData.append("mno", mno);
         UserHeart(formData);
     };
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     return(
         <div>
@@ -126,7 +132,6 @@ function Mate() {
                                                 :
                                                 <img id = { list.mno } onClick = { clickHeart } alt = "Heart" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
                                             } 
-                                            
                                         </div>
                                         <div className = "col-1">
                                             <label style = {{ fontSize: "1rem" }}>
@@ -135,9 +140,25 @@ function Mate() {
                                         </div>
                                         <div className = "col-1 offset-9" style = {{ paddingLeft: "0" }}>
                                             <label style = {{  }}>
-                                                <img alt = "More" src = { require('../../IMG/Mate_More.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
+                                                <img onClick = { handleShow } alt = "More" src = { require('../../IMG/Mate_More.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
                                             </label>
                                         </div>
+                                        <Modal show = { show } onHide = { handleClose }>
+                                            <Modal.Header closeButton>
+                                                <Modal.Title>Chat</Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                                <h5>채팅을 신청하겠습니까?</h5>
+                                            </Modal.Body>
+                                            <Modal.Footer>
+                                                <Button variant = "secondary" onClick = { handleClose }>
+                                                    취소
+                                                </Button>
+                                                <Button variant = "info" id = "modalBTN" style = {{ color: "white" }}>
+                                                    보내기
+                                                </Button>
+                                            </Modal.Footer>
+                                        </Modal>
                                     </div>
                                 </figcaption>
                             </figure>

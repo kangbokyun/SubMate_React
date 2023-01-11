@@ -28,11 +28,6 @@ function Chat() {
             message: ''
         });
 
-        // 해당 데이터가 업데이트 되면 console에 로그 남김
-        useEffect(() => {
-            console.log("userData : ", userData);
-        }, [userData]);
-
         const connect = () => {
             // 연결할 sockJS의 인자로 프로토콜의 URI를 입력, 입의의 변수에 할당 => stomp 프로토콜 위에 sockJS가 돌아가도록 Stomp.over() 메소드의 인자로 소켓 변수 할당
             // 상황에 따라 sotmpClient라는 변수에 서버 연결, 메세지 전송, 상대방 구독 관련 값을 추가 할당하기에 자주 사용됨
@@ -54,7 +49,7 @@ function Chat() {
             // subscribe()의 첫번째 인자는 구독할 URI, 두번째 인자는 구독한 후에 실행될 콜백함수이며 구독 이후, 세번째 인자는 subscribe 프레임을 전송할 때 같이 보내는 헤더를 설정
             // 상대방로부터 메세지를 수신받을 때마다 해당 콜백 함수 실행
             // 메세지 수신 액션 구독
-            sotmpClient.subscribe("/Room/public", onMessageReceived);
+            sotmpClient.subscribe("/room/public", onMessageReceived);
 
             // 개인 메세지 수신 액션 구독 해당 메세지에 데이터 전달
             sotmpClient.subscribe("/user/" + userData.username + "/private", onPrivateMessage)
@@ -80,7 +75,7 @@ function Chat() {
                         privateChats.set(payloadData.senderName, []);
                         setPrivateChats(new Map(privateChats));
                     } break;
-                case "Message":
+                case "MESSAGE":
                     publicChats.push(payloadData);
                     setPublicChats([ ...publicChats ]);
                     break;
@@ -185,34 +180,16 @@ function Chat() {
                 <div><h1 style = {{ marginLeft: "3vw", marginTop: "10vh" }}>Chat</h1></div> : 
                 <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>Chat</h1> 
             }
-            <div className = { window.innerWidth <= 767 ? "" : "container" } stlye = {{ border: "solid 1px black", width: "110px" }}>
+            <div className = { window.innerWidth <= 767 ? "" : "container" } stlye = {{ border: "solid 1px black" }}>
                 { userData.connected ?
                     <div>
-                        <div>
-                            <ul>
-                                {/* 왼쪽 상단 네비게이션 CHATROOM / active 상태라면 member class 작동 */}
-                                <li onClick = { () => { setRoom("Room") } } className = { `member ${ room === "Room" && "active" }` }>ChatRoom</li>
-                                {[ ...privateChats.keys() ].map((name, index) => (
-                                    // keys => name은 room의 상태를 알림
-                                    <li onClick = { () => { setRoom(name) } } className = { `member ${ room === name && "active" }` } key = { index }>{ name }</li>
-                                )) }
-                            </ul>
-                        </div>
-                        {/* true && expression은 항상 expression으로 평가되고, false && expression은 항상 false로 평가된다. 
-                        따라서 && 뒤의 엘리먼트는 조건이 true일 때 출력이 될 조건이 false라면 작동 안함 */}
-                        {/* room이 "Room"이라면 */}
-                        "{ room }"
                         { room === "Room" && <div>
                             <ul style = {{ border: "solid 1px black", height: "30vh" }}>
                                 { publicChats.map((chat, index) => (
-                                    // chat.senderName(보내는 사람)과 내가 아이디가 같다면 본인 메세지로 표시 설정
-                                    <li style = {{ border: "solid 1px green" }} className = { `message ${chat.senderName === userData.username && "self"}` } key = { index }>
-                                        {/* chat.senderName(보내는 사람)과 내가 아이디가 다르다면 상대메세지로 표시 */}
-                                        { chat.senderName !== userData.username && <div>{ chat.senderName }</div> }
-                                        {/* index에 맞게 chat.message */}
-                                        <div>{ chat.message }</div>
-                                        { chat.senderName === userData.username && <div>{ chat.senderName }</div> }
-                                    </li>
+                                    <div key = { index }>
+                                        <h6>{ chat.senderName }</h6>
+                                        { chat.message }
+                                    </div>
                                 )) }
                             </ul>
                             <div>

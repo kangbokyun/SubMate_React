@@ -10,7 +10,7 @@ import Menu from '../Menu';
 // sockJS에서 제공하는 프로토콜 연결, 메세지 전송, 상대방 구독 기능을 제공
 let sotmpClient = null;
 
-function Chat() {
+function ChatTemp() {
 
         // 개인 채팅 메세지
         const [ privateChats, setPrivateChats ] = useState(new Map());
@@ -259,4 +259,4 @@ function Chat() {
         </div>
     );
 };
-export default Chat;
+export default ChatTemp;

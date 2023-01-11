@@ -92,7 +92,7 @@ function Mate() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
+  
     return(
         <div>
             <Header />

@@ -92,6 +92,11 @@ function Mate() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const sendChat = (e) => {
+        const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
+        console.log("e.target.id : ", e.target.id, " userno : ", userInfo.mno);
+    };
   
     return(
         <div>
@@ -154,7 +159,7 @@ function Mate() {
                                                 <Button variant = "secondary" onClick = { handleClose }>
                                                     취소
                                                 </Button>
-                                                <Button variant = "info" id = "modalBTN" style = {{ color: "white" }}>
+                                                <Button variant = "info" onClick = { sendChat } style = {{ color: "white" }}>
                                                     보내기
                                                 </Button>
                                             </Modal.Footer>

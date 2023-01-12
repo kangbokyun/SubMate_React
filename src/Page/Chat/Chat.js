@@ -19,7 +19,7 @@ function Chat() {
         const [ publicChats, setPublicChats ] = useState([]);
 
         // 채팅룸 상태
-        const [ room, setRoom ] = useState("Room");
+        const [ room, setRoom ] = useState("Room1");
 
         const [ userData, setUserData ] = useState({
             username: '',
@@ -49,10 +49,13 @@ function Chat() {
             // subscribe()의 첫번째 인자는 구독할 URI, 두번째 인자는 구독한 후에 실행될 콜백함수이며 구독 이후, 세번째 인자는 subscribe 프레임을 전송할 때 같이 보내는 헤더를 설정
             // 상대방로부터 메세지를 수신받을 때마다 해당 콜백 함수 실행
             // 메세지 수신 액션 구독
-            sotmpClient.subscribe("/room/public", onMessageReceived);
+            if(room === "Room") {
+                sotmpClient.subscribe("/room/public", onMessageReceived);
+            } else {
+                sotmpClient.subscribe("/user/" + userData.username + "/private", onPrivateMessage)
+            }
 
             // 개인 메세지 수신 액션 구독 해당 메세지에 데이터 전달
-            sotmpClient.subscribe("/user/" + userData.username + "/private", onPrivateMessage)
 
             userJoin();
         };
@@ -68,6 +71,7 @@ function Chat() {
 
         // 메세지를 수신받은 payload 확인
         const onMessageReceived = (payload) => {
+            console.log("PublicPayload : ", payload);
             let payloadData = JSON.parse(payload.body);
             switch(payloadData.status) {
                 case "JOIN": // JOIN일 경우
@@ -86,21 +90,20 @@ function Chat() {
 
         // 전달받은 payload 확인
         const onPrivateMessage = (payload) => {
-            console.log("payload : ", payload);
+            console.log("PrivatePayload : ", payload);
             let payloadData = JSON.parse(payload.body);
-
-            // privateChats의 map타입에서 해당 senderName(메세지를 보낸 사람)의 키가 일치하면
-            if(privateChats.get(payloadData.senderName)) {
-                // 해당 키의 값에 value 를 push
-                privateChats.get(payloadData.senderName).push(payloadData);
-
-                // push한 값을 기존의 privateChats state에 전달
-                setPrivateChats(new Map(privateChats));
-            } else {
-                let list = [];
-                // privateChats의 키와 다르다면 리스트의 값에 담아 key와 value값을 privateChats에 담는다.
-                privateChats.set(payloadData.senderName, list);
-                setPrivateChats(new Map(privateChats));
+            switch(payloadData.status) {
+                case "JOIN": // JOIN일 경우
+                    if(!privateChats.get(payloadData.senderName)) {
+                        privateChats.set(payloadData.senderName, []);
+                        setPrivateChats(new Map(privateChats));
+                    } break;
+                case "MESSAGE":
+                    publicChats.push(payloadData);
+                    setPublicChats([ ...publicChats ]);
+                    break;
+                default:
+                    break;
             }
         };
 
@@ -139,24 +142,14 @@ function Chat() {
             if(sotmpClient) {
                 let chatMessage = {
                     senderName: userData.username,
-                    receiverName: room,
                     message: userData.message,
                     status: "MESSAGE"
                 };
 
-                // 클라이언트의 username과 room의 이름이 다르면
-                if(userData.username !== room) {
-                    // privateChats의 키가 room의 이름 value값에 chatmessage 상태 값들을 저장
-                    privateChats.get(room).push(chatMessage);
-
-                    // map 형으로 바꾼 후 state 값에 전달
-                    setPrivateChats(new Map(privateChats));
-                }
-
-                sotmpClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
-
-                // 클라이언트 상태의 데이터에 message를 담는다. 데이터를 쌓기 위해 깊은 복사 사용
+                console.log("sendValue_Message : ", chatMessage);
+                sotmpClient.send("/app/message", {}, JSON.stringify(chatMessage));
                 setUserData({ ...userData, "message" : "" });
+                
                 console.log("sendPrivateValue_UserData : ", userData);
                 console.log("Check");
             }
@@ -204,18 +197,12 @@ function Chat() {
                         { room !== "Room" && <div>
                             <ul>
                                 {/* privateChats.get(room) 탭에 해당하는 채팅 메세지 출력 */}
-                                {[ ...privateChats.get(room) ].map((chat, index) => (
-                                    <li className = {`message ${ chat.senderName === userData.username && "self" }`} key = { index }>
-                                        {/* 해당 채팅을 보내는 이름과 현재 클라이언트의 이름이 같이 않다면 상대 프로필 활성화 */}
-                                        { chat.senderName !== userData.username && <div>{ chat.senderName }</div> }
-
-                                        {/* 메세지 보내기 */}
-                                        <div>{ chat.message }</div>
-
-                                        {/* 해당 채팅을 보내는 이름과 현재 클라이언트의 이름이 같다면 내 프로필 활성화 */}
-                                        { chat.senderName === userData.username && <div>{ chat.senderName }</div> }
-                                    </li>
-                                ))}
+                                { publicChats.map((chat, index) => (
+                                    <div key = { index }>
+                                        <h6>{ chat.senderName }</h6>
+                                        { chat.message }
+                                    </div>
+                                )) }
                             </ul>
                             {/* 메세지 보내는 곳 */}
                             <div>

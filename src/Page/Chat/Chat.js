@@ -11,6 +11,12 @@ import Menu from '../Menu';
 let sotmpClient = null;
 
 function Chat() {
+    // Mate에서 채팅 신청을 하면 상대한테 알림
+    // 알림이 오면 채팅하기나 거부를 선택
+    // 채팅 선택 시 신청, 확인하는 사람의 PK를 이용해 고유값 생성 여기서 고유값이 방 아이디 or 방 번호
+    // 채팅 탭 클릭 시 회원 번호에 일치하는 방 리스트 출력
+    // 방 클릭 시 해당하는 방 입장
+    // 대화
 
         // 개인 채팅 메세지
         const [ privateChats, setPrivateChats ] = useState(new Map());

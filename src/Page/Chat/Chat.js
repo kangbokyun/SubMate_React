@@ -23,7 +23,7 @@ function Chat() {
 
         const [ userData, setUserData ] = useState({
             username: '',
-            receivername: '',
+            receiverName: '',
             connected: '',
             message: ''
         });
@@ -52,6 +52,7 @@ function Chat() {
             if(room === "Room") {
                 sotmpClient.subscribe("/room/public", onMessageReceived);
             } else {
+                console.log("userData.username : ", userData.username);
                 sotmpClient.subscribe("/user/" + userData.username + "/private", onPrivateMessage)
             }
 
@@ -64,9 +65,15 @@ function Chat() {
         const userJoin = () => {
             let chatMessage = {
                 senderName: userData.username,
+                receiverName: room,
                 status: "JOIN"
             };
-            sotmpClient.send("/app/message", {}, JSON.stringify(chatMessage));
+
+            if(room === "Room") {
+                sotmpClient.send("/app/message", {}, JSON.stringify(chatMessage));
+            } else {
+                sotmpClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
+            }
         };
 
         // 메세지를 수신받은 payload 확인
@@ -90,8 +97,8 @@ function Chat() {
 
         // 전달받은 payload 확인
         const onPrivateMessage = (payload) => {
-            console.log("PrivatePayload : ", payload);
             let payloadData = JSON.parse(payload.body);
+            console.log("PrivatePayload : ", payloadData);
             switch(payloadData.status) {
                 case "JOIN": // JOIN일 경우
                     if(!privateChats.get(payloadData.senderName)) {
@@ -99,6 +106,7 @@ function Chat() {
                         setPrivateChats(new Map(privateChats));
                     } break;
                 case "MESSAGE":
+                    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                     publicChats.push(payloadData);
                     setPublicChats([ ...publicChats ]);
                     break;
@@ -143,11 +151,12 @@ function Chat() {
                 let chatMessage = {
                     senderName: userData.username,
                     message: userData.message,
+                    receiverName: room,
                     status: "MESSAGE"
                 };
 
                 console.log("sendValue_Message : ", chatMessage);
-                sotmpClient.send("/app/message", {}, JSON.stringify(chatMessage));
+                sotmpClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
                 setUserData({ ...userData, "message" : "" });
                 
                 console.log("sendPrivateValue_UserData : ", userData);
@@ -195,6 +204,7 @@ function Chat() {
 
                         {/* room이 "Room"이 아니라면 개인 메세지 상태 */}
                         { room !== "Room" && <div>
+                            { room } 
                             <ul>
                                 {/* privateChats.get(room) 탭에 해당하는 채팅 메세지 출력 */}
                                 { publicChats.map((chat, index) => (

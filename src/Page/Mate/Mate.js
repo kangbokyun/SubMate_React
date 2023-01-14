@@ -102,7 +102,14 @@ function Mate() {
         <div>
             <Header />
             { window.innerWidth <= 767 ? 
-                <div><h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>Mate</h1></div> : 
+                <div className = "row" style = {{ width: "100%", marginLeft: "0.1vw" }}>
+                    <div className = "col-3">
+                        <h1 style = {{ marginTop: "8vh" }}>Mate</h1>
+                    </div>
+                    <div className = "col-3 offset-6">
+                        <img alt = "Setting" src = { require('../../IMG/Bell.png') } style = {{ width: "12vw", marginTop: "6vh", float: "right" }} />
+                    </div>
+                </div> : 
                 <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>Mate</h1> 
             }
             { window.innerWidth <= 767 ?
@@ -145,7 +152,7 @@ function Mate() {
                                         </div>
                                         <div className = "col-1 offset-9" style = {{ paddingLeft: "0" }}>
                                             <label style = {{  }}>
-                                                <img onClick = { handleShow } alt = "More" src = { require('../../IMG/Mate_More.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
+                                                <img id = "receivermno" onClick = { handleShow } alt = "More" src = { require('../../IMG/Mate_More.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
                                             </label>
                                         </div>
                                         <Modal show = { show } onHide = { handleClose }>

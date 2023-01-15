@@ -14,5 +14,7 @@ export const FormDataAPI = [
     "/Mate/ClickHeart",
     "/Home/Rank",
     "/Profile/TalkList",
-    "/SendedTendinous"
+    "/SendedTendinous",
+    "/ChatCall",
+    "/CallList"
 ]

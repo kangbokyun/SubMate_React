@@ -149,8 +149,8 @@ export const ChangeRole = (formData) => {
 };
 
 // 메이트 채팅 신청
-export const ChatCall = (chatcallDTO) => {
-    return call("/ChatCall", "POST", chatcallDTO)
+export const ChatCall = (formData) => {
+    return call("/ChatCall", "POST", formData)
     .then((res) => {
         if(res) {
             alert("채팅신청 되었습니다.\n상대가 수락하면 채팅이 시작됩니다.")

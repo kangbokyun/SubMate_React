@@ -5,9 +5,11 @@ import '../../Component/Card/Card2.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { call, UserHeart } from '../../Service/APIService';
+import { call, ChatCall, UserHeart } from '../../Service/APIService';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 function Mate() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -23,26 +25,20 @@ function Mate() {
     const [ profile, setProfile ] = useState([]);
     const [ userHeartList, setUserHeartList ] = useState([]);
     const [ checkClickH, setCheckClickH ] = useState(false);
+    const [ callList, setCallList ] = useState([]);
     useEffect(() => {
         let userInfo = JSON.parse(localStorage.getItem("UserInfo"));
         const formData = new FormData();
         formData.append("mno", userInfo.mno);
         // setUserInfos({"mno" : mno.mno})
         call("/Mate/Users", "POST", formData)
-        .then((res) => {
-            setUserInfos(res);
-            console.log("UserRes : ", res);
-        });
+        .then((res) => { setUserInfos(res); console.log("UserRes : ", res); });
         call("/Mate/Profile", "POST", formData)
-        .then((res) => {
-            setProfile(res);
-            console.log("ProfileRes : ", res);
-        });
+        .then((res) => { setProfile(res); console.log("ProfileRes : ", res); });
         call("/Mate/ClickHeart", "POST", formData)
-        .then((res) => {
-            setCheckClickH(res);
-            console.log("CheckHeartRes : ", res);
-        });
+        .then((res) => { setCheckClickH(res); console.log("CheckHeartRes : ", res); });
+        call("/CallList", "POST", formData)
+        .then((res) => { console.log("CallList/Res : ", res); setCallList(res); });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -91,11 +87,25 @@ function Mate() {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = (receivermno) => {
+        setUserNo(receivermno);
+        setShow(true)
+    };
 
+    const [ userNo, setUserNo ] = useState(0);
     const sendChat = (e) => {
+        const formData = new FormData();
         const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
-        console.log("e.target.id : ", e.target.id, " userno : ", userInfo.mno);
+        formData.append("sendermno", userInfo.mno);
+        formData.append("receivermno", userNo)
+        ChatCall(formData);
+    };
+
+    const chatOk = () => {
+        alert("OK");
+    };
+    const chatNo = () => {
+        alert("No");
     };
   
     return(
@@ -106,8 +116,27 @@ function Mate() {
                     <div className = "col-3">
                         <h1 style = {{ marginTop: "8vh" }}>Mate</h1>
                     </div>
-                    <div className = "col-3 offset-6">
-                        <img alt = "Setting" src = { require('../../IMG/Bell.png') } style = {{ width: "12vw", marginTop: "6vh", float: "right" }} />
+                    <div className = "col-4 offset-5">
+                        <img id="dropdown-basic-button" alt = "Setting" src = { require('../../IMG/Bell.png') } style = {{ width: "12vw", marginTop: "6vh", float: "right" }} />
+                        <DropdownButton id="dropdown-basic-button" style = {{ backgroundColor: "transparent", border: "solid 1px red", height: "4.5vh", marginTop: "7vh", backgroundImage: "../../IMG/Bell.png" }}>
+                            {callList.map((list) =>
+                                <div className = "row" style = {{ width: "100%", marginLeft: "3vw" }} key = { list.callno }>
+                                    <div className = "col-9" style = {{  }}>
+                                        <Dropdown.Item onClick = { handleShow } style = {{ paddingLeft: "1vw", width: "50vw" }}>{ list.sendername }님의 채팅신청</Dropdown.Item>
+                                    </div>
+                                    <div className = "col-3" style = {{  }}>
+                                        <div className = "row" style = {{ width: "100%" }}>
+                                            <div className = "col-6" style = {{ padding: "0" }}>
+                                                <p onClick = { chatOk } style = {{ float: "right" }}>v</p>
+                                            </div>
+                                            <div className = "col-6" style = {{ padding: "0" }}>
+                                                <p onClick = { chatNo } style = {{ float: "right" }}>x</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </DropdownButton>
                     </div>
                 </div> : 
                 <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>Mate</h1> 
@@ -152,7 +181,7 @@ function Mate() {
                                         </div>
                                         <div className = "col-1 offset-9" style = {{ paddingLeft: "0" }}>
                                             <label style = {{  }}>
-                                                <img id = "receivermno" onClick = { handleShow } alt = "More" src = { require('../../IMG/Mate_More.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
+                                                <img value = { userNo } onClick = { () => {handleShow(list.mno)} } alt = "More" src = { require('../../IMG/Mate_More.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
                                             </label>
                                         </div>
                                         <Modal show = { show } onHide = { handleClose }>

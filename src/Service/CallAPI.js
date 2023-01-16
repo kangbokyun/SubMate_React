@@ -17,5 +17,6 @@ export const FormDataAPI = [
     "/SendedTendinous",
     "/ChatCall",
     "/CallList",
+    "/ChatRoom",
     "/CreateChatRoom"
 ]

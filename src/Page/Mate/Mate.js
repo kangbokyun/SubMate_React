@@ -101,6 +101,7 @@ function Mate() {
         ChatCall(formData);
         handleClose();
     };
+    const [ chatRoom, setChatRoom ] = useState({});
 
     const chatOk = (receiverno, receivername, senderno, sendername) => {
         console.log("@@@@@@@@@@@@@ >>>>> ", receivername);
@@ -112,13 +113,20 @@ function Mate() {
         call("/CreateChatRoom", "POST", formData)
         .then((res) => { 
             if(res) {
-                history("/InChat", {
-                state: {
-                    "receiverno" : receiverno,
-                    "receivername" : receivername,
-                    "senderno" : senderno,
-                    "sendername" : sendername
-                }});
+                // 룸 번호 찾아와서 맞으면 히스토리
+                call("/ChatRoom", "POST", formData)
+                .then((ress) => { console.log("ChatRoom/Res : ", ress);
+                    if(ress) {
+                        history("/InChat", {
+                        state: {
+                            "receiverno" : receiverno,
+                            "receivername" : receivername,
+                            "senderno" : senderno,
+                            "sendername" : sendername,
+                            "roomname" : ress.roomname
+                        }});
+                    }  
+                });
             } 
         });
         console.log("채팅이 시작됨");

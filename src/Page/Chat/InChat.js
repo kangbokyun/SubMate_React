@@ -13,6 +13,11 @@ import Menu from '../Menu';
 let sotmpClient = null;
 
 function InChat() {
+    // 메이트에서 값 넘겨 받아 채팅 기본 데이터 세팅 완료
+    // 넘겨 받은 값을 이용해 서버에서 센더와 리시버를 이용해 조건 충족 시 룸네임 가져오기
+    // 서로 채팅
+    // 내가 센더거나 리시버라면 채팅 목록 가져와서 챗 페이지에 뿌리기
+
     const chatDTO = useLocation();
 
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -47,17 +52,15 @@ function InChat() {
         const [ chatRoom, setChatRoom ] = useState({});
 
         useEffect(() => {
-            setChatRoom({  })
-            call("/ChatRoom", "POST", chatDTO.state)
-            .then((res) => { console.log("ChatRoom/Res : ", res); setChatRoom(res) });
+            console.log("chatDTO : ", chatDTO);
             connect();
             resizeWindow();
             window.addEventListener("resize", resizeWindow);
             return () => window.removeEventListener("resize", resizeWindow);
-        }, [publicChats]);
+        }, []);
 
         // 채팅룸 상태
-        const [ room, setRoom ] = useState("Room1");
+        const [ room, setRoom ] = useState(chatDTO.state.roomname);
 
         const [ userData, setUserData ] = useState({
             username: '',
@@ -71,6 +74,7 @@ function InChat() {
             // 상황에 따라 sotmpClient라는 변수에 서버 연결, 메세지 전송, 상대방 구독 관련 값을 추가 할당하기에 자주 사용됨
             let Sock = new SockJS("http://localhost:8080/ws");
             sotmpClient = over(Sock);
+
 
             // 서버 연결
             // 서버에 연결하기 위해 서버에 connect 프레임 전송
@@ -91,7 +95,7 @@ function InChat() {
                 sotmpClient.subscribe("/room/public", onMessageReceived);
             } else {
                 console.log("userData.username : ", userData.username);
-                sotmpClient.subscribe("/user/" + userData.username + "/private", onPrivateMessage)
+                sotmpClient.subscribe("/user/" + chatDTO.state.roomname + "/private", onPrivateMessage)
             }
 
             // 개인 메세지 수신 액션 구독 해당 메세지에 데이터 전달
@@ -102,7 +106,7 @@ function InChat() {
         // 연결 될 경우 userJoin을 통해 JOIN 상태 값과 유저 이름을 전송한다.
         const userJoin = () => {
             let chatMessage = {
-                senderName: userData.username,
+                senderName: chatDTO.state.sendername,
                 receiverName: room,
                 status: "JOIN"
             };
@@ -169,7 +173,7 @@ function InChat() {
             // stompClient에 소켓이 존재한다면 /app/message로 값을 전달
             if(sotmpClient) {
                 let chatMessage = {
-                    senderName: userData.username,
+                    senderName: chatDTO.state.sendername,
                     message: userData.message,
                     status: "MESSAGE"
                 };
@@ -186,9 +190,9 @@ function InChat() {
             // room은 개인아이디 상태 or CHATROOM(PublicChat)을 나타냄
             if(sotmpClient) {
                 let chatMessage = {
-                    senderName: userData.username,
+                    senderName: chatDTO.state.sendername,
                     message: userData.message,
-                    receiverName: room,
+                    receiverName: chatDTO.state.roomname,
                     status: "MESSAGE"
                 };
 

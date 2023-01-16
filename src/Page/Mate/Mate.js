@@ -99,10 +99,29 @@ function Mate() {
         formData.append("sendermno", userInfo.mno);
         formData.append("receivermno", userNo)
         ChatCall(formData);
+        handleClose();
     };
 
-    const chatOk = () => {
-        alert("OK");
+    const chatOk = (receiverno, receivername, senderno, sendername) => {
+        console.log("@@@@@@@@@@@@@ >>>>> ", receivername);
+        const formData = new FormData();
+        formData.append("receiverno", receiverno);
+        formData.append("receivername", receivername);
+        formData.append("senderno", senderno);
+        formData.append("sendername", sendername);
+        call("/CreateChatRoom", "POST", formData)
+        .then((res) => { 
+            if(res) {
+                history("/InChat", {
+                state: {
+                    "receiverno" : receiverno,
+                    "receivername" : receivername,
+                    "senderno" : senderno,
+                    "sendername" : sendername
+                }});
+            } 
+        });
+        console.log("채팅이 시작됨");
     };
     const chatNo = () => {
         alert("No");
@@ -127,7 +146,7 @@ function Mate() {
                                     <div className = "col-3" style = {{  }}>
                                         <div className = "row" style = {{ width: "100%" }}>
                                             <div className = "col-6" style = {{ padding: "0" }}>
-                                                <p onClick = { chatOk } style = {{ float: "right" }}>v</p>
+                                                <p onClick = { () => { chatOk(list.callreceiverno, list.receivername, list.callsenderno, list.sendername) } } style = {{ float: "right" }}>v</p>
                                             </div>
                                             <div className = "col-6" style = {{ padding: "0" }}>
                                                 <p onClick = { chatNo } style = {{ float: "right" }}>x</p>

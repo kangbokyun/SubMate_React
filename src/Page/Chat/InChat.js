@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import SockJS from 'sockjs-client';
 import { over } from 'stompjs';
+import { call } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
 // import './Chat.css';
@@ -12,6 +13,8 @@ import Menu from '../Menu';
 let sotmpClient = null;
 
 function InChat() {
+    const chatDTO = useLocation();
+
     // 윈도우 크기 변경 감지되면 리렌더링
     const [ windowWidth, setWindowWidth ] = useState(0);
     const [ windowHeight, setWindowHeight ] = useState(0);
@@ -41,13 +44,13 @@ function InChat() {
         
         const scrollRef = useRef();
 
+        const [ chatRoom, setChatRoom ] = useState({});
+
         useEffect(() => {
-            let chatboxScrollHeight = document.querySelector("#chatBox");
-            console.log(chatboxScrollHeight);
-            // if(scrollRef.current.scrollTop >= 0) {
-            //     console.log(scrollRef.current.scrollHeight);
-            //     // scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-            // }
+            setChatRoom({  })
+            call("/ChatRoom", "POST", chatDTO.state)
+            .then((res) => { console.log("ChatRoom/Res : ", res); setChatRoom(res) });
+            connect();
             resizeWindow();
             window.addEventListener("resize", resizeWindow);
             return () => window.removeEventListener("resize", resizeWindow);
@@ -204,11 +207,6 @@ function InChat() {
             setUserData({ ...userData, "username" : value });
         };
 
-        // connect 함수 실행으로 서버 연결
-        const registerUser = () => {
-            connect();
-        };
-
     return(
         <div>
             <Header />
@@ -222,55 +220,47 @@ function InChat() {
                 <h1 style = {{ marginLeft: "1vw", marginTop: "8vh" }}>InChat</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" } stlye = {{ border: "solid 1px black" }}>
-                { userData.connected ?
-                    <div className = "row" style = {{ width: "100%" }}>
-                        { room === "Room" && <div>
-                            <ul style = {{ border: "solid 1px black", height: "30vh" }}>
-                                { publicChats.map((chat, index) => (
-                                    <div key = { index }>
-                                        <h6>{ chat.senderName }</h6>
-                                        { chat.message }
-                                    </div>
-                                )) }
-                            </ul>
-                            <div>
-                                {/* state에 message 전달(onChange) */}
-                                <input type = "text" placeholder = "메세지를 입력하세요." value = { userData.message } onChange = { handleMessage } />
-                                {/* 버튼 누르면 서버로 유저 정보 및 액션 상태, 메세지를 전달 */}
-                                <button type = "button" onClick = { sendValue }>Send</button>
-                            </div>
-                        </div> }
+                <div className = "row" style = {{ width: "100%" }}>
+                    { room === "Room" && <div>
+                        <ul style = {{ border: "solid 1px black", height: "30vh" }}>
+                            { publicChats.map((chat, index) => (
+                                <div key = { index }>
+                                    <h6>{ chat.senderName }</h6>
+                                    { chat.message }
+                                </div>
+                            )) }
+                        </ul>
+                        <div>
+                            {/* state에 message 전달(onChange) */}
+                            <input type = "text" placeholder = "메세지를 입력하세요." value = { userData.message } onChange = { handleMessage } />
+                            {/* 버튼 누르면 서버로 유저 정보 및 액션 상태, 메세지를 전달 */}
+                            <button type = "button" onClick = { sendValue }>Send</button>
+                        </div>
+                    </div> }
 
-                        {/* room이 "Room"이 아니라면 개인 메세지 상태 */}
-                        { room !== "Room" && <div style = {{ marginLeft: "3vw" }}>
-                            <h6>상대이름</h6>
-                            <ul id = "chatBox" style = {{ height: "72.5vh", overflowY: "scroll" }} ref = { scrollRef }>
-                                {/* privateChats.get(room) 탭에 해당하는 채팅 메세지 출력 */}
-                                { publicChats.map((chat, index) => (
-                                    <div key = { index }>
-                                        <h6>{ chat.senderName }</h6>
-                                        { chat.message }
-                                    </div>
-                                )) }
-                            </ul>
-                            {/* 메세지 보내는 곳 */}
-                            <div className = "row" stlye = {{ width: "100%" }}>
-                                <div className = "col-10">
-                                    <input className = "form-control" type = "text" placeholder = "메세지를 입력하세요." value = { userData.message } onChange = { handleMessage } style = {{  }} />
+                    {/* room이 "Room"이 아니라면 개인 메세지 상태 */}
+                    { room !== "Room" && <div style = {{ marginLeft: "3vw" }}>
+                        <h6>상대이름</h6>
+                        <ul id = "chatBox" style = {{ height: "72.5vh", overflowY: "scroll" }} ref = { scrollRef }>
+                            {/* privateChats.get(room) 탭에 해당하는 채팅 메세지 출력 */}
+                            { publicChats.map((chat, index) => (
+                                <div key = { index }>
+                                    <h6>{ chat.senderName }</h6>
+                                    { chat.message }
                                 </div>
-                                <div className = "col-2 gx-0">
-                                    <button className = "btn btn-info" style = {{ width: "80%", paddingLeft: "1vw", color: "white" }} type = "button" onClick = { sendPrivateValue }>Send</button>
-                                </div>
+                            )) }
+                        </ul>
+                        {/* 메세지 보내는 곳 */}
+                        <div className = "row" stlye = {{ width: "100%" }}>
+                            <div className = "col-10">
+                                <input className = "form-control" type = "text" placeholder = "메세지를 입력하세요." value = { userData.message } onChange = { handleMessage } style = {{  }} />
                             </div>
-                        </div> }
-                    </div>
-                    :
-                    // 연결 안됨
-                    <div>
-                        <input id = "user-name" placeholder = "이름을 입력하세요." name = "userName" value = { userData.username } onChange = { handleUserName } />
-                        <button type = "button" onClick = { registerUser }>connect</button>
-                    </div>
-                }
+                            <div className = "col-2 gx-0">
+                                <button className = "btn btn-info" style = {{ width: "80%", paddingLeft: "1vw", color: "white" }} type = "button" onClick = { sendPrivateValue }>Send</button>
+                            </div>
+                        </div>
+                    </div> }
+                </div>
             </div>
             <Menu />
         </div>

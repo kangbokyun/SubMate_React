@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { ListGroup } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router';
 import SockJS from 'sockjs-client';
 import { over } from 'stompjs';
-import { call } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
-// import './Chat.css';
 
 // 스프링에서 Stomp 사용
 // 웹 소켓의 서브 프로토콜인 stomp 위에서 sockJS가 정상적으로 작동되고 stomp 프로토콜 환경에서
@@ -13,6 +12,7 @@ import Menu from '../Menu';
 let sotmpClient = null;
 
 function InChat() {
+    const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
     // 메이트에서 값 넘겨 받아 채팅 기본 데이터 세팅 완료
     // 넘겨 받은 값을 이용해 서버에서 센더와 리시버를 이용해 조건 충족 시 룸네임 가져오기
     // 서로 채팅
@@ -173,7 +173,7 @@ function InChat() {
             // stompClient에 소켓이 존재한다면 /app/message로 값을 전달
             if(sotmpClient) {
                 let chatMessage = {
-                    senderName: chatDTO.state.sendername,
+                    senderName: userInfo.mnickname,
                     message: userData.message,
                     status: "MESSAGE"
                 };
@@ -190,7 +190,7 @@ function InChat() {
             // room은 개인아이디 상태 or CHATROOM(PublicChat)을 나타냄
             if(sotmpClient) {
                 let chatMessage = {
-                    senderName: chatDTO.state.sendername,
+                    senderName: userInfo.mnickname,
                     message: userData.message,
                     receiverName: chatDTO.state.roomname,
                     status: "MESSAGE"
@@ -218,15 +218,15 @@ function InChat() {
                 <div>
                     <h1 style = {{ marginLeft: "1vw", marginTop: "8vh", marginBottom: "1.5vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
-                        InChat
+                        InChat : { userInfo.mnickname === chatDTO.state.sendername ? chatDTO.state.receivername : chatDTO.state.sendername }
                     </h1>
                 </div> : 
                 <h1 style = {{ marginLeft: "1vw", marginTop: "8vh" }}>InChat</h1> 
             }
-            <div className = { window.innerWidth <= 767 ? "" : "container" } stlye = {{ border: "solid 1px black" }}>
+            <div className = { window.innerWidth <= 767 ? "" : "container" } stlye = {{  }}>
                 <div className = "row" style = {{ width: "100%" }}>
                     { room === "Room" && <div>
-                        <ul style = {{ border: "solid 1px black", height: "30vh" }}>
+                        <ul style = {{ height: "30vh" }}>
                             { publicChats.map((chat, index) => (
                                 <div key = { index }>
                                     <h6>{ chat.senderName }</h6>
@@ -243,26 +243,40 @@ function InChat() {
                     </div> }
 
                     {/* room이 "Room"이 아니라면 개인 메세지 상태 */}
-                    { room !== "Room" && <div style = {{ marginLeft: "3vw" }}>
-                        <h6>상대이름</h6>
-                        <ul id = "chatBox" style = {{ height: "72.5vh", overflowY: "scroll" }} ref = { scrollRef }>
+                    { room !== "Room" && <div className = "row" style = {{ width: "100%" }}>
+                        <ul style = {{ height: "74.5vh", overflowY: "scroll", marginLeft: "5.5vw" }} ref = { scrollRef }>
                             {/* privateChats.get(room) 탭에 해당하는 채팅 메세지 출력 */}
-                            { publicChats.map((chat, index) => (
-                                <div key = { index }>
-                                    <h6>{ chat.senderName }</h6>
-                                    { chat.message }
+                                { publicChats.map((chat, index) => 
+                                    <div key = { index } style = {{  }}>
+                                        { chat.senderName === userInfo.mnickname ? 
+                                        <label className = "row" style = {{ width: "100%", marginTop: "1.5vh", float: "left" }}>
+                                            <div className = "col-3" style = {{ textAlign: "left" }}>
+                                                { chat.senderName }
+                                            </div>
+                                            <div className = "col-10" style = {{ textAlign: "left" }}>
+                                                <label style = {{ backgroundColor: userInfo.mgender === "Woman" ? "#fdc6d5" : "#a7c2f7", paddingLeft: "2vw", borderRadius: "8px", paddingTop: "0.4vh", paddingRight: "2vw" }}>{ chat.message }</label>
+                                            </div>
+                                        </label>
+                                        : 
+                                        <label className = "row" style = {{ width: "100%", marginTop: "1.5vh", float: "right" }}>
+                                            <div className = "col-3 offset-9" style = {{ textAlign: "right" }}>
+                                                { chat.senderName }
+                                            </div>
+                                            <div className = "col-10 offset-2" style = {{ textAlign: "right" }}>
+                                                <label style = {{ backgroundColor: userInfo.mgender === "Woman" ? "#fdc6d5" : "#a7c2f7", paddingLeft: "2vw", borderRadius: "8px", paddingTop: "0.4vh", paddingRight: "2vw", textAlign: "left" }}>{ chat.message }</label>
+                                            </div>
+                                        </label>
+                                    }
                                 </div>
-                            )) }
+                            ) }
                         </ul>
                         {/* 메세지 보내는 곳 */}
-                        <div className = "row" stlye = {{ width: "100%" }}>
-                            <div className = "col-10">
-                                <input className = "form-control" type = "text" placeholder = "메세지를 입력하세요." value = { userData.message } onChange = { handleMessage } style = {{  }} />
+                            <div className = "col-10" style = {{  }}>
+                                <input className = "form-control" type = "text" placeholder = "메세지를 입력하세요." value = { userData.message } onChange = { handleMessage } style = {{ marginLeft: "4vw", width: "100%" }} />
                             </div>
-                            <div className = "col-2 gx-0">
-                                <button className = "btn btn-info" style = {{ width: "80%", paddingLeft: "1vw", color: "white" }} type = "button" onClick = { sendPrivateValue }>Send</button>
+                            <div className = "col-2 gx-0" style = {{  }}>
+                                <button className = "btn btn-info" style = {{ width: "100%", paddingLeft: "1.7vw", color: "white", marginLeft: "5vw" }} type = "button" onClick = { sendPrivateValue }>Send</button>
                             </div>
-                        </div>
                     </div> }
                 </div>
             </div>

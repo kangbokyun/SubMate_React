@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
+import { call } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
 
@@ -13,13 +14,31 @@ function Chat() {
         setWindowHeight(window.innerHeight);
     };
 
-    const [ reportList, setReportList ] = useState([]);
+    const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
+
+    const [ roomList, setRoomList ] = useState([]);
     useEffect(() => {
+        call("/ChatRoomList", "POST", null)
+        .then((res) => { console.log("/ChatRoomList/Res : ", res); setRoomList(res) });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
     }, []);
     // /윈도우 크기 변경 감지되면 리렌더링
+
+    const history = useNavigate();
+    const goToInChat = (roomname, sendername, senderno, receivername, receiverno, roomno) => {
+        history("/InChat", {
+            state: {
+                "roomname": roomname,
+                "sendername": sendername,
+                "senderno": senderno,
+                "receivername": receivername,
+                "receiverno": receiverno,
+                "roomno": roomno,
+            }
+        });
+    };
 
     return(
         <div>
@@ -29,11 +48,10 @@ function Chat() {
                 <h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>Chat</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
-                {/* TempData */}
-                <table className = "table table-striped" style = {{ border: "solid 1px black", height: "81.5vh" }}>
+                <table className = "table table-striped" style = {{ height: "81.5vh" }}>
                     <tbody>
-                        <Link to = "/InChat" style = {{ textDecoration: "none", color: "black" }}>
-                            <tr className = "row" style = {{ width: "100%", marginLeft: "0.1vh" }}>
+                        { roomList.map((list) => 
+                            <tr onClick = { () => goToInChat(list.roomname, list.sendername, list.senderno, list.receivername, list.receiverno, list.roomno) } className = "row" style = {{ width: "100%", marginLeft: "0.1vh" }} key = { list.roomno }>
                                 <td className = "col-12">
                                     <div className = "row" style = {{ width: "100%" }}>
                                         <div className = "col-3">
@@ -44,7 +62,11 @@ function Chat() {
                                                 <div className = "col-12">
                                                     <div className = "row">
                                                         <div className = "col-7">
-                                                            상대닉네임
+                                                            { list.sendername === userInfo.mnickname ? 
+                                                                list.receivername
+                                                                :
+                                                                list.sendername
+                                                            }
                                                         </div>
                                                         <div className = "col-5">
                                                             시간
@@ -66,205 +88,7 @@ function Chat() {
                                     </div>
                                 </td>
                             </tr>
-                        </Link>
-                        <tr className = "row" style = {{ width: "100%", marginLeft: "0.1vh" }}>
-                            <td className = "col-12">
-                                <div className = "row" style = {{ width: "100%" }}>
-                                    <div className = "col-3">
-                                        이미지
-                                    </div>
-                                    <div className = "col-9">
-                                        <div className = "row">
-                                            <div className = "col-12">
-                                                <div className = "row">
-                                                    <div className = "col-7">
-                                                        상대닉네임
-                                                    </div>
-                                                    <div className = "col-5">
-                                                        시간
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className = "col-12">
-                                                <div className = "row">
-                                                    <div className = "col-11">
-                                                        마지막대화
-                                                    </div>
-                                                    <div className = "col-1">
-                                                        1
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr className = "row" style = {{ width: "100%", marginLeft: "0.1vh" }}>
-                            <td className = "col-12">
-                                <div className = "row" style = {{ width: "100%" }}>
-                                    <div className = "col-3">
-                                        이미지
-                                    </div>
-                                    <div className = "col-9">
-                                        <div className = "row">
-                                            <div className = "col-12">
-                                                <div className = "row">
-                                                    <div className = "col-7">
-                                                        상대닉네임
-                                                    </div>
-                                                    <div className = "col-5">
-                                                        시간
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className = "col-12">
-                                                <div className = "row">
-                                                    <div className = "col-11">
-                                                        마지막대화
-                                                    </div>
-                                                    <div className = "col-1">
-                                                        1
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr className = "row" style = {{ width: "100%", marginLeft: "0.1vh" }}>
-                            <td className = "col-12">
-                                <div className = "row" style = {{ width: "100%" }}>
-                                    <div className = "col-3">
-                                        이미지
-                                    </div>
-                                    <div className = "col-9">
-                                        <div className = "row">
-                                            <div className = "col-12">
-                                                <div className = "row">
-                                                    <div className = "col-7">
-                                                        상대닉네임
-                                                    </div>
-                                                    <div className = "col-5">
-                                                        시간
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className = "col-12">
-                                                <div className = "row">
-                                                    <div className = "col-11">
-                                                        마지막대화
-                                                    </div>
-                                                    <div className = "col-1">
-                                                        1
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr className = "row" style = {{ width: "100%", marginLeft: "0.1vh" }}>
-                            <td className = "col-12">
-                                <div className = "row" style = {{ width: "100%" }}>
-                                    <div className = "col-3">
-                                        이미지
-                                    </div>
-                                    <div className = "col-9">
-                                        <div className = "row">
-                                            <div className = "col-12">
-                                                <div className = "row">
-                                                    <div className = "col-7">
-                                                        상대닉네임
-                                                    </div>
-                                                    <div className = "col-5">
-                                                        시간
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className = "col-12">
-                                                <div className = "row">
-                                                    <div className = "col-11">
-                                                        마지막대화
-                                                    </div>
-                                                    <div className = "col-1">
-                                                        1
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr className = "row" style = {{ width: "100%", marginLeft: "0.1vh" }}>
-                            <td className = "col-12">
-                                <div className = "row" style = {{ width: "100%" }}>
-                                    <div className = "col-3">
-                                        이미지
-                                    </div>
-                                    <div className = "col-9">
-                                        <div className = "row">
-                                            <div className = "col-12">
-                                                <div className = "row">
-                                                    <div className = "col-7">
-                                                        상대닉네임
-                                                    </div>
-                                                    <div className = "col-5">
-                                                        시간
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className = "col-12">
-                                                <div className = "row">
-                                                    <div className = "col-11">
-                                                        마지막대화
-                                                    </div>
-                                                    <div className = "col-1">
-                                                        1
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr className = "row" style = {{ width: "100%", marginLeft: "0.1vh" }}>
-                            <td className = "col-12">
-                                <div className = "row" style = {{ width: "100%" }}>
-                                    <div className = "col-3">
-                                        이미지
-                                    </div>
-                                    <div className = "col-9">
-                                        <div className = "row">
-                                            <div className = "col-12">
-                                                <div className = "row">
-                                                    <div className = "col-7">
-                                                        상대닉네임
-                                                    </div>
-                                                    <div className = "col-5">
-                                                        시간
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className = "col-12">
-                                                <div className = "row">
-                                                    <div className = "col-11">
-                                                        마지막대화
-                                                    </div>
-                                                    <div className = "col-1">
-                                                        1
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                        ) }
                     </tbody>
                 </table>
             </div>

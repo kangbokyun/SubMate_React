@@ -248,13 +248,17 @@ function InChat() {
                             {/* privateChats.get(room) 탭에 해당하는 채팅 메세지 출력 */}
                                 { publicChats.map((chat, index) => 
                                     <div key = { index } style = {{  }}>
-                                        { chat.senderName === userInfo.mnickname ? 
+                                        { chat.senderName === chatDTO.state.sendername ? 
                                         <label className = "row" style = {{ width: "100%", marginTop: "1.5vh", float: "left" }}>
                                             <div className = "col-3" style = {{ textAlign: "left" }}>
                                                 { chat.senderName }
                                             </div>
                                             <div className = "col-10" style = {{ textAlign: "left" }}>
-                                                <label style = {{ backgroundColor: userInfo.mgender === "Woman" ? "#fdc6d5" : "#a7c2f7", paddingLeft: "2vw", borderRadius: "8px", paddingTop: "0.4vh", paddingRight: "2vw" }}>{ chat.message }</label>
+                                                <label style = {{ 
+                                                    backgroundColor: chat.senderName === chatDTO.state.sendername ? chatDTO.state.sgender === "Woman" ? "#fdc6d5" : "#a7c2f7" : chatDTO.state.rgender === "Woman" ? "#fdc6d5" : "#a7c2f7", paddingLeft: "2vw", borderRadius: "8px", paddingTop: "0.4vh", paddingRight: "2vw" 
+                                                }}>
+                                                    { chat.message }
+                                                </label>
                                             </div>
                                         </label>
                                         : 
@@ -263,7 +267,7 @@ function InChat() {
                                                 { chat.senderName }
                                             </div>
                                             <div className = "col-10 offset-2" style = {{ textAlign: "right" }}>
-                                                <label style = {{ backgroundColor: userInfo.mgender === "Woman" ? "#fdc6d5" : "#a7c2f7", paddingLeft: "2vw", borderRadius: "8px", paddingTop: "0.4vh", paddingRight: "2vw", textAlign: "left" }}>{ chat.message }</label>
+                                                <label style = {{ backgroundColor: chat.senderName === chatDTO.state.sendername ? chatDTO.state.sgender === "Woman" ? "#fdc6d5" : "#a7c2f7" : chatDTO.state.rgender === "Woman" ? "#fdc6d5" : "#a7c2f7", fontWeight: "light", fontSize: "1rem", paddingLeft: "2vw", borderRadius: "8px", paddingTop: "0.4vh", paddingRight: "2vw", textAlign: "left" }}>{ chat.message }</label>
                                             </div>
                                         </label>
                                     }

@@ -27,7 +27,7 @@ function Chat() {
     // /윈도우 크기 변경 감지되면 리렌더링
 
     const history = useNavigate();
-    const goToInChat = (roomname, sendername, senderno, receivername, receiverno, roomno) => {
+    const goToInChat = (roomname, sendername, senderno, receivername, receiverno, roomno, sgender, rgender) => {
         history("/InChat", {
             state: {
                 "roomname": roomname,
@@ -36,6 +36,8 @@ function Chat() {
                 "receivername": receivername,
                 "receiverno": receiverno,
                 "roomno": roomno,
+                "sgender" : sgender,
+                "rgender" : rgender
             }
         });
     };
@@ -51,7 +53,7 @@ function Chat() {
                 <table className = "table table-striped" style = {{ height: "81.5vh" }}>
                     <tbody>
                         { roomList.map((list) => 
-                            <tr onClick = { () => goToInChat(list.roomname, list.sendername, list.senderno, list.receivername, list.receiverno, list.roomno) } className = "row" style = {{ width: "100%", marginLeft: "0.1vh" }} key = { list.roomno }>
+                            <tr onClick = { () => goToInChat(list.roomname, list.sendername, list.senderno, list.receivername, list.receiverno, list.roomno, list.sgender, list.rgender) } className = "row" style = {{ width: "100%", margin: "auto" }} key = { list.roomno }>
                                 <td className = "col-12">
                                     <div className = "row" style = {{ width: "100%" }}>
                                         <div className = "col-3">

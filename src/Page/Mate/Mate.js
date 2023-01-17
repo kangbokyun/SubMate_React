@@ -123,7 +123,9 @@ function Mate() {
                             "receivername" : receivername,
                             "senderno" : senderno,
                             "sendername" : sendername,
-                            "roomname" : ress.roomname
+                            "roomname" : ress.roomname,
+                            "sgender" : ress.sgender,
+                            "rgender" : ress.rgender
                         }});
                     }  
                 });
@@ -139,13 +141,13 @@ function Mate() {
         <div>
             <Header />
             { window.innerWidth <= 767 ? 
-                <div className = "row" style = {{ width: "100%", marginLeft: "0.1vw" }}>
+                <div className = "row" style = {{ width: "100%" }}>
                     <div className = "col-3">
-                        <h1 style = {{ marginTop: "8vh" }}>Mate</h1>
+                        <h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>Mate</h1>
                     </div>
                     <div className = "col-4 offset-5">
                         <img id="dropdown-basic-button" alt = "Setting" src = { require('../../IMG/Bell.png') } style = {{ width: "12vw", marginTop: "6vh", float: "right" }} />
-                        <DropdownButton id="dropdown-basic-button" style = {{ backgroundColor: "transparent", border: "solid 1px red", height: "4.5vh", marginTop: "7vh", backgroundImage: "../../IMG/Bell.png" }}>
+                        <DropdownButton id="dropdown-basic-button" style = {{ backgroundColor: "transparent", height: "4.5vh", marginTop: "7vh", backgroundImage: "../../IMG/Bell.png" }}>
                             {callList.map((list) =>
                                 <div className = "row" style = {{ width: "100%", marginLeft: "3vw" }} key = { list.callno }>
                                     <div className = "col-9" style = {{  }}>

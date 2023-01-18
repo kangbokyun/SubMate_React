@@ -18,8 +18,10 @@ function Chat() {
 
     const [ roomList, setRoomList ] = useState([]);
     const [ chatList, setChatList ] = useState([]);
+    const formData = new FormData();
+    formData.append("mno", userInfo.mno);
     useEffect(() => {
-        call("/ChatRoomList", "POST", null)
+        call("/ChatRoomList", "POST", formData)
         .then((res) => { console.log("/ChatRoomList/Res : ", res); setRoomList(res) });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);

@@ -20,7 +20,7 @@ function Mate() {
         setWindowHeight(window.innerHeight);
     };
 
-    const loginUser = JSON.parse(localStorage.getItem("UserInfo"));
+    const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
     const [ userInfos, setUserInfos ] = useState([]);
     const [ profile, setProfile ] = useState([]);
     const [ userHeartList, setUserHeartList ] = useState([]);
@@ -184,8 +184,8 @@ function Mate() {
                                 <figcaption style = {{ color: "white", marginTop: "32vh", height: "25vh" }}>
                                     Hobby & Introduce<br />
                                     { profile.map((profileList) =>
-                                        String(profileList.mno) !== String(list.mno) ?
-                                            <label key = { profileList.pno }>프로필을 설정하지 않았습니다</label>
+                                        (Number(userInfo.mno) !== Number(profileList.mno) && profileList.pno !== list.psetting) ?
+                                            <label key = { profileList.pno }>프로필을 설정하지 않았습니다.</label>
                                             :
                                             <label key = { profileList.pno }>
                                                 {profileList.pintro}<br /> {profileList.plike1} 좋아해요<br /> {profileList.plike2} 좋아해요<br />

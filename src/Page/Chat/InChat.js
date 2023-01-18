@@ -1,3 +1,4 @@
+import { calculateNewValue } from '@testing-library/user-event/dist/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { ListGroup } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router';
@@ -5,6 +6,7 @@ import SockJS from 'sockjs-client';
 import { over } from 'stompjs';
 import Header from '../Header';
 import Menu from '../Menu';
+import { call } from '../../Service/APIService';
 
 // 스프링에서 Stomp 사용
 // 웹 소켓의 서브 프로토콜인 stomp 위에서 sockJS가 정상적으로 작동되고 stomp 프로토콜 환경에서
@@ -49,9 +51,14 @@ function InChat() {
         
         const scrollRef = useRef();
 
-        const [ chatRoom, setChatRoom ] = useState({});
+        const [ chatData, setChatData ] = useState({});
+        const [ chatList, setChatList ] = useState([]);
 
         useEffect(() => {
+            const formData = new FormData();
+            formData.append("roomname", chatDTO.state.roomname);
+            call("/ChatHistoryList", "POST", formData)
+            .then((res) => { console.log("ChatHistory/Res : ", res); setChatList(res); });
             console.log("chatDTO : ", chatDTO);
             connect();
             resizeWindow();
@@ -193,6 +200,8 @@ function InChat() {
                     senderName: userInfo.mnickname,
                     message: userData.message,
                     receiverName: chatDTO.state.roomname,
+                    senderno: chatDTO.state.senderno,
+                    mgender: userInfo.mnickname === chatDTO.state.sendername ? chatDTO.state.sgender : chatDTO.state.rgender,
                     status: "MESSAGE"
                 };
 
@@ -245,6 +254,47 @@ function InChat() {
                     {/* room이 "Room"이 아니라면 개인 메세지 상태 */}
                     { room !== "Room" && <div className = "row" style = {{ width: "100%" }}>
                         <ul style = {{ height: "74.5vh", overflowY: "scroll", marginLeft: "5.5vw" }} ref = { scrollRef }>
+                            { chatList.map((list) =>
+                                <div key = { list.chno } style = {{  }}>
+                                    { list.chsendername === userInfo.mnickname ? 
+                                    <label className = "row" style = {{ width: "100%", marginTop: "1.5vh", float: "left" }}>
+                                        <div className = "col-3" style = {{ textAlign: "left" }}>
+                                            { list.chsendername }
+                                        </div>
+                                        <div className = "col-10" style = {{ textAlign: "left" }}>
+                                            <label style = {{ 
+                                                backgroundColor: userInfo.mnickname === chatDTO.sendername ? 
+                                                userInfo.mgender === chatDTO.state.sgender ? "#fdc6d5" : "#a7c2f7" : userInfo.mgender === chatDTO.state.rgender ? "#fdc6d5" : "#a7c2f7", 
+                                                paddingLeft: "2vw", 
+                                                borderRadius: "8px", 
+                                                paddingTop: "0.4vh", 
+                                                paddingRight: "2vw" ,
+                                                paddingBottom: "0.4vh"
+                                            }}>
+                                                { list.chcontents }<br />
+                                            </label>
+                                        </div>
+                                    </label>
+                                    : 
+                                    <label className = "row" style = {{ width: "100%", marginTop: "1.5vh", float: "right" }}>
+                                        <div className = "col-3 offset-9" style = {{ textAlign: "right" }}>
+                                            { list.chsendername }
+                                        </div>
+                                        <div className = "col-10 offset-2" style = {{ textAlign: "right" }}>
+                                            <label style = {{ 
+                                                backgroundColor: userInfo.mnickname === chatDTO.receivername ? 
+                                                userInfo.mgender === chatDTO.state.sgender ? "#fdc6d5" : "#a7c2f7" : userInfo.mgender === chatDTO.state.rgender ? "#a7c2f7" : "#fdc6d5", 
+                                                paddingLeft: "2vw", 
+                                                borderRadius: "8px", 
+                                                paddingTop: "0.4vh", 
+                                                paddingRight: "2vw" ,
+                                                paddingBottom: "0.4vh"
+                                            }}>{ list.chcontents }</label>
+                                        </div>
+                                    </label>
+                                }
+                            </div>
+                            ) }
                             {/* privateChats.get(room) 탭에 해당하는 채팅 메세지 출력 */}
                                 { publicChats.map((chat, index) => 
                                     <div key = { index } style = {{  }}>

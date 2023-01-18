@@ -17,6 +17,7 @@ function Chat() {
     const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
 
     const [ roomList, setRoomList ] = useState([]);
+    const [ chatList, setChatList ] = useState([]);
     useEffect(() => {
         call("/ChatRoomList", "POST", null)
         .then((res) => { console.log("/ChatRoomList/Res : ", res); setRoomList(res) });
@@ -77,8 +78,8 @@ function Chat() {
                                                 </div>
                                                 <div className = "col-12">
                                                     <div className = "row">
-                                                        <div className = "col-11">
-                                                            마지막대화
+                                                        <div className = "col-11" style = {{ marginTop: "0.4vh", color: "#a3a3a3" }}>
+                                                            { list.chlastmessage }
                                                         </div>
                                                         <div className = "col-1">
                                                             1

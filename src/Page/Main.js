@@ -72,7 +72,7 @@ function Main() {
             }
             { window.innerWidth <= 767 ? 
                 <div><h1 style = {{ marginLeft: "3vw", marginTop: "10vh" }}>4호선 Rank</h1></div> : 
-                <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>4호선 Rank</h1> 
+                <h1 style = {{ marginLeft: "8vw", marginTop: "8vh" }}>4호선 Rank</h1> 
             }
             {window.innerWidth <= 767 ?
                 <div style = {{ marginBottom: "10vh", width: "100%" }}>
@@ -176,9 +176,11 @@ function Main() {
                         <div className = "col-md-5">
                             <h1>공지사항</h1>
                             <div id="showcase-dynamic" style = {{ paddingTop: "0.1vh", backgroundColor: "transparent", color: "black", fontSize: "1.2rem" }}>
-                                <div><p>레이아웃을 잡는 중입니다.</p></div>
-                                <div><p>얼른 백엔드까지 연결하고 싶습니다.</p></div>
-                                <div><p>사실 제일 큰 문제는 JWT와 OAuth2입니다.</p></div>
+                                { notice.map((list) => 
+                                    <div key = { list.nno }>
+                                        <p>{ list.nkind === 1 ? "[ 공지 ]" : "[ 이벤트 ]" }　{ list.ntitle }</p>
+                                    </div>
+                                ) }
                             </div>
                         </div>
                         <h1 style = {{ marginTop: "1.4vh" }}>서브뉴스</h1>

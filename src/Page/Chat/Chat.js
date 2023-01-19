@@ -50,7 +50,7 @@ function Chat() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div><h1 style = {{ marginLeft: "3vw", marginTop: "8vh", marginBottom: "1.5vh" }}>Chat</h1></div> : 
-                <h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>Chat</h1> 
+                <h1 style = {{ marginLeft: "8vw", marginTop: "8vh" }}>Chat</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <table className = "table table-striped" style = {{ height: "81.5vh" }}>
@@ -59,13 +59,17 @@ function Chat() {
                             <tr onClick = { () => goToInChat(list.roomname, list.sendername, list.senderno, list.receivername, list.receiverno, list.roomno, list.sgender, list.rgender) } className = "row" style = {{ width: "100%", margin: "auto" }} key = { list.roomno }>
                                 <td className = "col-12">
                                     <div className = "row" style = {{ width: "100%" }}>
-                                        <div className = "col-3">
-                                            이미지
+                                        <div className = "col-3" style = {{ textAlign: "center" }}>
+                                            { list.sendername !== userInfo.mnickname ? 
+                                                <img alt = "" src = { require('../../MemberImg/' + list.simg) } style = {{ width: "15vw", height: "7vh", objectFit: "cover" }} />
+                                                :
+                                                <img alt = "" src = { require('../../MemberImg/' + list.rimg) } style = {{ width: "15vw", height: "7vh", objectFit: "cover" }} />
+                                            }
                                         </div>
                                         <div className = "col-9">
                                             <div className = "row">
                                                 <div className = "col-12">
-                                                    <div className = "row">
+                                                    <div className = "row" style = {{ marginTop: "0.8vh" }}>
                                                         <div className = "col-7">
                                                             { list.sendername === userInfo.mnickname ? 
                                                                 list.receivername
@@ -74,17 +78,14 @@ function Chat() {
                                                             }
                                                         </div>
                                                         <div className = "col-5">
-                                                            시간
+                                                            { list.createdate.substring(2, 10) }
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className = "col-12">
                                                     <div className = "row">
-                                                        <div className = "col-11" style = {{ marginTop: "0.4vh", color: "#a3a3a3" }}>
+                                                        <div className = "col-12" style = {{ marginTop: "0.4vh", color: "#a3a3a3" }}>
                                                             { list.chlastmessage }
-                                                        </div>
-                                                        <div className = "col-1">
-                                                            1
                                                         </div>
                                                     </div>
                                                 </div>

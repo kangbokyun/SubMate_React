@@ -168,7 +168,7 @@ function Mate() {
                         </DropdownButton>
                     </div>
                 </div> : 
-                <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>Mate</h1> 
+                <h1 style = {{ marginLeft: "8vw", marginTop: "8vh" }}>Mate</h1> 
             }
             { window.innerWidth <= 767 ?
                 <section className = "section-6" style = {{ borderBottom: "none", marginTop: "3vh", marginBottom: "2vh" }}>
@@ -183,9 +183,12 @@ function Mate() {
                                 </figcaption>
                                 <figcaption style = {{ color: "white", marginTop: "32vh", height: "25vh" }}>
                                     Hobby & Introduce<br />
-                                    { profile.map((profileList) =>
+                                    { profile.map((profileList) => 
+                                    profileList.mno === list.mno && list.psetting === 0 ?
+                                        <label key = { profileList.pno }>프로필 미설정</label>
+                                        :
                                         (Number(userInfo.mno) !== Number(profileList.mno) && profileList.pno !== list.psetting) ?
-                                            <label key = { profileList.pno }>프로필을 설정하지 않았습니다.</label>
+                                            <label key = { profileList.pno }></label>
                                             :
                                             <label key = { profileList.pno }>
                                                 {profileList.pintro}<br /> {profileList.plike1} 좋아해요<br /> {profileList.plike2} 좋아해요<br />

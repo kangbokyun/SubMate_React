@@ -29,7 +29,7 @@ function SetCustomer() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div><h1 style = {{ marginLeft: "1vw", marginTop: "10vh" }}><span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>Setting_Customer</h1></div> : 
-                <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>Setting_Customer</h1> 
+                <h1 style = {{ marginLeft: "8vw", marginTop: "8vh" }}>Setting_Customer</h1> 
             }
             { window.innerWidth <= 767 ?
                 <div>
@@ -53,16 +53,16 @@ function SetCustomer() {
                 :
                 <div className = "container">
                     <table className = "table">
-                        <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
+                        <tr style = {{ borderBottom: "solid 1px gray", height: "3vh" }}>
                             <td style = {{ fontSize: "1.2rem" }}><Link to = "/" style = {{ textDecoration: "none", color: "black" }}>문의하기</Link></td>
                         </tr>
-                        <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
+                        <tr style = {{ borderBottom: "solid 1px gray", height: "3vh" }}>
                             <td style = {{ fontSize: "1.2rem" }}><Link to = "/" style = {{ textDecoration: "none", color: "black" }}>건의하기</Link></td>
                         </tr>
-                        <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
+                        <tr style = {{ borderBottom: "solid 1px gray", height: "3vh" }}>
                             <td style = {{ fontSize: "1.2rem" }}><Link to = "/" style = {{ textDecoration: "none", color: "black" }}>FAQ</Link></td>
                         </tr>
-                        <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
+                        <tr style = {{ borderBottom: "solid 1px gray", height: "3vh" }}>
                             <td style = {{ fontSize: "1.2rem" }}><Link to = "/" style = {{ textDecoration: "none", color: "black" }}>내역</Link></td>
                         </tr>
                     </table>

@@ -174,13 +174,13 @@ function SetMate() {
                     </h1>
                 </div> 
                 : 
-                <h1 style = {{ marginLeft: "2vw", marginTop: "10vh" }}>Setting_Mate</h1> 
+                <h1 style = {{ marginLeft: "8vw", marginTop: "8vh" }}>Setting_Mate</h1> 
             }
             <div className = {window.innerWidth <= 767 ? "" : "container"}>
                 <div className = "row" style = {{ width: window.innerWidth <= 767 ? "100%" : "", marginTop: "1.5vh" }}>
-                    <div className = "col-12" style = {{ marginLeft: "2.5vw" }}>
+                    <div className = "col-12" style = {{ marginLeft: window.innerWidth <= 767 ? "2.5vw" : "" }}>
                         <label style = {{ fontSize: "1.5rem" }}>출근시간</label>
-                        <div className = "row">
+                        <div className = "row" style = {{ textAlign: window.innerWidth <= 767 ? "" : "center" }}>
                             <div className = "col-4">
                                 <input onChange = { saveMateSetting } name = "mategwst" type = "text" className = "form-control" style = {{ textAlign: "right" }} placeholder = "00" />
                             </div>
@@ -195,24 +195,24 @@ function SetMate() {
                             </div>
                         </div>
                     </div>
-                    <div className = "col-12" style = {{ marginTop: "1vh", borderBottom: "solid 1px gray", marginLeft: "2.5vw", paddingBottom: "2vh" }}>
+                    <div className = "col-12" style = {{ marginTop: "1vh", borderBottom: "solid 1px gray", marginLeft: window.innerWidth <= 767 ? "2.5vw" : "", paddingBottom: "2vh" }}>
                         <label style = {{ fontSize: "1.5rem" }}>퇴근시간</label>
-                        <div className = "row">
-                            <div className = "col-4">
+                        <div className = "row" style = {{ textAlign: window.innerWidth <= 767 ? "" : "center" }}>
+                            <div className = "col-4 col-md-4">
                                 <input onChange = { saveMateSetting } name = "matelwst" type = "text" className = "form-control" style = {{ textAlign: "right" }} placeholder = "00" />
                             </div>
-                            <div className = "col-2">
+                            <div className = "col-2 col-md-2">
                                 <label style = {{ fontSize: "1.5rem" }}>부터</label>
                             </div>
-                            <div className = "col-4">
+                            <div className = "col-4 col-md-4">
                                 <input onChange = { saveMateSetting } name = "matelwet" type = "text" className = "form-control" style = {{ textAlign: "right" }} placeholder = "00" />
                             </div>
-                            <div className = "col-2">
+                            <div className = "col-2 col-md-2">
                                 <label style = {{ fontSize: "1.5rem" }}>까지</label>
                             </div>
                         </div>
                     </div>
-                    <div className = "col-12" style = {{ marginTop: "1vh", borderBottom: "solid 1px gray", marginLeft: "2vw", paddingBottom: "2vh" }}>
+                    <div className = "col-12" style = {{ marginTop: "1vh", borderBottom: "solid 1px gray", marginLeft: window.innerWidth <= 767 ? "2vw" : "", paddingBottom: "2vh" }}>
                         <label style = {{ fontSize: "1.5rem" }}>노선</label>
                         <div className = "row">
                             <div className = "col-12" style = {{  }}>
@@ -321,7 +321,7 @@ function SetMate() {
                             </div>
                         </div>
                     </div>
-                    <div className = "col-12" style = {{ marginTop: "1vh", borderBottom: "solid 1px gray", marginLeft: "2vw", paddingBottom: "2vh" }}>
+                    <div className = "col-12" style = {{ marginTop: "1vh", borderBottom: "solid 1px gray", marginLeft: window.innerWidth <= 767 ? "2vw" : "", paddingBottom: "2vh" }}>
                         <label style = {{ fontSize: "1.5rem" }}>위치 확인</label>
                     </div>
                     <div 
@@ -329,7 +329,7 @@ function SetMate() {
                         style = {{ 
                             width: window.innerWidth <= 767 ? "100%" : "100%", 
                             height: window.innerWidth <= 767 ? "30vh" : "40vh",
-                            marginLeft: window.innerWidth <= 767 ? "2.6vw" : "2vw",
+                            marginLeft: window.innerWidth <= 767 ? "2.6vw" : "",
                             marginTop: ""
                         }}
                     >

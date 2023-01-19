@@ -39,10 +39,7 @@ function AdminBoard() {
                 <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>Board</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
-                <div style = {{ border: "solid 1px black", height: "20vh", marginTop: "1.5vh" }}>
-                    건의 문의 선 그래프
-                </div>
-                <div className = "row" style = {{ width: "100%", borderBottom: "solid 1px gray", marginLeft: "0.1px", marginBottom: "0" }}>
+                <div className = "row" style = {{ width: "100%", borderBottom: "solid 1px gray", marginLeft: "0.1px", marginBottom: "0", marginTop: "10vh" }}>
                     <div className = "col-8" >
                         <h4 style = {{ marginLeft: "0.5vw", paddingTop: "1vh" }}>건의사항</h4>
                     </div>

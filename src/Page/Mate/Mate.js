@@ -168,7 +168,7 @@ function Mate() {
                         </DropdownButton>
                     </div>
                 </div> : 
-                <h1 style = {{ marginLeft: "8vw", marginTop: "8vh" }}>Mate</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Mate</h1> 
             }
             { window.innerWidth <= 767 ?
                 <section className = "section-6" style = {{ borderBottom: "none", marginTop: "3vh", marginBottom: "2vh" }}>
@@ -252,17 +252,19 @@ function Mate() {
                                             <h3>{ list.mnickname } ( { list.mbti } )</h3>
                                         </figcaption>
                                         <figcaption style = {{ color: "white", marginTop: "4vh", height: "25vh", paddingLeft: "15px" }}>
-                                            Hobby & Introduce<br />
-                                            { profile.map((profileList) =>
-                                                String(profileList.mno) !== String(list.mno) ?
-                                                    <label key = { profileList.pno }>프로필을 설정하지 않았습니다</label>
-                                                    :
-                                                    <label key = { profileList.pno }>
-                                                        {profileList.pintro}<br /> {profileList.plike1} 좋아해요<br /> {profileList.plike2} 좋아해요<br />
-                                                        {profileList.plike3} 좋아해요<br /> {profileList.punlike1} 싫어해요<br /> {profileList.punlike2} 싫어해요<br />
-                                                        {profileList.punlike3} 싫어해요<br /> 취미는 {profileList.phobby1}와 {profileList.phobby2},  {profileList.phobby3}랍니다.
-                                                    </label>
-                                            ) }
+                                        { profile.map((profileList) => 
+                                           list.mno !== profileList.mno ? 
+                                           list.psetting === null ? 
+                                                <label>프로필 미설정</label> 
+                                                :
+                                                <label></label>
+                                           :
+                                            <label key = { profileList.pno }>
+                                                {profileList.pintro}<br /> {profileList.plike1} 좋아해요<br /> {profileList.plike2} 좋아해요<br />
+                                                {profileList.plike3} 좋아해요<br /> {profileList.punlike1} 싫어해요<br /> {profileList.punlike2} 싫어해요<br />
+                                                {profileList.punlike3} 싫어해요<br /> 취미는 {profileList.phobby1}와 {profileList.phobby2},  {profileList.phobby3}랍니다.
+                                            </label>
+                                        ) }
                                         </figcaption>
                                         <figcaption style = {{ color: "white", marginTop: "25vh", paddingTop: "0", paddingLeft: "15px" }}>
                                             <div className = "row" style = {{ fontSize: "30px", marginTop: "0", padding: "0" }}>

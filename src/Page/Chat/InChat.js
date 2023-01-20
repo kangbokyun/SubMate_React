@@ -230,7 +230,7 @@ function InChat() {
                         InChat : { userInfo.mnickname === chatDTO.state.sendername ? chatDTO.state.receivername : chatDTO.state.sendername }
                     </h1>
                 </div> : 
-                <h1 style = {{ marginLeft: "1vw", marginTop: "8vh" }}>InChat</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>InChat</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" } stlye = {{  }}>
                 <div className = "row" style = {{ width: "100%" }}>

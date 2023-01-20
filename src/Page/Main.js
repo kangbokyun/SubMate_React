@@ -72,7 +72,7 @@ function Main() {
             }
             { window.innerWidth <= 767 ? 
                 <div><h1 style = {{ marginLeft: "3vw", marginTop: "10vh" }}>4호선 Rank</h1></div> : 
-                <h1 style = {{ marginLeft: "8vw", marginTop: "8vh" }}>4호선 Rank</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>4호선 Rank</h1> 
             }
             {window.innerWidth <= 767 ?
                 <div style = {{ marginBottom: "10vh", width: "100%" }}>

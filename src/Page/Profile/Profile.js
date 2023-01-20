@@ -53,7 +53,7 @@ function Profile() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div><h1 style = {{ marginLeft: "1vw", marginTop: "10vh" }}><span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>Profile</h1></div> :
-                <h1 style = {{ marginLeft: "8vw", marginTop: "8vh" }}>Profile</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Profile</h1> 
             }
             <div className = "container">
                 <div className = "row">

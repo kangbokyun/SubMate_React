@@ -51,7 +51,7 @@ function Tendinous() {
                         Customer_Tendinous
                     </h1>
                 </div> : 
-                <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>Setting_Customer</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Setting_Customer</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <div className = "row" style = {{ width: "100%" }}>

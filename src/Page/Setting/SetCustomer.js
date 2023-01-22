@@ -54,16 +54,16 @@ function SetCustomer() {
                 <div className = "container">
                     <table className = "table">
                         <tr style = {{ borderBottom: "solid 1px gray", height: "3vh" }}>
-                            <td style = {{ fontSize: "1.2rem" }}><Link to = "/" style = {{ textDecoration: "none", color: "black" }}>문의하기</Link></td>
+                            <td style = {{ fontSize: "1.2rem" }}><Link to = "/Customer/QnA" style = {{ textDecoration: "none", color: "black" }}>문의하기</Link></td>
                         </tr>
                         <tr style = {{ borderBottom: "solid 1px gray", height: "3vh" }}>
-                            <td style = {{ fontSize: "1.2rem" }}><Link to = "/" style = {{ textDecoration: "none", color: "black" }}>건의하기</Link></td>
+                            <td style = {{ fontSize: "1.2rem" }}><Link to = "/Customer/Tendinous" style = {{ textDecoration: "none", color: "black" }}>건의하기</Link></td>
                         </tr>
                         <tr style = {{ borderBottom: "solid 1px gray", height: "3vh" }}>
                             <td style = {{ fontSize: "1.2rem" }}><Link to = "/" style = {{ textDecoration: "none", color: "black" }}>FAQ</Link></td>
                         </tr>
                         <tr style = {{ borderBottom: "solid 1px gray", height: "3vh" }}>
-                            <td style = {{ fontSize: "1.2rem" }}><Link to = "/" style = {{ textDecoration: "none", color: "black" }}>내역</Link></td>
+                            <td style = {{ fontSize: "1.2rem" }}><Link to = "/Customer/SendList" style = {{ textDecoration: "none", color: "black" }}>내역</Link></td>
                         </tr>
                     </table>
                 </div>

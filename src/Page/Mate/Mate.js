@@ -183,19 +183,19 @@ function Mate() {
                                 </figcaption>
                                 <figcaption style = {{ color: "white", marginTop: "32vh", height: "25vh" }}>
                                     Hobby & Introduce<br />
-                                    { profile.map((profileList) => 
-                                    profileList.mno === list.mno && list.psetting === 0 ?
-                                        <label key = { profileList.pno }>프로필 미설정</label>
-                                        :
-                                        (Number(userInfo.mno) !== Number(profileList.mno) && profileList.pno !== list.psetting) ?
-                                            <label key = { profileList.pno }></label>
+                                    { list.psetting === null ? 
+                                            <label style = {{ marginTop: "2vh" }}>프로필 미설정</label>
                                             :
-                                            <label key = { profileList.pno }>
+                                            profile.map((profileList) => 
+                                           list.mno !== profileList.mno ? 
+                                                <label></label>
+                                           :
+                                           <label key = { profileList.pno }>
                                                 {profileList.pintro}<br /> {profileList.plike1} 좋아해요<br /> {profileList.plike2} 좋아해요<br />
                                                 {profileList.plike3} 좋아해요<br /> {profileList.punlike1} 싫어해요<br /> {profileList.punlike2} 싫어해요<br />
-                                                {profileList.punlike3} 싫어해요<br /> 취미는 {profileList.phobby1}와 {profileList.phobby2},  {profileList.phobby3}랍니다.
+                                                {profileList.punlike3} 싫어해요<br /> 취미는 {profileList.phobby1}와 {profileList.phobby2},<br />{profileList.phobby3}랍니다.
                                             </label>
-                                    ) }
+                                        ) }
                                 </figcaption>
                                 <figcaption style = {{ color: "white", marginTop: "62vh", paddingTop: "5px" }}>
                                     <div className = "row" style = {{ fontSize: "30px", marginTop: "0", padding: "0" }}>
@@ -248,23 +248,24 @@ function Mate() {
                                 <section className="section-6" style = {{ borderBottom: "none", marginBottom: "2vh", width: "20vw" }}>
                                     <figure className = "figure" style = {{ backgroundColor: "black", borderRadius: "8px" }}>
                                         <img alt = "Setting" src = { require('../../MemberImg' + list.profileimg) } style = {{ width: "100%", marginLeft: "0px", height: "29vh", objectFit: "contain", backgroundColor: "gray" }} name = { list.mno } />
-                                        <figcaption style = {{ color: "white", marginTop: "28vh", height: "5vh" }}>
-                                            <h3>{ list.mnickname } ( { list.mbti } )</h3>
+                                        <figcaption style = {{ color: "white", marginTop: "1vh", height: "5vh", paddingLeft: "1vw" }}>
+                                            <h5 style = {{ borderBottom: "solid 1px #f4f5f7" }}>{ list.mnickname } ( { list.mbti } )</h5>
                                         </figcaption>
-                                        <figcaption style = {{ color: "white", marginTop: "4vh", height: "25vh", paddingLeft: "15px" }}>
-                                        { profile.map((profileList) => 
-                                           list.mno !== profileList.mno ? 
-                                           list.psetting === null ? 
-                                                <label>프로필 미설정</label> 
+                                        <figcaption style = {{ color: "white", marginTop: "3vh", height: "25vh", paddingLeft: "1vw", fontSize: "0.9rem" }}>
+                                            Hobby & Introduce<br />
+                                            { list.psetting === null ? 
+                                                <label style = {{ marginLeft: "5vw", marginTop: "7.5vh" }}>프로필 미설정</label>
                                                 :
-                                                <label></label>
-                                           :
-                                            <label key = { profileList.pno }>
-                                                {profileList.pintro}<br /> {profileList.plike1} 좋아해요<br /> {profileList.plike2} 좋아해요<br />
-                                                {profileList.plike3} 좋아해요<br /> {profileList.punlike1} 싫어해요<br /> {profileList.punlike2} 싫어해요<br />
-                                                {profileList.punlike3} 싫어해요<br /> 취미는 {profileList.phobby1}와 {profileList.phobby2},  {profileList.phobby3}랍니다.
-                                            </label>
-                                        ) }
+                                                profile.map((profileList) => 
+                                                    list.mno !== profileList.mno ? 
+                                                        <label></label>
+                                                :
+                                                <label key = { profileList.pno }>
+                                                    {profileList.pintro}<br /> {profileList.plike1} 좋아해요<br /> {profileList.plike2} 좋아해요<br />
+                                                    {profileList.plike3} 좋아해요<br /> {profileList.punlike1} 싫어해요<br /> {profileList.punlike2} 싫어해요<br />
+                                                    {profileList.punlike3} 싫어해요<br /> 취미는 {profileList.phobby1}와 {profileList.phobby2},<br />  {profileList.phobby3}랍니다.
+                                                </label>
+                                            ) }
                                         </figcaption>
                                         <figcaption style = {{ color: "white", marginTop: "25vh", paddingTop: "0", paddingLeft: "15px" }}>
                                             <div className = "row" style = {{ fontSize: "30px", marginTop: "0", padding: "0" }}>
@@ -283,9 +284,25 @@ function Mate() {
                                                 </div>
                                                 <div className = "col-md-1 offset-md-8" style = {{  }}>
                                                     <label style = {{  }}>
-                                                        <img alt = "More" src = { require('../../IMG/Mate_More.png') } style = {{ width: "3vw", height: "2.5vh", opacity: "1" }} />
+                                                        <img value = { userNo } onClick = { () => {handleShow(list.mno)} } alt = "More" src = { require('../../IMG/Mate_More.png') } style = {{ width: "3vw", height: "2.5vh", opacity: "1" }} />
                                                     </label>
                                                 </div>
+                                                <Modal show = { show } onHide = { handleClose }>
+                                                    <Modal.Header closeButton>
+                                                        <Modal.Title>Chat</Modal.Title>
+                                                    </Modal.Header>
+                                                    <Modal.Body>
+                                                        <h5>채팅을 신청하겠습니까?</h5>
+                                                    </Modal.Body>
+                                                    <Modal.Footer>
+                                                        <Button variant = "secondary" onClick = { handleClose }>
+                                                            취소
+                                                        </Button>
+                                                        <Button variant = "info" onClick = { sendChat } style = {{ color: "white" }}>
+                                                            보내기
+                                                        </Button>
+                                                    </Modal.Footer>
+                                                </Modal>
                                             </div>
                                         </figcaption>
                                     </figure>

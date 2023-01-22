@@ -82,7 +82,7 @@ function Profile() {
                                 <div className = "col-md-3 col-3">
                                 { window.innerWidth <= 767 ? 
                                     <div style = {{ marginTop: "4vh" }}><img alt = "Setting" src = { require('../../MemberImg' + userInfo.profileimg.split("/MemberImg")[1]) } style = {{ width: "100%", height: "80%", borderRadius: "8px", objectFit: "contain" }} /><h6 style = {{ marginLeft: "1vw" }}>{ userInfo.mager }</h6></div> : 
-                                    <div style = {{ marginTop: "4vh" }}><img alt = "Setting" src = { require('../../MemberImg' + userInfo.profileimg.split("/MemberImg")[1]) } style = {{ width: "100%", height: "80%", borderRadius: "8px", objectFit: "contain" }} /><h6 style = {{ marginLeft: "1vw" }}>{ userInfo.mager }</h6></div> 
+                                    <div style = {{ marginTop: "4vh" }}><img alt = "Setting" src = { require('../../MemberImg' + userInfo.profileimg.split("/MemberImg")[1]) } style = {{ width: "100%", height: "80%", borderRadius: "8px", objectFit: "contain" }} /><h6 style = {{ marginLeft: "4vw" }}>{ userInfo.mager }</h6></div> 
                                 }
                                 </div>
                                 <div className = "col-md-10 col-10 offset-md-1 offset-1">

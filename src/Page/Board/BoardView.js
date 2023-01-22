@@ -167,7 +167,7 @@ function BoardView() {
                     <img alt = "Setting" src = { require('../../BoardImg/' + boardDTO.state.bimg) } style = {{ width: window.innerWidth <= 767 ? "100vw" : "30%", height: window.innerWidth <= 767 ? "30vh" : "30vh", borderRadius: "8px", marginTop: "0.7vh", objectFit: "contain", backgroundColor: "gray" }} />
                 }
                 <div className = "row gx-0" style = {{ marginTop: "0.5vh", marginLeft: window.innerWidth <= 767 ? "1.5vw" : "", width: window.innerWidth <= 767 ? "97%" : "" }}>
-                    <label className = "col-md-2" style = {{  }}>
+                    <label className = "col-md-4" style = {{  }}>
                         { likeValue === "0" ? 
                             <img onClick = { clickLike } value = { likeValue } alt = "Like" src = { require('../../IMG/BoardHeart_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
                             :
@@ -175,9 +175,9 @@ function BoardView() {
                         }
                         <img onClick = { (e) => replyWrite(boardDTO.state.bno, boardDTO.state.bwriter, boardDTO.state.bcontents, boardDTO.state.becho, boardDTO.state.bechotimer, boardDTO.state.bview, boardDTO.state.createdDate, boardDTO.state.heart, boardDTO.state.hrno) } alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
                         { reportStatus === "0" ? 
-                            <img onClick = { report } alt = "Siren" src = { require('../../IMG/Siren_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh", float: "right" }} />
+                            <img onClick = { report } alt = "Siren" src = { require('../../IMG/Siren_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh", float: "right", marginRight: "2vw" }} />
                             :
-                            <img onClick = { report } alt = "Siren" src = { require('../../IMG/Siren_Red.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh", float: "right" }} />
+                            <img onClick = { report } alt = "Siren" src = { require('../../IMG/Siren_Red.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh", float: "right", marginRight: "2vw" }} />
                         }
 
                         <Modal show = { show } onHide = { handleClose }>

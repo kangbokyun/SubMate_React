@@ -15,3 +15,7 @@ Server : Spring Boot, JDK 11, Tomcat
 Database : MySQL  
 VersionControl : GitHub  
 IDE : Client - VSCode / Server - Intelli J  
+
+<h2>개발목적</h2>
+- OpenAPI, API 가공, 여러 기능 결합과 처리 경험쌓기
+- 문득 떠오르는 아이디어 실현 가능성 확인

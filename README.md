@@ -62,3 +62,6 @@ IDE : Client - VSCode / Server - Intelli J
 
 ### 화면 구조
 ![SubMate 화면 구조도](https://user-images.githubusercontent.com/91529033/214325074-bf8862a6-e05c-4cc7-8539-4f980a70b4d8.png)
+
+### DB 설계
+![SubMate DB 구조](https://user-images.githubusercontent.com/91529033/214325787-817ac492-9107-4a3c-a03f-131d14fd5dca.png)

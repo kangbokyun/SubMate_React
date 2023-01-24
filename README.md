@@ -48,3 +48,17 @@ IDE : Client - VSCode / Server - Intelli J
 |23.01.09 ~ 23.01.10|채팅 레이아웃 수정|
 |23.01.11 ~ 23.01.13|미흡한 부분 마무리|
 |23.01.14 ~ 23.01.15|마무리|
+
+### React Using Library
+ - react-router-dom
+ - react-bootstrap bootstrap
+ - react-fast-marquee
+ - react-kakao-login
+ - react-daum-postcode
+ - recharts
+ - sockjs-client
+ - react-stompjs
+ - net -S
+
+### 화면 구조
+![SubMate 화면 구조도](https://user-images.githubusercontent.com/91529033/214325074-bf8862a6-e05c-4cc7-8539-4f980a70b4d8.png)

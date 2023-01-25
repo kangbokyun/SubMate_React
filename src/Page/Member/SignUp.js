@@ -287,7 +287,11 @@ function SignUp() {
                     top: "0px",
                     opacity: "70%"
                 }}>
-                    <h1 style = {{ position: "relative", top: "0px", marginLeft: "2vw", zIndex: "1", color: "white", marginTop: "1.5vh" }}>&#10094;</h1>
+                    { window.innerWidth <= 767 ? 
+                        <h1 onClick = { GoBack } style = {{ position: "relative", top: "0px", marginLeft: "2vw", zIndex: "1", color: "white", marginTop: "1.5vh" }}>&#10094;</h1> 
+                        :
+                        <div style = {{ position: "relative", top: "0px", marginLeft: "2vw", zIndex: "1", color: "white", marginTop: "1.5vh", height: "3.1vh" }}></div>
+                    } 
                     <h1 onClick = { GoBack } style = {{ position: "relative", top: "0px", zIndex: "1", textAlign: "center", color: "white", marginTop: "0.4vh" }}>SubMate</h1>
                     <Marquee gradient = { false } speed = "45" style = {{ position: "relative", top: "0px", zIndex: "1", textAlign: "center", color: "gold", marginTop: "5vh", width: window.innerWidth <= 767 ? "90%" :"60%", marginLeft: window.innerWidth <= 767 ? "5vw" :"10vw", fontSize: "1.4rem" }}>
                         지하철에서 스치듯 지나간 그 사람.. 서브메이트에서 만나자!　　　　　　　　　

@@ -41,7 +41,7 @@ function Login() {
     };
     const clickBtn = () => {
         setLoading(true);
-        // LoginAPI(minfo);
+        LoginAPI(minfo);
         setTimeout(() => {
             setLoading(false);
         }, 1500);

@@ -230,7 +230,7 @@ function InChat() {
                         InChat : { userInfo.mnickname === chatDTO.state.sendername ? chatDTO.state.receivername : chatDTO.state.sendername }
                     </h1>
                 </div> : 
-                <h1 style = {{ marginLeft: "1vw", marginTop: "8vh" }}>InChat</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>InChat</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" } stlye = {{  }}>
                 <div className = "row" style = {{ width: "100%" }}>
@@ -255,7 +255,7 @@ function InChat() {
                     { room !== "Room" && <div className = "row" style = {{ width: "100%" }}>
                         <ul style = {{ height: "74.5vh", overflowY: "scroll", marginLeft: "5.5vw" }} ref = { scrollRef }>
                             { chatList.map((list) =>
-                                <div key = { list.chno } style = {{  }}>
+                                <div key = { list.chno } style = {{ paddingRight: window.innerWidth <= 767 ? "" : "6vw" }}>
                                     { list.chsendername === userInfo.mnickname ? 
                                     <label className = "row" style = {{ width: "100%", marginTop: "1.5vh", float: "left" }}>
                                         <div className = "col-3" style = {{ textAlign: "left" }}>
@@ -341,10 +341,10 @@ function InChat() {
                             ) }
                         </ul>
                         {/* 메세지 보내는 곳 */}
-                            <div className = "col-10" style = {{  }}>
+                            <div className = "col-10 gx-0 col-md-9" style = {{  }}>
                                 <input className = "form-control" type = "text" placeholder = "메세지를 입력하세요." value = { userData.message } onChange = { handleMessage } style = {{ marginLeft: "4vw", width: "100%" }} />
                             </div>
-                            <div className = "col-2 gx-0" style = {{  }}>
+                            <div className = "col-2 gx-0 col-md-2" style = {{  }}>
                                 <button className = "btn btn-info" style = {{ width: "100%", paddingLeft: "1.7vw", color: "white", marginLeft: "5vw" }} type = "button" onClick = { sendPrivateValue }>Send</button>
                             </div>
                     </div> }

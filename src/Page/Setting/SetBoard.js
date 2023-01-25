@@ -29,7 +29,7 @@ function SetBoard() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div><h1 style = {{ marginLeft: "1vw", marginTop: "10vh" }}><span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>Setting_Board</h1></div> : 
-                <h1 style = {{ marginLeft: "2vw", marginTop: "10vh" }}>Setting_Board</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Setting_Board</h1> 
             }
             <Menu />
         </div>

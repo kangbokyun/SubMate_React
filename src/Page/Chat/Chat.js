@@ -50,7 +50,7 @@ function Chat() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div><h1 style = {{ marginLeft: "3vw", marginTop: "8vh", marginBottom: "1.5vh" }}>Chat</h1></div> : 
-                <h1 style = {{ marginLeft: "8vw", marginTop: "8vh" }}>Chat</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Chat</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <table className = "table table-striped" style = {{ height: "81.5vh" }}>

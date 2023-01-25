@@ -54,7 +54,7 @@ function AdminMain() {
                     </h1>
                 </div> 
                 : 
-                <h1 style = {{ marginLeft: "2vw", marginTop: "10vh" }}>Setting_Mate</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Admin</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <div className = "row" style = {{ width: "100%" }}>
@@ -73,7 +73,7 @@ function AdminMain() {
                                 </tr>
                             </tbody>
                         </table>
-                        <div className = "col-12" style = {{ width: "100%", height: "20vh", textAlign: "center", paddingLeft: "0", marginLeft: "0" }}>
+                        <div className = "col-12 col-md-12" style = {{ width: "100%", height: "20vh", textAlign: "center", paddingLeft: "0", marginLeft: "0" }}>
                             {/* <h4>유저 이용 추이 그래프</h4> */}
                             <MultiLineChart data = { chartData } />
                         </div>

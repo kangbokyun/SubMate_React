@@ -66,7 +66,7 @@ function UserManage() {
                     </h1>
                 </div> 
                 : 
-                <h1 style = {{ marginLeft: "2vw", marginTop: "10vh" }}>Setting_Mate</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>UserManage</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <table className = "table table-striped">

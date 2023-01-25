@@ -174,7 +174,7 @@ function SetMate() {
                     </h1>
                 </div> 
                 : 
-                <h1 style = {{ marginLeft: "8vw", marginTop: "8vh" }}>Setting_Mate</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Setting_Mate</h1> 
             }
             <div className = {window.innerWidth <= 767 ? "" : "container"}>
                 <div className = "row" style = {{ width: window.innerWidth <= 767 ? "100%" : "", marginTop: "1.5vh" }}>

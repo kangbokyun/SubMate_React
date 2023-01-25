@@ -141,7 +141,7 @@ function Login() {
                                 <i></i>
                             </div>
                             <div className = "box" style = {{ width: "100%" }}>
-                                <input type = "text" name = "mpw" required onChange = { changeBox } />
+                                <input type = "password" name = "mpw" required onChange = { changeBox } />
                                 <span>PW</span>
                                 <i></i>
                             </div>

@@ -193,6 +193,10 @@ function InChat() {
         };
 
         const sendPrivateValue = () => {
+            if(window.event.keyCode === 13) {
+                alert("EnterKeyUp");
+                return;
+            }
             // stompClient에 소켓이 존재한다면 /app/private-message로 값을 전달, 현재 room상태를 전달한다.
             // room은 개인아이디 상태 or CHATROOM(PublicChat)을 나타냄
             if(sotmpClient) {

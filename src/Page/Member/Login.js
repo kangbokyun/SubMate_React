@@ -42,11 +42,9 @@ function Login() {
     const clickBtn = () => {
         setLoading(true);
         LoginAPI(minfo);
-        // if(minfo.length === 0) {
         setTimeout(() => {
             setLoading(false);
         }, 1500);
-        // }
     };
 
     const kakaoLogin = (result) => {
@@ -94,7 +92,7 @@ function Login() {
 
     return(
         <div className = "row" style = {{ width: "100%", margin: "auto" }}>
-            { loading ? 
+            { loading &&
                 <div 
                     style = {{ 
                         paddingTop: window.innerWidth <= 767 ? "47vh" : "50vh", 
@@ -113,8 +111,6 @@ function Login() {
                         cssOverride = { override }
                     />
                 </div>
-                :
-                <></>
             }
             <div className = "col-md-6 offset-md-3 col-sm-6 offset-sm-3 col-12" style = {{ margin: "auto", padding: "0" }}>
                 <div style = {{ 

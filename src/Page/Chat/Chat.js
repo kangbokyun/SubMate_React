@@ -78,14 +78,14 @@ function Chat() {
                                                             }
                                                         </div>
                                                         <div className = "col-5">
-                                                            { list.createdate.substring(2, 10) }
+                                                            { list.chlastmessage != null && list.createdate.substring(2, 10) }
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className = "col-12">
                                                     <div className = "row">
                                                         <div className = "col-12" style = {{ marginTop: "0.4vh", color: "#a3a3a3" }}>
-                                                            { list.chlastmessage }
+                                                            { list.chlastmessage != null ? list.chlastmessage : "채팅을 입력해 대화를 시작해보세요!" }
                                                         </div>
                                                     </div>
                                                 </div>

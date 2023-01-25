@@ -76,8 +76,13 @@ function Main() {
             }
             {window.innerWidth <= 767 ?
                 <div style = {{ marginBottom: "10vh", width: "100%" }}>
-                    <Carousel fade>
-                        { rankDTO.map((list) =>
+                    { rankDTO.length <= 0 ?
+                        <div className = "container" style = {{ width: "100%", height: "30vh", textAlign: "center", paddingTop: "10vh" }}>
+                            <h3>메이트 설정을 통해 설정한<br />호선 별랭킹을 만나보세요!</h3>
+                        </div>
+                        :
+                        <Carousel fade>
+                            {rankDTO.map((list) =>
                             <Carousel.Item key = { list.mno } style = {{  }}>
                                 <div style = {{ width: "100%"}}>
                                     <img alt = "Setting" src = { require('../MemberImg/' + list.profileImg) } style = {{ width: "100%", height: "30vh", maxHeight: "30vh", objectFit: "contain", backgroundColor: "gray" }} /> 
@@ -100,8 +105,9 @@ function Main() {
                                     </div>
                                 </div>
                             </Carousel.Item>
-                        )}
-                    </Carousel>
+                            )}
+                        </Carousel>
+                    }
                     <h1 style = {{ marginTop: "1.4vh", marginLeft: "2vw" }}>공지사항</h1>
                     <div id="showcase-dynamic" style = {{ height: "5vh", paddingTop: "0", backgroundColor: "transparent", color: "black", fontSize: "1.2rem", marginLeft: "2vw" }}>
                         { notice.map((list) => 
@@ -146,32 +152,38 @@ function Main() {
                 </div>
                 :
                 <div className = "container" style = {{  }}>
-                    <Carousel fade style = {{ width: "100%" }}>
-                        { rankDTO.map((list) => 
-                            <Carousel.Item key = { list.mno }>
-                                <div style = {{ width: "100%"}}>
-                                    <img alt = "Setting" src = { require('../MemberImg/' + list.profileImg) } style = {{ width: "100%", height: "30vh", maxHeight: "30vh", objectFit: "contain", backgroundColor: "gray" }} /> 
-                                    <div className = "row" style = {{ backgroundColor: "rgba(0, 0, 0, 0.2)", color: "white", width: "100%", position: "absolute", bottom: "0", left: "0", marginLeft: "0.1vw" }}>
-                                        <div className = "col-md-6">
-                                            <div className = "row">
-                                                <div className = "col-md-2">
-                                                    <img alt = "Setting" src = { require('../IMG/BoardHeart_Red.png') } style = {{ width: "5vw", paddingTop: "2px" }} />
-                                                </div>
-                                                <div className = "col-md-4 gx-0">
-                                                    <h5 style ={{ paddingTop: "1.5vh", fontSize: "1.5rem" }}>{ list.heartcount }</h5>
+                    { rankDTO.length <= 0 ? 
+                        <div className = "container" style = {{ width: "100%", height: "30vh", textAlign: "center", paddingTop: "10vh" }}>
+                            <h3>메이트 설정을 통해 설정한<br />호선 별랭킹을 만나보세요!</h3>
+                        </div>
+                        :
+                        <Carousel fade style = {{ width: "100%" }}>
+                            { rankDTO.map((list) => 
+                                <Carousel.Item key = { list.mno }>
+                                    <div style = {{ width: "100%"}}>
+                                        <img alt = "Setting" src = { require('../MemberImg/' + list.profileImg) } style = {{ width: "100%", height: "30vh", maxHeight: "30vh", objectFit: "contain", backgroundColor: "gray" }} /> 
+                                        <div className = "row" style = {{ backgroundColor: "rgba(0, 0, 0, 0.2)", color: "white", width: "100%", position: "absolute", bottom: "0", left: "0", marginLeft: "0.1vw" }}>
+                                            <div className = "col-md-6">
+                                                <div className = "row">
+                                                    <div className = "col-md-2">
+                                                        <img alt = "Setting" src = { require('../IMG/BoardHeart_Red.png') } style = {{ width: "5vw", paddingTop: "2px" }} />
+                                                    </div>
+                                                    <div className = "col-md-4 gx-0">
+                                                        <h5 style ={{ paddingTop: "1.5vh", fontSize: "1.5rem" }}>{ list.heartcount }</h5>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className = "col-md-6">
-                                            <div>
-                                                <h5 style = {{ paddingTop: "1.5vh", float: "right", fontSize: "1.5rem" }}>{ list.rankrankernickname }님</h5>
+                                            <div className = "col-md-6">
+                                                <div>
+                                                    <h5 style = {{ paddingTop: "1.5vh", float: "right", fontSize: "1.5rem" }}>{ list.rankrankernickname }님</h5>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </Carousel.Item>
-                        )}
-                    </Carousel>
+                                </Carousel.Item>
+                            )}
+                        </Carousel>
+                    }
                     <div className = "row" style = {{ marginTop: "5vh" }}>
                         <div className = "col-md-5">
                             <h1>공지사항</h1>

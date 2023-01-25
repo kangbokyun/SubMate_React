@@ -214,6 +214,28 @@ function InChat() {
             }
         };
 
+        const sendEnterPrivateValue = () => {
+            if(window.event.keyCode === 13) {
+                if(sotmpClient) {
+                    let chatMessage = {
+                        senderName: userInfo.mnickname,
+                        message: userData.message,
+                        receiverName: chatDTO.state.roomname,
+                        senderno: chatDTO.state.senderno,
+                        mgender: userInfo.mnickname === chatDTO.state.sendername ? chatDTO.state.sgender : chatDTO.state.rgender,
+                        status: "MESSAGE"
+                    };
+    
+                    console.log("sendValue_Message : ", chatMessage);
+                    sotmpClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
+                    setUserData({ ...userData, "message" : "" });
+                    
+                    console.log("sendPrivateValue_UserData : ", userData);
+                    console.log("Check");
+                }
+            }
+        };
+
         // 등록할 때 사용
         const handleUserName = (e) => {
             const { value } = e.target;
@@ -342,7 +364,7 @@ function InChat() {
                         </ul>
                         {/* 메세지 보내는 곳 */}
                             <div className = "col-10 gx-0 col-md-9" style = {{  }}>
-                                <input className = "form-control" type = "text" placeholder = "메세지를 입력하세요." value = { userData.message } onChange = { handleMessage } style = {{ marginLeft: "4vw", width: "100%" }} />
+                                <input className = "form-control" onKeyUp = { sendEnterPrivateValue } type = "text" placeholder = "메세지를 입력하세요." value = { userData.message } onChange = { handleMessage } style = {{ marginLeft: "4vw", width: "100%" }} />
                             </div>
                             <div className = "col-2 gx-0 col-md-2" style = {{  }}>
                                 <button className = "btn btn-info" style = {{ width: "100%", paddingLeft: "1.7vw", color: "white", marginLeft: "5vw" }} type = "button" onClick = { sendPrivateValue }>Send</button>

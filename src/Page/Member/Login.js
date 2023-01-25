@@ -41,12 +41,10 @@ function Login() {
     };
     const clickBtn = () => {
         setLoading(true);
-        LoginAPI(minfo);
-        // if(minfo.length === 0) {
+        // LoginAPI(minfo);
         setTimeout(() => {
             setLoading(false);
         }, 1500);
-        // }
     };
 
     const kakaoLogin = (result) => {
@@ -95,7 +93,18 @@ function Login() {
     return(
         <div className = "row" style = {{ width: "100%", margin: "auto" }}>
             { loading ? 
-                <div style = {{ paddingTop: "50vh", position: "absolute", paddingLeft: "19vh", backgroundColor: "gray", opacity: "0.6", zIndex: "3", border: "solid 1px aqua", height: "100%" }}>
+                <div 
+                    style = {{ 
+                        paddingTop: window.innerWidth <= 767 ? "47vh" : "50vh", 
+                        paddingLeft: window.innerWidth <= 767 ? "45vw" : "47vw", 
+                        position: "absolute", 
+                        backgroundColor: "gray", 
+                        opacity: "0.6", 
+                        zIndex: "3", 
+                        border: "solid 1px aqua", 
+                        height: "100%" 
+                    }}
+                >
                     <ClockLoader
                         color = "#A7C2F7"
                         loading = { loading }

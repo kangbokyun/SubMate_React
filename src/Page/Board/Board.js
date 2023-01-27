@@ -33,31 +33,11 @@ function Board() {
             console.log("/Board/HeartList : ", res);
             setLikeList(res);
         })
-        // let temp = boardList.map(function(list) {
-        //     // console.log("list.htype : ", list.heart);
-        //     if(String(list.heart) === "0") {
-        //         String(list.heart) === "1"
-        //     }
-        // })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
     }, []);
     // /윈도우 크기 변경 감지되면 리렌더링
-    // 스크롤 위치 감지
-    // const [ infinityScroll, setInfinityScroll ] = useState([]);
-    // const getScroll = () => {
-    //     let scrollContainer = document.getElementById("ScrollContainer");
-    //     let yContainer = scrollContainer.scrollHeight; // 스크롤 전체 길이
-    //     let y = scrollContainer.scrollTop; // 스크롤 된 높이
-    //     let clientHeight = scrollContainer.clientHeight; // 눈에 보이는 높이
-    //     let leftScroll = y + clientHeight;
-    //     let eightyPerScroll = (yContainer * 0.95);
-    //     if(eightyPerScroll <= leftScroll) {
-    //         // 무한 스크롤 로직
-    //     }
-    // };
-    // -/스크롤 위치 감지
     // 뒤로가기
     const history = useNavigate();
     const GoBack = () => {
@@ -141,7 +121,7 @@ function Board() {
                                                             <label style = {{ fontSize: "0.8rem" }}>{ list.createdDate }</label>
                                                         </div>
                                                         <div className = "col-6" style = {{ marginTop: "0.8vh", paddingRight: "0", marginRight: "0" }}>
-                                                            <label style = {{ float: "right" }} key = {likeList.rno}>
+                                                            <label style = {{ float: "right" }}>
                                                                 { list.heart === "1" && list.hrno === "null" ?
                                                                     <img alt = "Like" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: "7vw", height: "3vh" }} />
                                                                     :

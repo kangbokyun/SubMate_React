@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import './Mate.css';
 
 function Mate() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -136,6 +137,11 @@ function Mate() {
     const chatNo = () => {
         alert("No");
     };
+
+    const [ sidebar, setSidebar ] = useState(false);
+    const clickBell = () => {
+        setSidebar(sidebar => !sidebar);
+    };
   
     return(
         <div>
@@ -147,28 +153,40 @@ function Mate() {
                     </div>
                     <div className = "col-4 offset-5">
                         <img id="dropdown-basic-button" alt = "Setting" src = { require('../../IMG/Bell.png') } style = {{ width: "12vw", marginTop: "6vh", float: "right" }} />
-                        <DropdownButton id="dropdown-basic-button" style = {{ backgroundColor: "transparent", height: "4.5vh", marginTop: "7vh", backgroundImage: "../../IMG/Bell.png" }}>
-                            {callList.map((list) =>
-                                <div className = "row" style = {{ width: "100%", marginLeft: "3vw" }} key = { list.callno }>
-                                    <div className = "col-9" style = {{  }}>
-                                        <Dropdown.Item onClick = { handleShow } style = {{ paddingLeft: "1vw", width: "50vw" }}>{ list.sendername }님의 채팅신청</Dropdown.Item>
-                                    </div>
-                                    <div className = "col-3" style = {{  }}>
-                                        <div className = "row" style = {{ width: "100%" }}>
-                                            <div className = "col-6" style = {{ padding: "0" }}>
-                                                <p onClick = { () => { chatOk(list.callreceiverno, list.receivername, list.callsenderno, list.sendername) } } style = {{ float: "right" }}>v</p>
-                                            </div>
-                                            <div className = "col-6" style = {{ padding: "0" }}>
-                                                <p onClick = { chatNo } style = {{ float: "right" }}>x</p>
+                        <DropdownButton id="dropdown-basic-button" title = "" style = {{ backgroundColor: "transparent", height: "4.5vh", marginTop: "7vh", backgroundImage: "../../IMG/Bell.png" }}>
+                            { callList.length <= 0 ?
+                                <div style = {{ fontSize: "0.8rem", textAlign: "center" }}>받은 채팅 신청이 없습니다.</div>
+                                :
+                                callList.map((list) =>
+                                    <div className = "row" style = {{ width: "100%", marginLeft: "3vw" }} key = { list.callno }>
+                                        <div className = "col-9" style = {{  }}>
+                                            <Dropdown.Item onClick = { handleShow } style = {{ paddingLeft: "1vw", width: "50vw" }}>{ list.sendername }님의 채팅신청</Dropdown.Item>
+                                        </div>
+                                        <div className = "col-3" style = {{  }}>
+                                            <div className = "row" style = {{ width: "100%" }}>
+                                                <div className = "col-6" style = {{ padding: "0" }}>
+                                                    <p onClick = { () => { chatOk(list.callreceiverno, list.receivername, list.callsenderno, list.sendername) } } style = {{ float: "right" }}>v</p>
+                                                </div>
+                                                <div className = "col-6" style = {{ padding: "0" }}>
+                                                    <p onClick = { chatNo } style = {{ float: "right" }}>x</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            )}
+                                )
+                            }
                         </DropdownButton>
                     </div>
                 </div> : 
-                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Mate</h1> 
+                <div className = "row" style = {{ width: "100%" }}>
+                    <div className = "col-md-6">
+                        <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Mate</h1> 
+                    </div>
+                    <div className = "col-md-6" onClick = { clickBell }>
+                        <img id="dropdown-basic-button" alt = "Setting" src = { require('../../IMG/Bell.png') } style = {{ width: "5vw", marginTop: "6.5vh", float: "right" }} />
+                    </div>
+
+                </div>
             }
             { window.innerWidth <= 767 ?
                 <section className = "section-6" style = {{ borderBottom: "none", marginTop: "3vh", marginBottom: "2vh" }}>
@@ -178,17 +196,17 @@ function Mate() {
                         userInfos.map((list) => 
                             <figure key = { list.mno } className = "figure" style = {{ backgroundColor: "black", borderRadius: "8px" }}>
                                 <img alt = "Setting" src = { require('../../MemberImg' + list.profileimg) } style = {{ width: "100%", marginLeft: "0px", height: "67.5vh", objectFit: "contain", backgroundColor: "gray" }} name = { list.mno } />
-                                <figcaption style = {{ color: "white", marginTop: "28vh", height: "5vh" }}>
+                                <figcaption style = {{ color: "white", marginTop: "25vh", height: "5vh" }}>
                                     <h3>{ list.mnickname } ( { list.mbti } )</h3>
                                 </figcaption>
-                                <figcaption style = {{ color: "white", marginTop: "32vh", height: "25vh" }}>
-                                    Hobby & Introduce<br />
+                                <figcaption style = {{ color: "white", marginTop: "29vh", height: "25vh" }}>
+                                    Hobby & Introduce<br /><br />
                                     { list.psetting === null ? 
-                                            <label style = {{ marginTop: "2vh" }}>프로필 미설정</label>
+                                            <label key = { list.mno } style = {{ marginTop: "2vh" }}>프로필 미설정</label>
                                             :
                                             profile.map((profileList) => 
                                            list.mno !== profileList.mno ? 
-                                                <label></label>
+                                                <label key = { profileList.pno }></label>
                                            :
                                            <label key = { profileList.pno }>
                                                 {profileList.pintro}<br /> {profileList.plike1} 좋아해요<br /> {profileList.plike2} 좋아해요<br />
@@ -239,6 +257,38 @@ function Mate() {
                 </section>
                 :
                 <div className = "container" style = {{ marginTop: "3vh" }}>
+                    <div className = { sidebar ? "show-sidebar" : "hide-sidebar" } style = {{ backgroundColor: "white", boxShadow: "8px 5px 31px gray", paddingTop: "1vh" }}>
+                        <div className = "row" style = {{ width: "100%", marginLeft: "0.1vw" }}>
+                            <div className = "col-md-2" style = {{ borderBottom: "solid 1px #cac9cb" }}>
+                                <h3 style = {{ paddingTop: "0.5vh", cursor: "pointer" }} onClick = { clickBell }>X</h3>
+                            </div>
+                            <div className = "col-md-10" style = {{ borderBottom: "solid 1px #cac9cb" }}>
+                                <p style = {{ fontSize: "1.7rem", fontStyle: "none" }}>채팅 신청 내역</p>
+                            </div>
+                            <table className = "table">
+                                <tbody>
+                                    { callList.length <= 0 ? 
+                                        <tr><td>받은 채팅 신청이 없습니다.</td></tr> :
+                                        callList.map((list) => 
+                                            <tr key = { list.callno } className = "row" style = {{ width: "100%", marginLeft: "0.1vw" }}>
+                                                <td className = "col-md-8"><div style = {{ marginLeft: "1.5vw", marginTop: "0.5vh" }}>"{ list.sendername }"님의 채팅신청</div></td>
+                                                <td className = "col-md-4">
+                                                    <div className = "row" style = {{ width: "100%" }}>
+                                                        <div className = "col-md-6">
+                                                            <h4 onClick = { () => { chatOk(list.callreceiverno, list.receivername, list.callsenderno, list.sendername) }}>v</h4>
+                                                        </div>
+                                                        <div className = "col-md-6">
+                                                            <h4>x</h4>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ) 
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <div className = "row">
                         { userInfos.length === 0 ? 
                             <div style = {{ textAlign: "center", fontSize: "1.2rem", marginTop: "25vh" }}>설정을 통해 조건에 맞는<br />새로운 사람을 만나보세요!</div>
@@ -252,13 +302,13 @@ function Mate() {
                                             <h5 style = {{ borderBottom: "solid 1px #f4f5f7" }}>{ list.mnickname } ( { list.mbti } )</h5>
                                         </figcaption>
                                         <figcaption style = {{ color: "white", marginTop: "3vh", height: "25vh", paddingLeft: "1vw", fontSize: "0.9rem" }}>
-                                            Hobby & Introduce<br />
+                                            Hobby & Introduce<br /><br />
                                             { list.psetting === null ? 
-                                                <label style = {{ marginLeft: "5vw", marginTop: "7.5vh" }}>프로필 미설정</label>
+                                                <label key = { list.mno } style = {{ marginLeft: "5vw", marginTop: "7.5vh" }}>프로필 미설정</label>
                                                 :
                                                 profile.map((profileList) => 
                                                     list.mno !== profileList.mno ? 
-                                                        <label></label>
+                                                        <label key = { profileList.pno }></label>
                                                 :
                                                 <label key = { profileList.pno }>
                                                     {profileList.pintro}<br /> {profileList.plike1} 좋아해요<br /> {profileList.plike2} 좋아해요<br />

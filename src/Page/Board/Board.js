@@ -45,7 +45,7 @@ function Board() {
     };
 
     const [ viewData, setViewData ] = useState("");
-    const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg, createdDate, heart, hrno) => {
+    const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg, createdDate, heart, hrno, writerimg) => {
         if(heart === "1") { heart = "1"; } else { heart = "0" }
         // 글 상세보기로
         history('/BoardView', {
@@ -60,7 +60,8 @@ function Board() {
                 "bimg" : bimg,
                 "createdDate" : createdDate,
                 "heart" : heart,
-                "hrno" : hrno
+                "hrno" : hrno,
+                "writerimg" : writerimg
             }
         })
     };
@@ -70,7 +71,7 @@ function Board() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div style = {{ borderBottom: "solid 1px gray" }}>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "10vh", marginBottom: "2.5vh" }}>
+                    <h1 style = {{ marginLeft: "1vw", marginTop: "8vh", marginBottom: "2.5vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
                         Board
                         <span style = {{ float: "right", marginRight: "2vw" }}>
@@ -102,7 +103,7 @@ function Board() {
                                             <div className = "row" style = {{ width: "100%" }}>
                                                 <div className = "col-12" style = {{ marginTop: "0.7vh", fontSize: "1.3rem" }}>
                                                     <div className = "row">
-                                                        <label className = "col-9 col-md-9" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno) } }>
+                                                        <label className = "col-9 col-md-9" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno, list.writerimg) } }>
                                                             {list.btitle.length >= 11 ?
                                                                 String(list.btitle).substring(0, 10) + "..." 
                                                                 : 
@@ -173,7 +174,7 @@ function Board() {
                                     </tr> 
                                     { boardList.map((list) => 
                                         <tr key = { list.bno } className = "row" style = {{  }}>
-                                            <td className = "col-md-6" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart) } }>{ list.btitle }</td>
+                                            <td className = "col-md-6" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno, list.writerimg) } }>{ list.btitle }</td>
                                             <td className = "col-md-1" style = {{ textAlign: "center", marginLeft: "0", paddingLeft: "0", paddingRight: "1.4vw" }}>
                                                 <div className = "row">
                                                     <label className = "col-md-3" style = {{ float: "right" }}>

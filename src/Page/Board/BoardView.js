@@ -46,7 +46,7 @@ function BoardView() {
     };
 
     // 댓글 페이지로
-    const replyWrite = (bno, bwriter, bcontents, becho, bechotimer, bview, createdDate, heart, hrno) => {
+    const replyWrite = (bno, bwriter, bcontents, becho, bechotimer, bview, createdDate, heart, hrno, writerimg) => {
         history("/BoardReply", {
             state: {
                 "bno" : bno,
@@ -57,7 +57,8 @@ function BoardView() {
                 "bview" : bview,
                 "createdDate" : createdDate,
                 "heart" : heart,
-                "hrno" : hrno
+                "hrno" : hrno,
+                "writerimg" : writerimg
             }
         });
     };
@@ -142,13 +143,13 @@ function BoardView() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "10vh" }}>
+                    <h1 style = {{ marginLeft: "1vw", marginTop: "8vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
                         BoardView
                     </h1>
                 </div>
                 : 
-                <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>BoardView</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>BoardView</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <label style = {{ marginLeft: window.innerWidth <= 767 ? "1.5vw" : "", fontSize: "1.7rem", marginTop: "1.5vh" }}>{ boardDTO.state.btitle }</label>{ window.innerWidth <= 767 ? "" : <br /> }
@@ -173,7 +174,7 @@ function BoardView() {
                             :
                             <img onClick = { clickLike } value = { likeValue } alt = "Like" src = { require('../../IMG/BoardHeart_Red.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
                         }
-                        <img onClick = { (e) => replyWrite(boardDTO.state.bno, boardDTO.state.bwriter, boardDTO.state.bcontents, boardDTO.state.becho, boardDTO.state.bechotimer, boardDTO.state.bview, boardDTO.state.createdDate, boardDTO.state.heart, boardDTO.state.hrno) } alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
+                        <img onClick = { (e) => replyWrite(boardDTO.state.bno, boardDTO.state.bwriter, boardDTO.state.bcontents, boardDTO.state.becho, boardDTO.state.bechotimer, boardDTO.state.bview, boardDTO.state.createdDate, boardDTO.state.heart, boardDTO.state.hrno, boardDTO.state.writerimg) } alt = "Reply" src = { require('../../IMG/BoardReply_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh" }} />
                         { reportStatus === "0" ? 
                             <img onClick = { report } alt = "Siren" src = { require('../../IMG/Siren_Black.png') } style = {{ width: window.innerWidth <= 767 ? "13vw" : "4vw", height: window.innerWidth <= 767 ? "5vh" : "3.5vh", float: "right", marginRight: "2vw" }} />
                             :

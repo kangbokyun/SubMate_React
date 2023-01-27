@@ -106,7 +106,14 @@ function SetProfile() {
                     </h1>
                 </div>
                 : 
-                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Setting_Profile</h1> 
+                <div className = "row" style = {{ width: "100%", marginLeft: "6vw", marginTop: "8vh" }}>
+                    <div className = "col-md-6">
+                        <h1 style = {{  }}>Setting_Profile</h1> 
+                    </div>
+                    <div className = "col-md-6">
+                        <button onClick = { saveSetting } type = "button" className = "btn btn-info" style = {{ float: "right", marginRight: "14vw", color: "white" }}>저장</button>
+                    </div>
+                </div> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <div className = "row" style = {{ width: "100%" }}>

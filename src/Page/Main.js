@@ -110,7 +110,12 @@ function Main() {
                     }
                     <h1 style = {{ marginTop: "1.4vh", marginLeft: "2vw" }}>공지사항</h1>
                     <div id="showcase-dynamic" style = {{ height: "5vh", paddingTop: "0", backgroundColor: "transparent", color: "black", fontSize: "1.2rem", marginLeft: "2vw" }}>
-                        { notice.map((list) => 
+                        { notice.length <= 0 ?
+                        <div>
+                            <p>공지가 없습니다.</p>
+                        </div>
+                        : 
+                        notice.map((list) => 
                             <div key = { list.nno }>
                                 <p>{ list.nkind === 1 ? "[ 공지 ]" : "[ 이벤트 ]" }　{ list.ntitle }</p>
                             </div>

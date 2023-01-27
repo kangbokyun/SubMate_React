@@ -52,7 +52,7 @@ function Profile() {
         <div>
             <Header />
             { window.innerWidth <= 767 ? 
-                <div><h1 style = {{ marginLeft: "1vw", marginTop: "10vh" }}><span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>Profile</h1></div> :
+                <div><h1 style = {{ marginLeft: "1vw", marginTop: "8vh" }}><span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>Profile</h1></div> :
                 <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Profile</h1> 
             }
             <div className = "container">
@@ -81,8 +81,8 @@ function Profile() {
                                 </div>
                                 <div className = "col-md-3 col-3">
                                 { window.innerWidth <= 767 ? 
-                                    <div style = {{ marginTop: "4vh" }}><img alt = "Setting" src = { require('../../MemberImg' + userInfo.profileimg.split("/MemberImg")[1]) } style = {{ width: "100%", height: "80%", borderRadius: "8px", objectFit: "contain" }} /><h6 style = {{ marginLeft: "1vw" }}>{ userInfo.mager }</h6></div> : 
-                                    <div style = {{ marginTop: "4vh" }}><img alt = "Setting" src = { require('../../MemberImg' + userInfo.profileimg.split("/MemberImg")[1]) } style = {{ width: "100%", height: "80%", borderRadius: "8px", objectFit: "contain" }} /><h6 style = {{ marginLeft: "4vw" }}>{ userInfo.mager }</h6></div> 
+                                    <div style = {{ marginTop: "4vh" }}><img alt = "Setting" src = { require('../../MemberImg' + userInfo.profileimg.split("/MemberImg")[1]) } style = {{ width: "23vw", height: "15vh", borderRadius: "8px", objectFit: "cover" }} /><h6 style = {{ marginLeft: "1vw" }}>{ userInfo.mager }</h6></div> : 
+                                    <div style = {{ marginTop: "4vh" }}><img alt = "Setting" src = { require('../../MemberImg' + userInfo.profileimg.split("/MemberImg")[1]) } style = {{ width: "15vw", height: "17.5vh", borderRadius: "8px", objectFit: "cover" }} /><h6 style = {{ marginLeft: "4vw" }}>{ userInfo.mager }</h6></div> 
                                 }
                                 </div>
                                 <div className = "col-md-10 col-10 offset-md-1 offset-1">

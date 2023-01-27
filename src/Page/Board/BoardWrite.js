@@ -138,7 +138,7 @@ function BoardWrite() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "10vh" }}>
+                    <h1 style = {{ marginLeft: "1vw", marginTop: "8vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
                         BoardWrite
                         <span style = {{ float: "right", marginRight: "2vw" }}>
@@ -147,7 +147,7 @@ function BoardWrite() {
                     </h1>
                 </div>
                 : 
-                <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>BoardWrite</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>BoardWrite</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" } style = {{ marginTop: "3vh" }}>
                 { window.innerWidth <= 767 ? "" : <div><button type = "button" className = "btn btn-outline-secondary" style = {{ float: "right", marginBottom: "1.5vh", marginLeft: "1vw" }} onClick = { GoBack }>취소</button><button type = "button" className = "btn btn-outline-success" style = {{ float: "right", marginBottom: "1.5vh" }} onClick = { sendBoardWrite }>등록</button></div> }

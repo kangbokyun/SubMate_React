@@ -140,14 +140,14 @@ function BoardReply() {
                     </h1>
                 </div>
                 : 
-                <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>BoardReply</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>BoardReply</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <div style = {{ borderBottom: "solid 1px gray" }}>
                     <div className = "row" style = {{ width: "100%" }}>
                         <div className = "col-3 col-md-3" style = {{ marginBottom: "1.5vh" }}>
                             <img alt = "" 
-                                src = { require('../../../IMG/임시프사2.jpg') } 
+                                src = { require('../../../MemberImg/' + boardData.state.writerimg) } 
                                 style = {{ 
                                     width: window.innerWidth <= 767 ? "20vw" : "10vw", 
                                     objectFit: "cover", 
@@ -160,7 +160,11 @@ function BoardReply() {
                         <div className = "col-9 col-md-9">
                             <div className = "row">
                                 <div className = "col-3 col-md-3" style = {{ marginTop: "0.8vh" }}>
-                                    <h3>{ boardData.state.bwriter }</h3>
+                                    { window.innerWidth <= 767 ? 
+                                        <h6>{ boardData.state.bwriter }</h6> 
+                                        : 
+                                        <h3>{ boardData.state.bwriter }</h3> 
+                                    }
                                 </div>
                                 <div className = "col-7 col-md-7" style = {{ textAlign: "center" }}>
                                     <span style = {{ fontSize: "0.8rem", float: "right", marginTop: "1.4vh" }}>{ boardData.state.bview }</span>

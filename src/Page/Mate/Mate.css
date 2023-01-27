@@ -1,18 +1,45 @@
 @font-face {
+  font-family: 'GongGothicMedium';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+* {
     font-family: 'GongGothicMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
-  * {
-      font-family: 'GongGothicMedium';
-  }
-  ::-webkit-scrollbar {
-    width:20px;
-  }
-  ::-webkit-scrollbar-track{
-    background:#fff;
-  }
-  ::-webkit-scrollbar-thumb{
-    background:#000;
-  }
+}
+::-webkit-scrollbar {
+  width:20px;
+}
+::-webkit-scrollbar-track{
+  background:#fff;
+}
+::-webkit-scrollbar-thumb{
+  background:#000;
+}
+
+.show-sidebar {
+  /* display: block; */
+  top: 0;
+  height: 87vh;
+  margin-top: 7vh;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: black;
+  width: 25%;
+  position: fixed;
+  right: 0;
+  color: black;
+  transition: 0.7s ease-in-out;
+}
+
+.hide-sidebar {
+  top: 0;
+  width: 25%;
+  margin-top: 7vh;
+  height: 87vh;
+  background-color: white;
+  position: fixed;
+  /* left: 1270px; */
+  right: -27%;
+  transition: 0.7s ease-in-out;
+}

@@ -193,11 +193,17 @@ function Main() {
                         <div className = "col-md-5">
                             <h1>공지사항</h1>
                             <div id="showcase-dynamic" style = {{ paddingTop: "0.1vh", backgroundColor: "transparent", color: "black", fontSize: "1.2rem" }}>
-                                { notice.map((list) => 
-                                    <div key = { list.nno }>
-                                        <p>{ list.nkind === 1 ? "[ 공지 ]" : "[ 이벤트 ]" }　{ list.ntitle }</p>
+                                { notice.length <= 0 ?
+                                    <div>
+                                        <p>공지사항이 없습니다.</p>
                                     </div>
-                                ) }
+                                    :
+                                    notice.map((list) => 
+                                        <div key = { list.nno }>
+                                            <p>{ list.nkind === 1 ? "[ 공지 ]" : "[ 이벤트 ]" }　{ list.ntitle }</p>
+                                        </div>
+                                    ) 
+                                }
                             </div>
                         </div>
                         <h1 style = {{ marginTop: "1.4vh" }}>서브뉴스</h1>

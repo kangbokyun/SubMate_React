@@ -13,7 +13,7 @@ function Setting() {
         <div>
             <Header />
             { window.innerWidth <= 767 ? 
-                <div><h1 style = {{ marginLeft: "3vw", marginTop: "10vh" }}>Setting</h1></div> : 
+                <div><h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>Setting</h1></div> : 
                 <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Setting</h1> 
             }
             

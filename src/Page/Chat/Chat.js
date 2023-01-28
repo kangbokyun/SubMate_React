@@ -83,7 +83,7 @@ function Chat() {
                                                                 }
                                                             </div>
                                                             <div className = "col-5">
-                                                                { list.chlastmessage != null && list.createdate.substring(2, 10) }
+                                                                { list.chlastmessage != null ? list.createdate.substring(2, 10) : "" }
                                                             </div>
                                                         </div>
                                                     </div>

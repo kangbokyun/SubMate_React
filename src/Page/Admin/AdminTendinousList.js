@@ -41,13 +41,13 @@ function AdminTendinousList() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div style = {{ borderBottom: "solid 1px gray" }}>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "8vh", marginBottom: "1.5vh" }}>
+                    <h1 style = {{ marginLeft: "3vw", marginTop: "8vh", marginBottom: "1.5vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
                         TendinousList
                     </h1>
                 </div> 
                 : 
-                <h1 style = {{ marginLeft: "2vw", marginTop: "10vh" }}>TendinousList</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>TendinousList</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <table className = "table" style = {{  }}>

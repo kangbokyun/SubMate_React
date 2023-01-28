@@ -19,6 +19,7 @@ function UserManage() {
     useEffect(() => {
         call("/Admin/UserManage", "POST", null)
         .then((res) => {
+            console.log("/Admin/UserManage/Res : ", res);
             setUserData(res);
         })
         resizeWindow();
@@ -60,7 +61,7 @@ function UserManage() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div style = {{ borderBottom: "solid 1px gray" }}>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "8vh", marginBottom: "1.5vh" }}>
+                    <h1 style = {{ marginLeft: "3vw", marginTop: "8vh", marginBottom: "1.5vh" }}>
                         {/* <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span> */}
                         UserManage
                     </h1>
@@ -84,7 +85,7 @@ function UserManage() {
                             <tr style = {{ textAlign: "center" }} key = { list.mno }>
                                 <td>{ list.mname }</td>
                                 <td>{ list.mnickname }</td>
-                                <td>2건</td>
+                                <td>0건</td>
                                 <td>0건</td>
                                 <td>
                                     <span

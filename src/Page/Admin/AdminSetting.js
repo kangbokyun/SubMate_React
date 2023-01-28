@@ -28,11 +28,11 @@ function AdminSetting() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div style = {{ borderBottom: "solid 1px gray" }}>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "8vh" }}>
+                    <h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>
                         Setting
                     </h1>
                 </div> : 
-                <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>Setting</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Setting</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <table className = "table">

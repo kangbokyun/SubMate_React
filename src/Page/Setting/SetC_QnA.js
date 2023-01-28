@@ -41,7 +41,7 @@ function QnA() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div style = {{ borderBottom: "solid 1px gray" }}>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "8vh" }}>
+                    <h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
                         Customer_QnA
                     </h1>

@@ -97,7 +97,7 @@ function SetProfile() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "8vh" }}>
+                    <h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
                         Setting_Profile
                         <span style = {{ float: "right", marginRight: "2vw" }}>

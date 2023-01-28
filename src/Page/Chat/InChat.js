@@ -288,10 +288,11 @@ function InChat() {
                                             { list.chsendername }
                                         </div>
                                         <div className = "col-10" style = {{ textAlign: "left" }}>
-                                            <label style = {{ // "#fdc6d5" : "#a7c2f7"
-                                                backgroundColor: userInfo.mnickname === chatDTO.sendername ? 
-                                                userInfo.mgender === "Woman" ? "#fdc6d5" : "#a7c2f7" :
-                                                userInfo.mgender === "Woman" ? "#fdc6d5" : "#a7c2f7",
+                                            <label style = {{ // "#fdc6d5" : "#a7c2f7" / 빨강 : 파랑
+                                                backgroundColor: list.chsendername === chatDTO.state.sendername ? 
+                                                    chatDTO.state.sgender === "Man" ? "#a7c2f7" : "#fdc6d5"
+                                                    :
+                                                    chatDTO.state.rgender === "Man" ? "#a7c2f7" : "#fdc6d5",
                                                 paddingLeft: "2vw", 
                                                 borderRadius: "8px", 
                                                 paddingTop: "0.4vh", 
@@ -309,9 +310,10 @@ function InChat() {
                                         </div>
                                         <div className = "col-10 offset-2" style = {{ textAlign: "right" }}>
                                             <label style = {{ 
-                                                backgroundColor: userInfo.mnickname === chatDTO.sendername ? 
-                                                userInfo.mgender === "Woman" ? "#a7c2f7" : "#fdc6d5" :
-                                                userInfo.mgender === "Woman" ? "#a7c2f7" : "#fdc6d5", 
+                                                backgroundColor: list.chsendername === chatDTO.state.sendername ? 
+                                                    chatDTO.state.sgender === "Man" ? "#a7c2f7" : "#fdc6d5"
+                                                    :
+                                                    chatDTO.state.rgender === "Man" ? "#a7c2f7" : "#fdc6d5",
                                                 paddingLeft: "2vw", 
                                                 borderRadius: "8px", 
                                                 paddingTop: "0.4vh", 
@@ -333,8 +335,10 @@ function InChat() {
                                             </div>
                                             <div className = "col-10" style = {{ textAlign: "left" }}>
                                                 <label style = {{ 
-                                                    backgroundColor: userInfo.mnickname === chatDTO.sendername ? 
-                                                    userInfo.mgender === chatDTO.state.sgender ? "#fdc6d5" : "#a7c2f7" : userInfo.mgender === chatDTO.state.rgender ? "#fdc6d5" : "#a7c2f7", 
+                                                    backgroundColor: chat.chsendername === chatDTO.state.sendername ? 
+                                                        chatDTO.state.sgender === "Man" ? "#a7c2f7" : "#fdc6d5"
+                                                        :
+                                                        chatDTO.state.rgender === "Man" ? "#a7c2f7" : "#fdc6d5",
                                                     paddingLeft: "2vw", 
                                                     borderRadius: "8px", 
                                                     paddingTop: "0.4vh", 
@@ -352,8 +356,10 @@ function InChat() {
                                             </div>
                                             <div className = "col-10 offset-2" style = {{ textAlign: "right" }}>
                                                 <label style = {{ 
-                                                    backgroundColor: userInfo.mnickname === chatDTO.receivername ? 
-                                                    userInfo.mgender === chatDTO.state.sgender ? "#fdc6d5" : "#a7c2f7" : userInfo.mgender === chatDTO.state.rgender ? "#a7c2f7" : "#fdc6d5", 
+                                                    backgroundColor: chat.chsendername === chatDTO.state.sendername ? 
+                                                        chatDTO.state.sgender === "Man" ? "#a7c2f7" : "#fdc6d5"
+                                                        :
+                                                        chatDTO.state.rgender === "Man" ? "#a7c2f7" : "#fdc6d5",
                                                     paddingLeft: "2vw", 
                                                     borderRadius: "8px", 
                                                     paddingTop: "0.4vh", 

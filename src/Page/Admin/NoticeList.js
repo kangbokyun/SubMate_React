@@ -38,7 +38,7 @@ function NoticeList() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div style = {{ borderBottom: "solid 1px gray" }}>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "8vh" }}>
+                    <h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
                         NoticeList
                         <span style = {{ float: "right", marginRight: "2vw" }}>
@@ -48,7 +48,7 @@ function NoticeList() {
                         </span>
                     </h1>
                 </div> : 
-                <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>NoticeList</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>NoticeList</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <table className = "table" style = {{  }}>

@@ -28,7 +28,7 @@ function SetCustomer() {
         <div>
             <Header />
             { window.innerWidth <= 767 ? 
-                <div><h1 style = {{ marginLeft: "1vw", marginTop: "10vh" }}><span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>Setting_Customer</h1></div> : 
+                <div><h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}><span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>Setting_Customer</h1></div> : 
                 <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Setting_Customer</h1> 
             }
             { window.innerWidth <= 767 ?

@@ -32,11 +32,11 @@ function AdminBoard() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div style = {{ borderBottom: "solid 1px gray" }}>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "8vh" }}>
+                    <h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>
                         Board
                     </h1>
                 </div> : 
-                <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>Board</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>Board</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <div className = "row" style = {{ width: "100%", borderBottom: "solid 1px gray", marginLeft: "0.1px", marginBottom: "0", marginTop: "10vh" }}>
@@ -51,15 +51,19 @@ function AdminBoard() {
                     <div className = "col-12">
                         <table className = "table" style = {{ height: "23vh", width: "100%" }}>
                             <tbody>
-                                { tendinous.map((list) => 
-                                    String(list.tstatus) === "0" ?
-                                    <tr className = "row" key = { list.tno } style = {{ width: "100%", marginLeft: "2.5vw" }}>
-                                        <td className = "col-9">{ list.tcontents }</td>
-                                        <td className = "col-3" style = {{ textAlign: "right" }}>{ list.tstatus === "0" ? "미처리" : "" }</td>
-                                    </tr>
+                                { tendinous.length <= 0 ?
+                                    <tr><td>받은 건의사항이 없습니다.</td></tr>
                                     :
-                                    <tr key = { list.tno }></tr>
-                                ) }
+                                    tendinous.map((list) => 
+                                        String(list.tstatus) === "0" ?
+                                        <tr className = "row" key = { list.tno } style = {{ width: "100%", marginLeft: "2.5vw" }}>
+                                            <td className = "col-9">{ list.tcontents }</td>
+                                            <td className = "col-3" style = {{ textAlign: "right" }}>{ list.tstatus === "0" ? "미처리" : "" }</td>
+                                        </tr>
+                                        :
+                                        <tr key = { list.tno }></tr>
+                                    ) 
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -73,14 +77,20 @@ function AdminBoard() {
                     </div>
                 </div>
                 <div className = "row" style = {{ width: "100%" }}>
-                    <div className = "col-12">
+                    <div className = "col-12" style = {{  }}>
                         <table className = "table" style = {{ height: "23vh" }}>
                             <tbody>
-                                { QnA.map((list) =>
-                                    <tr className = "row" style = {{ width: "100%", marginLeft: "1vw" }} key = { list.qnano }>
-                                        <td>{ list.qnatitle }</td>
-                                    </tr>
-                                ) }
+                                { QnA.length <= 0 ?
+                                    <tr><td>받은 QnA가 없습니다.</td></tr>
+                                    :
+                                    QnA.map((list) =>
+                                        list.qnano > 5 ?
+                                        "" :
+                                        <tr className = "row" style = {{ width: "100%", marginLeft: "1vw" }} key = { list.qnano }>
+                                            <td>{ list.qnatitle }</td>
+                                        </tr>
+                                    ) 
+                                }
                             </tbody>
                         </table>
                     </div>

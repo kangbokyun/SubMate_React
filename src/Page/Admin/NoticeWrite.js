@@ -62,12 +62,12 @@ function NoticeWrite() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div style = {{ borderBottom: "solid 1px gray" }}>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "8vh" }}>
+                    <h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
                         NoticeWrite
                     </h1>
                 </div> : 
-                <h1 style = {{ marginLeft: "6vw", marginTop: "10vh" }}>NoticeWrite</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>NoticeWrite</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <div className = "row" style = {{ width: "100%", marginTop: "1.5vh" }}>

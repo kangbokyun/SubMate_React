@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { call } from '../../Service/APIService';
 import Header from '../Header';
 import AdminMenu from './AdminMenu';
 
@@ -13,7 +14,11 @@ function AdminQnA() {
         setWindowWidth(window.innerWidth);
         setWindowHeight(window.innerHeight);
     };
+
+    const [ QnA, setQnA ] = useState([]);
     useEffect(() => {
+        call("/Admin/QnA", "POST", null)
+        .then((res) => { console.log("/Admin/QnA/Res : ", res); setQnA(res) });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -29,13 +34,13 @@ function AdminQnA() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div style = {{ borderBottom: "solid 1px gray" }}>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "8vh", marginBottom: "1.5vh" }}>
+                    <h1 style = {{ marginLeft: "3vw", marginTop: "8vh", marginBottom: "1.5vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
                         QnAList
                     </h1>
                 </div> 
                 : 
-                <h1 style = {{ marginLeft: "2vw", marginTop: "10vh" }}>QnAList</h1> 
+                <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>QnAList</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" }>
                 <table className = "table" style = {{  }}>
@@ -45,11 +50,16 @@ function AdminQnA() {
                             <td className = "col-2" style = {{ textAlign: "center" }}>작성자</td>
                             <td className = "col-2" style = {{ textAlign: "center" }}>상태</td>
                         </tr>
-                        <tr className = "row" style = {{ width: "100%", marginLeft: "0.1px" }}>
-                            <td className = "col-8" style = {{ textAlign: "center" }}>이거 이렇게 할 수 있나요?</td>
-                            <td className = "col-2" style = {{ textAlign: "center" }}>유재석</td>
-                            <td className = "col-2" style = {{ textAlign: "center" }}>OK</td>
-                        </tr>
+                        { QnA.length <= 0 ?
+                        <tr><td styel = {{  }}>받은 QnA가 없습니다.</td></tr>
+                        :
+                        QnA.map((list) =>
+                            <tr key = { list.qnano } className = "row" style = {{ width: "100%", marginLeft: "0.1px" }}>
+                                <td className = "col-8" style = {{ textAlign: "center" }}>{ list.qnatitle }</td>
+                                <td className = "col-2" style = {{ textAlign: "center" }}>유재석</td>
+                                <td className = "col-2" style = {{ textAlign: "center" }}>OK</td>
+                            </tr>
+                        ) }
                     </tbody>
                 </table>
             </div>

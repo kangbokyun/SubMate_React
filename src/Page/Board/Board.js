@@ -71,8 +71,7 @@ function Board() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div style = {{ borderBottom: "solid 1px gray" }}>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "8vh", marginBottom: "2.5vh" }}>
-                        <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
+                    <h1 style = {{ marginLeft: "3vw", marginTop: "8vh", marginBottom: "2.5vh" }}>
                         Board
                         <span style = {{ float: "right", marginRight: "2vw" }}>
                             <Link to = "/BoardWrite">

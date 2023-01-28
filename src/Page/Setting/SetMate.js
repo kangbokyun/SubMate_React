@@ -167,7 +167,7 @@ function SetMate() {
             <Header />
             { window.innerWidth <= 767 ? 
                 <div style = {{ borderBottom: "solid 1px gray" }}>
-                    <h1 style = {{ marginLeft: "1vw", marginTop: "8vh", marginBottom: "1.5vh" }}>
+                    <h1 style = {{ marginLeft: "3vw", marginTop: "8vh", marginBottom: "1.5vh" }}>
                         <span onClick = { GoBack } style = {{ marginRight: "1.5vw" }}>&#10094;</span>
                         Setting_Mate
                         <button onClick = { saveSetting } type = "button" className = "btn btn-info" style = {{ float: "right", marginRight: "1vw", color: "white" }}>저장</button>

@@ -1,6 +1,7 @@
 > SubMate
 > ---
  - ppt 자료 있습니다.
+ [ Show ](https://youtu.be/cliKMCOclL4)
 
 ### 프로젝트 개요
 

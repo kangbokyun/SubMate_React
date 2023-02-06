@@ -38,9 +38,6 @@ function Setting() {
                         <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
                             <td style = {{ fontSize: "1.2rem" }}><Link to = "/SetCustomer" style = {{ textDecoration: "none", color: "black" }}>회원</Link></td>
                         </tr>
-                        <tr style = {{ borderBottom: "solid 1px gray", height: "5.5vh" }}>
-                            <td style = {{ fontSize: "1.2rem" }}><div onClick = { logoutClick } style = {{ textDecoration: "none", color: "black" }}>로그아웃</div></td>
-                        </tr>
                     </tbody>
                 </table>
                 :
@@ -64,9 +61,6 @@ function Setting() {
                             </tr>
                             <tr style = {{ borderBottom: "solid 1px gray", height: "3vh" }}>
                                 <td style = {{ fontSize: "1.2rem" }}><Link to = "/SetCustomer" style = {{ textDecoration: "none", color: "black" }}>회원</Link></td>
-                            </tr>
-                            <tr style = {{ borderBottom: "solid 1px gray", height: "3vh" }}>
-                                <td style = {{ fontSize: "1.2rem" }}><div onClick = { logoutClick } style = {{ textDecoration: "none", color: "black" }}>로그아웃</div></td>
                             </tr>
                         </tbody>
                     </table>

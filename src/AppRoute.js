@@ -21,6 +21,7 @@ import Main from './Page/Main';
 import Mate from './Page/Mate/Mate';
 import Login from './Page/Member/Login';
 import SignUp from './Page/Member/SignUp';
+import MyProfile from './Page/Profile/MyProfile';
 import Profile from './Page/Profile/Profile';
 import SendList from './Page/Setting/SendList';
 import SetBoard from './Page/Setting/SetBoard';
@@ -71,6 +72,7 @@ function AppRoute() {
                 
                 {/* Profile */}
                 <Route path = "/Profile" element = { <Profile /> } />
+                <Route path = "/MyProfile" element = { <MyProfile /> } />
                 
                 {/* Setting */}
                 <Route path = "/Setting" element = { <Setting /> } />

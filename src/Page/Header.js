@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { LogoutAPI } from '../Service/APIService';
 import './Header.css';
 
 function Header(){
@@ -26,6 +27,10 @@ function Header(){
         setSideStatus(sideStatus => !sideStatus);
     };
 
+    const logoutClick = () => {
+        LogoutAPI();
+    };
+
     return(
         <header style = {{ textAlign: "center", backgroundColor: "#a7c2f7", verticalAlign: "middle", position: "fixed", top: "0", zIndex: "2", width: "100%", height: window.innerWidth <= 767 ? "6vh" : "7vh" }}>
             <div className = { sideStatus ? "show-side" : "hide-side" }>
@@ -43,8 +48,8 @@ function Header(){
                     </div>
                     <table className = "table" style = {{ marginLeft: "2.5vw", textAlign: "left" }}>
                         <tbody>
-                            <tr><td style = {{ paddingLeft: "3vw" }}><Link to = "/Profile" style = {{ textDecoration: "none", color: "black" }}>내 정보 보기</Link></td></tr>
-                            <tr><td style = {{ paddingLeft: "3vw" }}>로그아웃</td></tr>
+                            <tr><td style = {{ paddingLeft: "3vw" }}><Link to = "/MyProfile" style = {{ textDecoration: "none", color: "black" }}>내 정보 보기</Link></td></tr>
+                            <tr><td style = {{ paddingLeft: "3vw" }} onClick = { logoutClick }>로그아웃</td></tr>
                         </tbody>
                     </table>
                 </div>

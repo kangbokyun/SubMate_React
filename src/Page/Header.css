@@ -1,0 +1,15 @@
+.show-side {
+    position: fixed;
+    left: 0;
+    height: 100%;
+    width: 80vw;
+    background-color: white;
+    transition: 0.7s;
+}
+.hide-side {
+    position: fixed;
+    left: -400px;
+    height: 100%;
+    width: 80vw;
+    transition: 0.7s;
+}

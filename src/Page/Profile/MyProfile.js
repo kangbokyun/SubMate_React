@@ -9,6 +9,18 @@ function MyProfile() {
     // 윈도우 크기 변경 감지되면 리렌더링
     const [ windowWidth, setWindowWidth ] = useState(0);
     const [ windowHeight, setWindowHeight ] = useState(0);
+    const [ userId, setUserId ] = useState("");
+    const [ idSt, setIdSt ] = useState(true);
+    const [ name, setName ] = useState("");
+    const [ nameSt, setNameSt ] = useState(true);
+    const [ nick, setNick ] = useState("");
+    const [ nickSt, setNcikSt ] = useState(true);
+    const [ phone, setPhone ] = useState("");
+    const [ phoneSt, setPhoneSt ] = useState(true);
+    const [ mbti, setMbti ] = useState("");
+    const [ mbtiSt, setMbtiSt ] = useState(true);
+    const [ address, setAddress ] = useState("");
+    const [ addressSt, setAddressSt ] = useState(true);
     
     let userInfo = JSON.parse(localStorage.getItem("UserInfo"));
     
@@ -29,20 +41,84 @@ function MyProfile() {
         return history(-1) // 한 페이지 뒤로
     };
 
+    const stChange = (e) => {
+        console.log(e.target.id);
+        if([e.target.id].includes("idBtn")) {
+            setIdSt(idSt => !idSt);
+        } else if([e.target.id].includes("nameBtn")) {
+            setIdSt(nameSt => !nameSt);
+        } else if([e.target.id].includes("nickBtn")) {
+            setIdSt(nickSt => !nickSt);
+        } else if([e.target.id].includes("phoneBtn")) {
+            setIdSt(phoneSt => !phoneSt);
+        } else if([e.target.id].includes("mbtiBtn")) {
+            setIdSt(mbtiSt => !mbtiSt);
+        } else if([e.target.id].includes("addressBtn")) {
+            setIdSt(addressSt => !addressSt);
+        }
+    };
+
     return(
         <div>
             <Header />
             { window.innerWidth <= 767 ? 
-                <div><h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>MyProfile
-                    <span style = {{ float: "right", marginRight: "2vw" }}>
-                        <button type = "button" className = "btn btn-success">정보수정</button>
-                    </span>
-                </h1></div> :
+                <div><h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>MyProfile</h1></div> :
                 <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>MyProfile</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "container" : "" }>
                 <div className = "row" style = {{ width: "100%", marginTop: "3vh" }}>
-                
+                    <table className = "table">
+                        <tbody>
+                            <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
+                                <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>ID</label></td>
+                                <td className = "col-6"><input type = "text" className = "form-control" value = { userInfo.mid } disabled = { idSt } /></td>
+                                <td className = "col-3"><button type = "button" onClick = { stChange } id = "idBtn" className = "btn btn-info" style = {{ width: "100%", color: "white" }}>수정</button></td>
+                            </tr>
+                            <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
+                                <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Name</label></td>
+                                <td className = "col-6"><input type = "text" className = "form-control" value = { userInfo.mname } disabled = { nameSt } /></td>
+                                <td className = "col-3"><button type = "button" onClick = { stChange } id = "nameBtn" className = "btn btn-info" style = {{ width: "100%", color: "white" }}>수정</button></td>
+                            </tr>
+                            <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
+                                <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Nick</label></td>
+                                <td className = "col-6"><input type = "text" className = "form-control" value = { userInfo.mnickname } disabled = { nickSt } /></td>
+                                <td className = "col-3"><button type = "button" onClick = { stChange } id = "nickBtn" className = "btn btn-info" style = {{ width: "100%", color: "white" }}>수정</button></td>
+                            </tr>
+                            <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
+                                <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Ager</label></td>
+                                <td className = "col-6"><input type = "text" className = "form-control" value = { userInfo.mager } disabled = "true" /></td>
+                            </tr>
+                            <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
+                                <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Gender</label></td>
+                                <td className = "col-6"><input type = "text" className = "form-control" value = { userInfo.mgender } disabled = "true" /></td>
+                            </tr>
+                            <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
+                                <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>MBTI</label></td>
+                                <td className = "col-6"><input type = "text" className = "form-control" value = { userInfo.mbti } disabled = { mbtiSt } /></td>
+                                <td className = "col-3"><button type = "button" onClick = { stChange } id = "mbtiBtn" className = "btn btn-info" style = {{ width: "100%", color: "white" }}>수정</button></td>
+                            </tr>
+                            <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
+                                <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Address</label></td>
+                                <td className = "col-6"><input type = "text" className = "form-control" value = { userInfo.maddress } disabled = { addressSt } /></td>
+                                <td className = "col-3"><button type = "button" onClick = { stChange } id = "addressBtn" className = "btn btn-info" style = {{ width: "100%", color: "white" }}>수정</button></td>
+                            </tr>
+                            <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
+                                <td className = "col-12">
+                                    <img 
+                                        alt = "" 
+                                        src = { require('../../MemberImg' + userInfo.profileimg.split("/MemberImg")[1]) }
+                                        style = {{  
+                                            width: "90vw",
+                                            height: "30vh",
+                                            objectFit: "contain",
+                                            backgroundColor: "#f0efed"
+                                        }} 
+                                    />
+                                </td>
+                                <td><input type = "file" className = "form-control" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <Menu />

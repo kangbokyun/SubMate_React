@@ -142,6 +142,29 @@ function Mate() {
     const clickBell = () => {
         setSidebar(sidebar => !sidebar);
     };
+
+    const [ dropDown, setDropDown ] = useState(false);
+    const clickDrop = () => {
+        setDropDown(dropDown => !dropDown);
+    };
+
+    const getProfile = (mno, mager, mbirth, mbti, mgender, mhobby, mid, mname, mphone, profileimg, mnickname) => {
+        history('/Profile', {
+            state: {
+                "mno" : mno,
+                "mager" : mager,
+                "mbirth" : mbirth,
+                "mbti" : mbti,
+                "mgender" : mgender,
+                "mhobby" : mhobby,
+                "mid" : mid,
+                "mname" : mname,
+                "mphone" : mphone,
+                "profileimg" : profileimg,
+                "mnickname" : mnickname
+            }
+        });
+    };
   
     return(
         <div>
@@ -231,8 +254,16 @@ function Mate() {
                                         </div>
                                         <div className = "col-1 offset-9" style = {{ paddingLeft: "0" }}>
                                             <label style = {{  }}>
-                                                <img value = { userNo } onClick = { () => {handleShow(list.mno)} } alt = "More" src = { require('../../IMG/Mate_More.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
+                                                <img value = { userNo } onClick = { clickDrop } alt = "More" src = { require('../../IMG/Mate_More.png') } style = {{ width: "11vw", height: "5vh", opacity: "1" }} />
                                             </label>
+                                        </div>
+                                        <div className = { dropDown ? "show-drop" : "hide-drop" } style = {{ backgroundColor: "#e6e6e6" }}>
+                                            <table style = {{ width: "100%" }}>
+                                                <tbody>
+                                                    <tr style = {{ fontSize: "1rem" }}><td style = {{ paddingTop: "0.5vh", borderBottom: "solid 1px black", color: "black" }} onClick = { () => { handleShow() } }>채팅하기</td></tr>
+                                                    <tr style = {{ fontSize: "1rem" }}><td style = {{ paddingTop: "0.5vh", color: "black" }} id = { list.mno } onClick = { () => {getProfile(list.mno, list.mager, list.mbirth, list.mbti, list.mgender, list.mhobby, list.mid, list.mname, list.mphone, list.profileimg, list.mnickname)} }>프로필보기</td></tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                         <Modal show = { show } onHide = { handleClose }>
                                             <Modal.Header closeButton>

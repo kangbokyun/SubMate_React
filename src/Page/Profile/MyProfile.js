@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import Menu from '../Menu';
+import Statistics from './Statistics';
 
 function MyProfile() {
     // 윈도우 크기 변경 감지되면 리렌더링
@@ -58,6 +59,16 @@ function MyProfile() {
         }
     };
 
+    const [ view, setView ] = useState(1);
+    const viewChange = (e) => {
+        console.log(e.target.id);
+        if(e.target.id === "1") {
+            setView(2);
+        } else {
+            setView(1);
+        }
+    };
+
     return(
         <div>
             <Header />
@@ -66,6 +77,29 @@ function MyProfile() {
                 <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>MyProfile</h1> 
             }
             <div className = { window.innerWidth <= 767 ? "container" : "" }>
+                <div className = "row" style = {{ width: "100%", marginTop: "3vh", marginLeft: "0.1vw" }}>
+                    <div className = "col-6" style = {{ height: "6vh", textAlign: "center", backgroundColor: view === 1 ? "white" : "#e6e6e6", paddingLeft: "1.5vw" }}>
+                        <img alt = "" src = { require('../../IMG/ProfileHuman.png') } 
+                            style = {{  
+                                width: "10vw"
+                            }}
+                            id = "2"
+                            onClick = { viewChange }
+                        />
+                    </div>
+                    <div className = "col-6" style = {{ height: "6vh", textAlign: "center", backgroundColor: view === 2 ? "white" : "#e6e6e6" }}>
+                        <img alt = "" src = { require('../../IMG/ProfileGraph.png') } 
+                            style = {{  
+                                width: "12vw",
+                                marginTop: "0.5vh"
+                            }}
+                            id = "1"
+                            onClick = { viewChange }
+                        />
+                    </div>
+                </div>
+                { view === 1 ? 
+                
                 <div className = "row" style = {{ width: "100%", marginTop: "3vh" }}>
                     <table className = "table">
                         <tbody>
@@ -83,14 +117,6 @@ function MyProfile() {
                                 <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Nick</label></td>
                                 <td className = "col-6"><input type = "text" className = "form-control" value = { userInfo.mnickname } disabled = { nickSt } /></td>
                                 <td className = "col-3"><button type = "button" onClick = { stChange } id = "nickBtn" className = "btn btn-info" style = {{ width: "100%", color: "white" }}>수정</button></td>
-                            </tr>
-                            <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
-                                <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Ager</label></td>
-                                <td className = "col-6"><input type = "text" className = "form-control" value = { userInfo.mager } disabled = "true" /></td>
-                            </tr>
-                            <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
-                                <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Gender</label></td>
-                                <td className = "col-6"><input type = "text" className = "form-control" value = { userInfo.mgender } disabled = "true" /></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>MBTI</label></td>
@@ -119,7 +145,10 @@ function MyProfile() {
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                    </div>
+                    :
+                    <Statistics />
+                }
             </div>
             <Menu />
         </div>

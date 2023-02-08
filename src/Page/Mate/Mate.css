@@ -43,3 +43,22 @@
   right: -27%;
   transition: 0.7s ease-in-out;
 }
+
+.show-drop {
+  position: absolute;
+  display: block;
+  top: -50px;
+  left: 250px;
+  width: 30vw;
+  height: 6.5vh;
+  transition: 1s ease-in-out;
+}
+.hide-drop {
+  position: absolute;
+  display: none;
+  top: -50px;
+  left: 250px;
+  width: 30vw;
+  height: 6.5vh;
+  transition: 1s ease-in-out;
+}

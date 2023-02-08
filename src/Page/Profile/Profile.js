@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { call, SendTalkAPI } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
 
 function Profile() {
+    const mateProfile = useLocation();
+    console.log(mateProfile);
     // 윈도우 크기 변경 감지되면 리렌더링
     const [ windowWidth, setWindowWidth ] = useState(0);
     const [ windowHeight, setWindowHeight ] = useState(0);
@@ -70,19 +72,34 @@ function Profile() {
                                             { window.innerWidth <= 767 ? <h4>MBTI</h4> : <h4 style = {{ marginTop: "1vh" }}>MBTI</h4> }
                                             { window.innerWidth <= 767 ? <h4>Auth</h4> : <h4 style = {{ marginTop: "1vh" }}>Auth</h4> }
                                         </div>
-                                        <div className = "col-md-8 col-8" style = {{ textAlign: "center" }}>
-                                            { window.innerWidth <= 767 ? <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mnickname }</h4> : <h4 style = {{ marginTop: "2vh" }}>{ userInfo.mnickname }</h4> }
-                                            { window.innerWidth <= 767 ? <h4 style = {{ marginTop: window.innerWidth <= 767 ? userInfo.mhobby === null ? "1.7vh" : "1vh" : "", fontSize: userInfo.mhobby === null ? "0.9rem" : "" }}>{ userInfo.mhobby === null ? "취미를 설정해주세요." : userInfo.mhobby }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mhobby === null ? "취미를 설정해주세요." : userInfo.mhobby }</h4> }
-                                            { window.innerWidth <= 767 ? <h4 style = {{ marginTop: window.innerWidth <= 767 ? "1vh" : "" }}>{ userInfo.mbirth }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mbirth }</h4> }
-                                            { window.innerWidth <= 767 ? <h4 style = {{ marginTop: window.innerWidth <= 767 ? "1vh" : "" }}>{ userInfo.mbti }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mbti }</h4> }
-                                            <h4>{ userInfo.platForm === "Kakao" ? <span style = {{ font: "bold", color: "yellow" }}>K</span> : userInfo.mplatform === "SubMate" || null || "" ? <span style = {{ font: "bold", color: "green" }}>SubMate</span> : <span style = {{ font: "bold", color: "green" }}>N</span> }</h4>
-                                        </div>
+                                        { mateProfile.state === null ? 
+                                            <div className = "col-md-8 col-8" style = {{ textAlign: "center" }}>
+                                                { window.innerWidth <= 767 ? <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mnickname }</h4> : <h4 style = {{ marginTop: "2vh" }}>{ userInfo.mnickname }</h4> }
+                                                { window.innerWidth <= 767 ? <h4 style = {{ marginTop: window.innerWidth <= 767 ? userInfo.mhobby === null ? "1.7vh" : "1vh" : "", fontSize: userInfo.mhobby === null ? "0.9rem" : "" }}>{ userInfo.mhobby === null ? "취미를 설정해주세요." : userInfo.mhobby }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mhobby === null ? "취미를 설정해주세요." : userInfo.mhobby }</h4> }
+                                                { window.innerWidth <= 767 ? <h4 style = {{ marginTop: window.innerWidth <= 767 ? "1vh" : "" }}>{ userInfo.mbirth }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mbirth }</h4> }
+                                                { window.innerWidth <= 767 ? <h4 style = {{ marginTop: window.innerWidth <= 767 ? "1vh" : "" }}>{ userInfo.mbti }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ userInfo.mbti }</h4> }
+                                                <h4>{ userInfo.platForm === "Kakao" ? <span style = {{ font: "bold", color: "yellow" }}>K</span> : userInfo.mplatform === "SubMate" || null || "" ? <span style = {{ font: "bold", color: "green" }}>SubMate</span> : <span style = {{ font: "bold", color: "green" }}>N</span> }</h4>
+                                            </div>
+                                            :
+                                            <div className = "col-md-8 col-8" style = {{ textAlign: "center" }}>
+                                                { window.innerWidth <= 767 ? <h4 style = {{ marginTop: "1vh" }}>{ mateProfile.state.mnickname }</h4> : <h4 style = {{ marginTop: "2vh" }}>{ mateProfile.state.mnickname }</h4> }
+                                                { window.innerWidth <= 767 ? <h4 style = {{ marginTop: window.innerWidth <= 767 ? mateProfile.state.mhobby === null ? "1.7vh" : "1vh" : "", fontSize: mateProfile.state.mhobby === null ? "0.9rem" : "" }}>{ mateProfile.state.mhobby === null ? "취미를 설정해주세요." : mateProfile.state.mhobby }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ mateProfile.state.mhobby === null ? "취미를 설정해주세요." : mateProfile.state.mhobby }</h4> }
+                                                { window.innerWidth <= 767 ? <h4 style = {{ marginTop: window.innerWidth <= 767 ? "1vh" : "" }}>{ mateProfile.state.mbirth }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ mateProfile.state.mbirth }</h4> }
+                                                { window.innerWidth <= 767 ? <h4 style = {{ marginTop: window.innerWidth <= 767 ? "1vh" : "" }}>{ mateProfile.state.mbti }</h4> : <h4 style = {{ marginTop: "1vh" }}>{ mateProfile.state.mbti }</h4> }
+                                                <h4>{ userInfo.platForm === "Kakao" ? <span style = {{ font: "bold", color: "yellow" }}>K</span> : mateProfile.state.mplatform === "SubMate" || null || "" ? <span style = {{ font: "bold", color: "green" }}>SubMate</span> : <span style = {{ font: "bold", color: "green" }}>N</span> }</h4>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                                 <div className = "col-md-3 col-3">
-                                { window.innerWidth <= 767 ? 
+                                { mateProfile.state === null ? 
+                                    window.innerWidth <= 767 ? 
                                     <div style = {{ marginTop: "4vh" }}><img alt = "Setting" src = { require('../../MemberImg' + userInfo.profileimg.split("/MemberImg")[1]) } style = {{ width: "23vw", height: "15vh", borderRadius: "8px", objectFit: "cover" }} /><h6 style = {{ marginLeft: "1vw" }}>{ userInfo.mager }</h6></div> : 
                                     <div style = {{ marginTop: "4vh" }}><img alt = "Setting" src = { require('../../MemberImg' + userInfo.profileimg.split("/MemberImg")[1]) } style = {{ width: "15vw", height: "17.5vh", borderRadius: "8px", objectFit: "cover" }} /><h6 style = {{ marginLeft: "4vw" }}>{ userInfo.mager }</h6></div> 
+                                    :
+                                    window.innerWidth <= 767 ? 
+                                        <div style = {{ marginTop: "4vh" }}><img alt = "Setting" src = { require('../../MemberImg' + mateProfile.state.profileimg) } style = {{ width: "23vw", height: "15vh", borderRadius: "8px", objectFit: "cover" }} /><h6 style = {{ marginLeft: "1vw" }}>{ mateProfile.state.mager }</h6></div> : 
+                                        <div style = {{ marginTop: "4vh" }}><img alt = "Setting" src = { require('../../MemberImg' + mateProfile.state.profileimg) } style = {{ width: "15vw", height: "17.5vh", borderRadius: "8px", objectFit: "cover" }} /><h6 style = {{ marginLeft: "4vw" }}>{ mateProfile.state.mager }</h6></div> 
                                 }
                                 </div>
                                 <div className = "col-md-10 col-10 offset-md-1 offset-1">

@@ -66,6 +66,25 @@ function Board() {
         })
     };
 
+    // 스크롤 위치 감지
+    const [ infinityScroll, setInfinityScroll ] = useState([]);
+    const getScroll = () => {
+        let scrollContainer = document.getElementById("ScrollContainer");
+        let yContainer = scrollContainer.scrollHeight; // 스크롤 전체 길이
+        let y = scrollContainer.scrollTop; // 스크롤 된 높이
+        let clientHeight = scrollContainer.clientHeight; // 눈에 보이는 높이
+        let leftScroll = y + clientHeight; // 스크롤 된 높이 + 눈에 보이는 길이 = 스크롤 맨 아래
+        let eightyPerScroll = (yContainer * 0.99); // 스크롤이 전체 길이의 99% 내려갔을 때
+        console.log("leftScroll : ", leftScroll);
+        console.log("eightyPerScroll : ", eightyPerScroll);
+
+        if(eightyPerScroll <= leftScroll) {
+            // 무한 스크롤 로직
+            console.log("99% 내려옴")
+        }
+    };
+    // -/스크롤 위치 감지
+
     return(
         <div>
             <Header />
@@ -85,7 +104,7 @@ function Board() {
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" } style = {{  }}>
                 { window.innerWidth <= 767 ? 
-                    <div style = {{ overflowY: "auto", height: "79vh" }}> {/*  id = "ScrollContainer" onScroll = { getScroll }  */}
+                    <div style = {{ overflowY: "auto", height: "79vh" }} id = "ScrollContainer" onScroll = { getScroll }> {/*  id = "ScrollContainer" onScroll = { getScroll }  */}
                         <table className = "table" style = {{ }}>
                             <tbody>
                                 { boardList.map((list) => 

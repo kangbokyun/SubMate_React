@@ -125,34 +125,62 @@ function Profile() {
                             </div>
                         </div>
                     </div>
-                    <div className = "row" style = {{ width: "100%", marginTop: "3vh" }}>
-                        <h5>한마디</h5>
-                        <table className = "table"  style = {{ marginLeft: "5vw", height: "37vh" }}>
-                            <tbody>
-                                { talkList.length === 0 ? 
-                                    <tr className = "row" style = {{ width: "100%" }}>
-                                        <td className = "col-12" style = {{ textAlign: "center" }}>첫 한마디를 남겨보세요!</td>
-                                    </tr>
-                                    :
-                                    <></>
-                                }
-                                { talkList.map((list) =>
-                                    <tr key = { list.ptno } className = "row" style = {{ width: "100%" }}>
-                                        <td className = "col-3">{ list.ptwriter }</td>
-                                        <td className = "col-9">{ list.ptcontents }</td>
-                                    </tr>
-                                ) }
-                            </tbody>
-                        </table>
-                        <div className = "row">
-                            <div className = "col-11" style = {{ paddingLeft: "5vw" }}>
-                                <input type = "text" className = "form-control" onChange = { lineTalk } name = "ptcontents" />
-                            </div>
-                            <div className = "col-1 gx-0">
-                                <button type = "button" className = "btn btn-success" onClick = { sendTalk }>Send</button>
+                    { mateProfile.state === null ? 
+                        <div className = "row" style = {{ width: "100%" }}>
+                            <h5 style = {{ textAlign: "center", color: "#cfcfcf", marginTop: "2vh" }}>상대에게 내 프로필은 위처럼 보입니다.</h5>
+                            <h5 style = {{ marginTop: "2vh" }}>한마디</h5>
+                            <table className = "table"  style = {{ marginLeft: "5vw", height: "37vh" }}>
+                                <tbody>
+                                    { talkList.length === 0 ? 
+                                        <tr className = "row" style = {{ width: "100%" }}>
+                                            { mateProfile.state === null ? 
+                                                <td className = "col-12" style = {{ textAlign: "center" }}>아직 한마디가 없습니다.</td>
+                                                :
+                                                <td className = "col-12" style = {{ textAlign: "center" }}>첫 한마디를 남겨보세요!</td>
+                                            }
+                                        </tr>
+                                        :
+                                        <></>
+                                    }
+                                    { talkList.map((list) =>
+                                        <tr key = { list.ptno } className = "row" style = {{ width: "100%" }}>
+                                            <td className = "col-3">{ list.ptwriter }</td>
+                                            <td className = "col-9">{ list.ptcontents }</td>
+                                        </tr>
+                                    ) }
+                                </tbody>
+                            </table>
+                        </div>
+                        :
+                        <div className = "row" style = {{ width: "100%", marginTop: "3vh" }}>
+                            <h5>한마디</h5>
+                            <table className = "table"  style = {{ marginLeft: "5vw", height: "37vh" }}>
+                                <tbody>
+                                    { talkList.length === 0 ? 
+                                        <tr className = "row" style = {{ width: "100%" }}>
+                                            <td className = "col-12" style = {{ textAlign: "center" }}>첫 한마디를 남겨보세요!</td>
+                                        </tr>
+                                        :
+                                        <></>
+                                    }
+                                    { talkList.map((list) =>
+                                        <tr key = { list.ptno } className = "row" style = {{ width: "100%" }}>
+                                            <td className = "col-3">{ list.ptwriter }</td>
+                                            <td className = "col-9">{ list.ptcontents }</td>
+                                        </tr>
+                                    ) }
+                                </tbody>
+                            </table>
+                            <div className = "row">
+                                <div className = "col-11" style = {{ paddingLeft: "5vw" }}>
+                                    <input type = "text" className = "form-control" onChange = { lineTalk } name = "ptcontents" />
+                                </div>
+                                <div className = "col-1 gx-0">
+                                    <button type = "button" className = "btn btn-success" onClick = { sendTalk }>Send</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <Menu />

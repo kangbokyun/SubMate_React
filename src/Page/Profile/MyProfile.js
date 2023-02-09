@@ -61,7 +61,6 @@ function MyProfile() {
 
     const [ view, setView ] = useState(1);
     const viewChange = (e) => {
-        console.log(e.target.id);
         if(e.target.id === "1") {
             setView(2);
         } else {
@@ -78,7 +77,7 @@ function MyProfile() {
             }
             <div className = { window.innerWidth <= 767 ? "container" : "" }>
                 <div className = "row" style = {{ width: "100%", marginTop: "3vh", marginLeft: "0.1vw" }}>
-                    <div className = "col-6" style = {{ height: "6vh", textAlign: "center", backgroundColor: view === 1 ? "white" : "#e6e6e6", paddingLeft: "1.5vw" }}>
+                    <div className = "col-6" style = {{ height: "6vh", textAlign: "center", backgroundColor: view === 1 ? "white" : "#e6e6e6", paddingLeft: "1.5vw", boxShadow: view === 1 ? "" : "inset -5px -5px 5px 5px gray" }}>
                         <img alt = "" src = { require('../../IMG/ProfileHuman.png') } 
                             style = {{  
                                 width: "10vw"
@@ -87,7 +86,7 @@ function MyProfile() {
                             onClick = { viewChange }
                         />
                     </div>
-                    <div className = "col-6" style = {{ height: "6vh", textAlign: "center", backgroundColor: view === 2 ? "white" : "#e6e6e6" }}>
+                    <div className = "col-6" style = {{ height: "6vh", textAlign: "center", backgroundColor: view === 2 ? "white" : "#e6e6e6", boxShadow: view === 2 ? "" : "inset 5px -5px 5px 5px gray" }}>
                         <img alt = "" src = { require('../../IMG/ProfileGraph.png') } 
                             style = {{  
                                 width: "12vw",
@@ -141,7 +140,7 @@ function MyProfile() {
                                         }} 
                                     />
                                 </td>
-                                <td><input type = "file" className = "form-control" /></td>
+                                <td><input type = "file" className = "form-control"  /></td>
                             </tr>
                         </tbody>
                     </table>

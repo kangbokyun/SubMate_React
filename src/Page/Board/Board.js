@@ -22,6 +22,8 @@ function Board() {
     useEffect(() => {
         const formData = new FormData();
         formData.append("mno", userInfo.mno);
+        formData.append("page", 0);
+        formData.append("lastno", 0);
         call("/Board/BoardList", "POST", formData)
         .then((res) => {
             setBoardList(res);
@@ -67,7 +69,7 @@ function Board() {
     };
 
     // 스크롤 위치 감지
-    const [ infinityScroll, setInfinityScroll ] = useState([]);
+    const [ page, setPage ] = useState(0);
     const getScroll = () => {
         let scrollContainer = document.getElementById("ScrollContainer");
         let yContainer = scrollContainer.scrollHeight; // 스크롤 전체 길이
@@ -80,7 +82,17 @@ function Board() {
 
         if(eightyPerScroll <= leftScroll) {
             // 무한 스크롤 로직
-            console.log("99% 내려옴")
+            setPage(page + 1);
+            const formData = new FormData();
+            formData.append("mno", userInfo.mno);
+            formData.append("page", page);
+            formData.append("lastno", 60);
+            call("/Board/BoardList", "POST", formData)
+            .then((res) => {
+                console.log("InfinityRes : ", res);
+                setBoardList({ ...boardList, res });
+            })
+            console.log("boardList : ", boardList);
         }
     };
     // -/스크롤 위치 감지

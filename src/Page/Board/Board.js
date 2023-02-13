@@ -89,10 +89,11 @@ function Board() {
             formData.append("lastno", 60);
             call("/Board/BoardList", "POST", formData)
             .then((res) => {
-                console.log("InfinityRes : ", res);
-                setBoardList({ ...boardList, res });
-            })
-            console.log("boardList : ", boardList);
+                console.log("InfinityRes@@@@@@@@@@@@@@ : ", res);
+                boardList.push(...res);
+                // setBoardList([...boardList, res]);
+                console.log("boardList>>>>>>>>>>> : ", boardList);
+            });
         }
     };
     // -/스크롤 위치 감지

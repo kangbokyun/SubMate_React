@@ -83,16 +83,17 @@ function Board() {
         if(eightyPerScroll <= leftScroll) {
             // 무한 스크롤 로직
             setPage(page + 1);
+            // boardList.sort(function(a, b) {
+            //     return parseFloat(a.bno) - parseFloat(b.bno);
+            // });
             const formData = new FormData();
             formData.append("mno", userInfo.mno);
             formData.append("page", page);
-            formData.append("lastno", 60);
+            formData.append("lastno", boardList[boardList.length - 1].bno);
             call("/Board/BoardList", "POST", formData)
             .then((res) => {
-                console.log("InfinityRes@@@@@@@@@@@@@@ : ", res);
                 boardList.push(...res);
                 // setBoardList([...boardList, res]);
-                console.log("boardList>>>>>>>>>>> : ", boardList);
             });
         }
     };

@@ -76,9 +76,14 @@ function Board() {
         let y = scrollContainer.scrollTop; // 스크롤 된 높이
         let clientHeight = scrollContainer.clientHeight; // 눈에 보이는 높이
         let leftScroll = y + clientHeight; // 스크롤 된 높이 + 눈에 보이는 길이 = 스크롤 맨 아래
-        let eightyPerScroll = (yContainer * 0.99); // 스크롤이 전체 길이의 99% 내려갔을 때
-        console.log("leftScroll : ", leftScroll);
-        console.log("eightyPerScroll : ", eightyPerScroll);
+        let eightyPerScroll;
+        if(page === 0) {
+            // 99%로 설정하면 간헐적으로 정상 작동하고 아니면 첫 스크롤이 
+            // 바로 렌더링 되지 않고 스크롤을 99%에 도달한 뒤에 움직여줘야 작동
+            eightyPerScroll = (yContainer * 0.85); // 스크롤이 전체 길이의 95% 내려갔을 때
+        } else {
+            eightyPerScroll = (yContainer * 0.99); // 스크롤이 전체 길이의 99% 내려갔을 때
+        }
 
         if(eightyPerScroll <= leftScroll) {
             // 무한 스크롤 로직
@@ -137,9 +142,9 @@ function Board() {
                                                     <div className = "row">
                                                         <label className = "col-9 col-md-9" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno, list.writerimg) } }>
                                                             {list.btitle.length >= 11 ?
-                                                                String(list.btitle).substring(0, 10) + "..." 
+                                                                "[" + list.bno + "] " + String(list.btitle).substring(0, 10) + "..." 
                                                                 : 
-                                                                list.btitle
+                                                                "[" + list.bno + "] " + list.btitle
                                                             }
                                                         </label>
                                                         <label className = "col-3 col-md-3" style = {{ fontSize: "0.8rem", marginTop: "0.8vh", textAlign: "right", color: "gray" }}>

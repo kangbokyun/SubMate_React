@@ -1,4 +1,4 @@
-.show-side {
+.show-Mside {
     position: fixed;
     left: 0;
     height: 100%;
@@ -6,10 +6,26 @@
     background-color: white;
     transition: 0.7s;
 }
-.hide-side {
+.hide-Mside {
     position: fixed;
     left: -400px;
     height: 100%;
     width: 95vw;
+    transition: 0.7s;
+}
+
+.show-Pside {
+    position: fixed;
+    left: 0;
+    height: 100%;
+    width: 30vw;
+    background-color: white;
+    transition: 0.7s;
+}
+.hide-Pside {
+    position: fixed;
+    left: -400px;
+    height: 100%;
+    width: 30vw;
     transition: 0.7s;
 }

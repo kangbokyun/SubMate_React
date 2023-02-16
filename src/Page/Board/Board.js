@@ -19,6 +19,7 @@ function Board() {
     const [ likeList, setLikeList ] = useState([]);
     let windowSize = window.innerWidth;
     const [ pmDivision, setPmDivision ] = useState({});
+    const [ pagination, setPagination ] = useState([]);
     useEffect(() => {
         const formData = new FormData();
         formData.append("mno", userInfo.mno);
@@ -35,8 +36,14 @@ function Board() {
             console.log("/Board/HeartList : ", res);
             setLikeList(res);
         })
+        call("/BoardListPaging", "POST", null)
+        .then((res) => {
+            setPagination(res);
+            console.log("res : >>>>>>>>>>>>>>>>", res);
+        });
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
+        // paging();
         return () => window.removeEventListener("resize", resizeWindow);
     }, []);
     // /윈도우 크기 변경 감지되면 리렌더링
@@ -68,7 +75,7 @@ function Board() {
         })
     };
 
-    // 스크롤 위치 감지
+    // [ 인피니티 스크롤 ] 스크롤 위치 감지
     const [ page, setPage ] = useState(0);
     const getScroll = () => {
         let scrollContainer = document.getElementById("ScrollContainer");
@@ -102,7 +109,32 @@ function Board() {
             });
         }
     };
-    // -/스크롤 위치 감지
+    // -/ [ 인피니티 스크롤 ] 스크롤 위치 감지
+    // [ 페이징 ]
+    const paging = () => {
+        // 페이지 갯수 가져오기
+        const formData = new FormData();
+        formData.append("mno", userInfo.mno);
+        formData.append("page", page);
+        formData.append("lastno", boardList[boardList.length - 1].bno);
+        call("/BoardListPaging", "POST", null)
+        .then((res) => {
+            setPagination(res);
+            console.log("res : >>>>>>>>>>>>>>>>", res);
+        });
+        call("/Board/BoardList", "POST", formData)
+        .then((res) => {
+            setBoardList(res);
+        });
+        // 페이지 전송 -> 페이지에 맞는 글 가져오기
+            // ex) 1page => 1 ~ 10번 글
+        // 버튼 페이지 개수에 따라 생성
+        // 맨앞으로, 앞으로, 뒤로 버튼
+            // 1page일 때 맨앞, 앞 버튼 없게
+        // 페이지 버튼 다섯개만 뿌리기
+        // 맨 마지막 페이지에는 10개 미만의 글을 가져올 테니 그것만 뿌리기
+    };
+    // -/ [ 페이징 ]
 
     return(
         <div>
@@ -253,6 +285,20 @@ function Board() {
                                     )}
                                 </tbody>
                         </table>
+                        <div className = "row" style = {{ width: "100%", textAlign: "center" }}>
+                            <div className = "col-md-12" style = {{ textAlign: "center" }}>
+                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white" }}>&lt;&lt;</button>
+                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white" }}>&lt;</button>
+                                { pagination.map((list) => 
+                                    pagination.length >= 6 ?
+                                    <label style = {{ width: "3vw", border: "none", backgroundColor: "white" }}>{ list.pageno <= 5 && list.pageno }</label>
+                                    :
+                                    <label style = {{ width: "3vw", border: "none", backgroundColor: "white" }}>{ list.pageno }</label>
+                                ) }
+                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white" }}>&gt;</button>
+                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white" }}>&gt;&gt;</button>
+                            </div>
+                        </div>
                     </div>
                 }
             </div>

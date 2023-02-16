@@ -13,6 +13,7 @@ function Header(){
     };
     
     useEffect(() => {
+        console.log(window.innerWidth);
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -33,14 +34,14 @@ function Header(){
 
     return(
         <header style = {{ textAlign: "center", backgroundColor: "#a7c2f7", verticalAlign: "middle", position: "fixed", top: "0", zIndex: "2", width: "100%", height: window.innerWidth <= 767 ? "6vh" : "7vh" }}>
-            <div className = { sideStatus ? "show-side" : "hide-side" }>
+            <div className = { window.innerWidth <= 767 ? sideStatus ? "show-Mside" : "hide-Mside" : sideStatus ? "show-Pside" : "hide-Pside" }>
                 <div className = "row" style = {{ width: "100%" }}>
                     <div className = "col-12 col-md-12" style = {{ borderBottom: "solid 1px gray", marginLeft: "2.5vw", paddingLeft: "0" }}>
                         <img 
                             alt = "X"
                             src = { require('../IMG/SideX.png') }
                             style = {{ 
-                                width: window.innerWidth <= 767 ? "15vw" : "",
+                                width: window.innerWidth <= 767 ? "15vw" : "4vw",
                                 float: "left" 
                             }}
                             onClick = { () => sideBar() }
@@ -55,15 +56,15 @@ function Header(){
                 </div>
             </div>
             <div className = "row" style = {{ width: "100%" }}>
-                <div className = "col-2" stlye = {{ border: "solid 1px black" }}>
+                <div className = "col-2 col-md-2" stlye = {{ border: "solid 1px black" }}>
                     <img 
                         alt = "Menu"
                         src = { require('../IMG/HamburgerMenu.png') }
-                        style = {{ width: window.innerWidth <= 767 ? "15vw" : "" }}
+                        style = {{ width: window.innerWidth <= 767 ? "15vw" : "8vw" }}
                         onClick = { () => sideBar() }
                     />
                 </div>
-                <div className = "col-8">
+                <div className = "col-8 col-md-8">
                     <img 
                         alt = "SubMate" 
                         src = { require('../IMG/SubMate.png') } 
@@ -74,7 +75,7 @@ function Header(){
                         }} 
                     />
                 </div>
-                <div className = "col-2"></div>
+                <div className = "col-2 col-md-2"></div>
             </div>
         </header>
     );

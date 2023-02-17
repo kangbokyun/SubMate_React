@@ -134,6 +134,22 @@ function Board() {
         // 페이지 버튼 다섯개만 뿌리기
         // 맨 마지막 페이지에는 10개 미만의 글을 가져올 테니 그것만 뿌리기
     };
+
+    const [ pcPage, setPcPage ] = useState(1);
+    const pagingTest = (e) => {
+        if([e.target.id].includes("prevfirst")) {
+            console.log("prevfirst");
+        } else if([e.target.id].includes("prevone")) {
+            console.log("prevone");
+        } else if([e.target.id].includes("nextone")) {
+            console.log("nextone");
+        } else if([e.target.id].includes("nextlast")) {
+            console.log("nextlast");
+        } else {
+            console.log(e.target.id);
+            setPcPage(e.target.id);
+        }
+    };
     // -/ [ 페이징 ]
 
     return(
@@ -287,16 +303,18 @@ function Board() {
                         </table>
                         <div className = "row" style = {{ width: "100%", textAlign: "center" }}>
                             <div className = "col-md-12" style = {{ textAlign: "center" }}>
-                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white" }}>&lt;&lt;</button>
-                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white" }}>&lt;</button>
+                                {}
+                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "prevfirst" onClick = { pagingTest }>&lt;&lt;</button>
+                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "prevone" onClick = { pagingTest }>&lt;</button>
                                 { pagination.map((list) => 
                                     pagination.length >= 6 ?
-                                    <label style = {{ width: "3vw", border: "none", backgroundColor: "white" }}>{ list.pageno <= 5 && list.pageno }</label>
-                                    :
-                                    <label style = {{ width: "3vw", border: "none", backgroundColor: "white" }}>{ list.pageno }</label>
+                                        list.pageno <= 5 ?
+                                        <label key = { list.pageno } style = {{ width: "3vw", border: "none", backgroundColor: Number(pcPage) === Number(list.pageno) ?  "#fdc6d5" : "white", borderRadius: "8px", paddingTop: "0.1vh" }} id = { list.pageno } onClick = { pagingTest }>{ list.pageno }</label> : <></>
+                                        :
+                                        <label key = { list.pageno } style = {{ width: "3vw", border: "none", backgroundColor: Number(pcPage) === Number(list.pageno) ?  "#fdc6d5" : "white", paddingTop: "0.1vh" }} id = { list.pageno } onClick = { pagingTest }>{ list.pageno }</label>
                                 ) }
-                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white" }}>&gt;</button>
-                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white" }}>&gt;&gt;</button>
+                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "nextone" onClick = { pagingTest }>&gt;</button>
+                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "nextlast" onClick = { pagingTest }>&gt;&gt;</button>
                             </div>
                         </div>
                     </div>

@@ -20,10 +20,15 @@ function Board() {
     let windowSize = window.innerWidth;
     const [ pmDivision, setPmDivision ] = useState({});
     const [ pagination, setPagination ] = useState([]);
+    const [ pcPage, setPcPage ] = useState(1);
     useEffect(() => {
         const formData = new FormData();
         formData.append("mno", userInfo.mno);
-        formData.append("page", 0);
+        if(window.innerWidth >= 767) {
+            formData.append("page", pcPage);
+        } else {
+            formData.append("page", 0);
+        }
         formData.append("lastno", 0);
         call("/Board/BoardList", "POST", formData)
         .then((res) => {
@@ -138,8 +143,11 @@ function Board() {
         // 맨 마지막 페이지에는 10개 미만의 글을 가져올 테니 그것만 뿌리기
     };
 
-    const [ pcPage, setPcPage ] = useState(1);
     const pagingTest = (e) => {
+        const formData = new FormData();
+        formData.append("mno", userInfo.mno);
+        formData.append("page", e.target.id);
+        formData.append("lastno", boardList[boardList.length - 1].bno);
         if([e.target.id].includes("prevfirst")) {
             console.log("prevfirst");
         } else if([e.target.id].includes("prevone")) {
@@ -149,8 +157,9 @@ function Board() {
         } else if([e.target.id].includes("nextlast")) {
             console.log("nextlast");
         } else {
-            console.log(e.target.id);
             setPcPage(e.target.id);
+            call("/Board/BoardList", "POST", formData)
+            .then((res) => { console.log("/Board/BoardList/Res : ", res); setBoardList(res) });
         }
     };
     // -/ [ 페이징 ]
@@ -306,11 +315,11 @@ function Board() {
                         </table>
                         <div className = "row" style = {{ width: "100%", textAlign: "center" }}>
                             <div className = "col-md-12" style = {{ textAlign: "center" }}>
-                                { (pagination.length + 1 === 1 || pagination.length === 1) ? 
+                                { (Number(pcPage) === 1) ? 
                                         <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} id = "prevfirst" onClick = { pagingTest }></button>
                                         :
                                         <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "prevfirst" onClick = { pagingTest }>&lt;&lt;</button> }
-                                { (pagination.length + 1 === 1 || pagination.length === 1) ?
+                                { (Number(pcPage) === 1) ?
                                         <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} id = "prevone" onClick = { pagingTest }></button> 
                                         :
                                         <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "prevone" onClick = { pagingTest }>&lt;</button> }

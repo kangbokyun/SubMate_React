@@ -38,6 +38,9 @@ function Board() {
         })
         call("/BoardListPaging", "POST", null)
         .then((res) => {
+            if(res.length === 0) {
+                res.push({ pageno : 1 });
+            } 
             setPagination(res);
             console.log("res : >>>>>>>>>>>>>>>>", res);
         });
@@ -190,9 +193,9 @@ function Board() {
                                                     <div className = "row">
                                                         <label className = "col-9 col-md-9" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno, list.writerimg) } }>
                                                             {list.btitle.length >= 11 ?
-                                                                "[" + list.bno + "] " + String(list.btitle).substring(0, 10) + "..." 
+                                                                String(list.btitle).substring(0, 10) + "..." 
                                                                 : 
-                                                                "[" + list.bno + "] " + list.btitle
+                                                                list.btitle
                                                             }
                                                         </label>
                                                         <label className = "col-3 col-md-3" style = {{ fontSize: "0.8rem", marginTop: "0.8vh", textAlign: "right", color: "gray" }}>
@@ -303,18 +306,23 @@ function Board() {
                         </table>
                         <div className = "row" style = {{ width: "100%", textAlign: "center" }}>
                             <div className = "col-md-12" style = {{ textAlign: "center" }}>
-                                {}
-                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "prevfirst" onClick = { pagingTest }>&lt;&lt;</button>
-                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "prevone" onClick = { pagingTest }>&lt;</button>
+                                { (pagination.length + 1 === 1 || pagination.length === 1) ? 
+                                        <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} id = "prevfirst" onClick = { pagingTest }></button>
+                                        :
+                                        <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "prevfirst" onClick = { pagingTest }>&lt;&lt;</button> }
+                                { (pagination.length + 1 === 1 || pagination.length === 1) ?
+                                        <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} id = "prevone" onClick = { pagingTest }></button> 
+                                        :
+                                        <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "prevone" onClick = { pagingTest }>&lt;</button> }
                                 { pagination.map((list) => 
                                     pagination.length >= 6 ?
                                         list.pageno <= 5 ?
-                                        <label key = { list.pageno } style = {{ width: "3vw", border: "none", backgroundColor: Number(pcPage) === Number(list.pageno) ?  "#fdc6d5" : "white", borderRadius: "8px", paddingTop: "0.1vh" }} id = { list.pageno } onClick = { pagingTest }>{ list.pageno }</label> : <></>
+                                        <label key = { list.pageno } style = {{ width: "2vw", border: "none", backgroundColor: Number(pcPage) === Number(list.pageno) ?  "#fdc6d5" : "white", borderRadius: "8px", paddingTop: "0.1vh", cursor: "pointer" }} id = { list.pageno } onClick = { pagingTest }>{ list.pageno }</label> : <></>
                                         :
-                                        <label key = { list.pageno } style = {{ width: "3vw", border: "none", backgroundColor: Number(pcPage) === Number(list.pageno) ?  "#fdc6d5" : "white", paddingTop: "0.1vh" }} id = { list.pageno } onClick = { pagingTest }>{ list.pageno }</label>
+                                        <label key = { list.pageno } style = {{ width: "2vw", border: "none", backgroundColor: Number(pcPage) === Number(list.pageno) ?  "#fdc6d5" : "white", borderRadius: "8px", paddingTop: "0.1vh", cursor: "pointer" }} id = { list.pageno } onClick = { pagingTest }>{ list.pageno }</label>
                                 ) }
-                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "nextone" onClick = { pagingTest }>&gt;</button>
-                                <button type = "button" style = {{ width: "3vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "nextlast" onClick = { pagingTest }>&gt;&gt;</button>
+                                <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "nextone" onClick = { pagingTest }>&gt;</button>
+                                <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "nextlast" onClick = { pagingTest }>&gt;&gt;</button>
                             </div>
                         </div>
                     </div>

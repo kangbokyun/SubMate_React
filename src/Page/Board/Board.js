@@ -153,13 +153,15 @@ function Board() {
         } else if([e.target.id].includes("prevone")) {
             console.log("prevone");
         } else if([e.target.id].includes("nextone")) {
+            // 1 | 2 | 3 | 4 | 5 >> 6 | 7
             console.log("nextone");
+            setPcPage(pcPage => Number(pcPage) + 1);
         } else if([e.target.id].includes("nextlast")) {
             console.log("nextlast");
         } else {
             setPcPage(e.target.id);
             call("/Board/BoardList", "POST", formData)
-            .then((res) => { console.log("/Board/BoardList/Res : ", res); setBoardList(res) });
+            .then((res) => { console.log("/Board/BoardList/Res : ", res); setBoardList(res); });
         }
     };
     // -/ [ 페이징 ]
@@ -323,12 +325,14 @@ function Board() {
                                         <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} id = "prevone" onClick = { pagingTest }></button> 
                                         :
                                         <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "prevone" onClick = { pagingTest }>&lt;</button> }
+                                { pcPage }
                                 { pagination.map((list) => 
                                     pagination.length >= 6 ?
-                                        list.pageno <= 5 ?
                                         <label key = { list.pageno } style = {{ width: "2vw", border: "none", backgroundColor: Number(pcPage) === Number(list.pageno) ?  "#fdc6d5" : "white", borderRadius: "8px", paddingTop: "0.1vh", cursor: "pointer" }} id = { list.pageno } onClick = { pagingTest }>{ list.pageno }</label> : <></>
-                                        :
-                                        <label key = { list.pageno } style = {{ width: "2vw", border: "none", backgroundColor: Number(pcPage) === Number(list.pageno) ?  "#fdc6d5" : "white", borderRadius: "8px", paddingTop: "0.1vh", cursor: "pointer" }} id = { list.pageno } onClick = { pagingTest }>{ list.pageno }</label>
+                                        // list.pageno <= 5 ?
+                                        // <label key = { list.pageno } style = {{ width: "2vw", border: "none", backgroundColor: Number(pcPage) === Number(list.pageno) ?  "#fdc6d5" : "white", borderRadius: "8px", paddingTop: "0.1vh", cursor: "pointer" }} id = { list.pageno } onClick = { pagingTest }>{ list.pageno }</label> : <></>
+                                        // :
+                                        // <label key = { list.pageno } style = {{ width: "2vw", border: "none", backgroundColor: Number(pcPage) === Number(list.pageno) ?  "#fdc6d5" : "white", borderRadius: "8px", paddingTop: "0.1vh", cursor: "pointer" }} id = { list.pageno } onClick = { pagingTest }>{ list.pageno }</label>
                                 ) }
                                 <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "nextone" onClick = { pagingTest }>&gt;</button>
                                 <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "nextlast" onClick = { pagingTest }>&gt;&gt;</button>

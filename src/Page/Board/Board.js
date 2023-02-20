@@ -21,20 +21,23 @@ function Board() {
     const [ pmDivision, setPmDivision ] = useState({});
     const [ pagination, setPagination ] = useState([]);
     const [ pcPage, setPcPage ] = useState(1);
+    const [ firstNo, setFirstNo ] = useState();
     useEffect(() => {
         const formData = new FormData();
         formData.append("mno", userInfo.mno);
+        formData.append("lastno", 0);
         if(window.innerWidth >= 767) {
             formData.append("page", pcPage);
         } else {
             formData.append("page", 0);
         }
-        formData.append("lastno", 0);
+        formData.append("pagestatus", "null");
         call("/Board/BoardList", "POST", formData)
         .then((res) => {
             setBoardList(res);
             setResStatus(res);
             console.log("/Board/BoardList : ", res);
+            setFirstNo(res[0].bno);
         })
         call("/Board/HeartList", "POST", null)
         .then((res) => {
@@ -146,20 +149,44 @@ function Board() {
     const pagingTest = (e) => {
         const formData = new FormData();
         formData.append("mno", userInfo.mno);
-        formData.append("page", e.target.id);
-        formData.append("lastno", boardList[boardList.length - 1].bno);
         if([e.target.id].includes("prevfirst")) {
             console.log("prevfirst");
         } else if([e.target.id].includes("prevone")) {
+            formData.append("lastno", boardList[boardList.length - 1].bno);
+            formData.append("pagestatus", "prev");
             console.log("prevone");
+            if(Number(pcPage) == 1) {
+                alert("첫 페이지입니다.");
+                return;
+            }
+            setPcPage(pcPage => Number(pcPage) - 1);
+            console.log("pcPage : ", pcPage);
+            formData.append("page", pcPage);
+            call("/Board/BoardList", "POST", formData)
+            .then((res) => { console.log("/Board/BoardList/Res : ", res); setBoardList(res); });
         } else if([e.target.id].includes("nextone")) {
+            formData.append("lastno", boardList[boardList.length - 1].bno);
+            formData.append("pagestatus", "next");
             // 1 | 2 | 3 | 4 | 5 >> 6 | 7
             console.log("nextone");
-            setPcPage(pcPage => Number(pcPage) + 1);
+            if(Number(pcPage) >= Number(pagination.length)) {
+                alert("마지막 페이지입니다.");
+                return;
+            }
+            setPcPage(Number(pcPage) + 1);
+            formData.append("page", pcPage);
+            console.log("pcPage : ", pcPage);
+            call("/Board/BoardList", "POST", formData)
+            .then((res) => { console.log("/Board/BoardList/Res : ", res); setBoardList(res); });
         } else if([e.target.id].includes("nextlast")) {
             console.log("nextlast");
         } else {
+            console.log(firstNo);
+            formData.append("lastno", firstNo);
+            formData.append("pagestatus", "null");
             setPcPage(e.target.id);
+            // alert(e.target.id);
+            formData.append("page", e.target.id);
             call("/Board/BoardList", "POST", formData)
             .then((res) => { console.log("/Board/BoardList/Res : ", res); setBoardList(res); });
         }
@@ -273,7 +300,7 @@ function Board() {
                                     </tr> 
                                     { boardList.map((list) => 
                                         <tr key = { list.bno } className = "row" style = {{  }}>
-                                            <td className = "col-md-6" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno, list.writerimg) } }>{ list.btitle }</td>
+                                            <td className = "col-md-6" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno, list.writerimg) } }>{ " [ " + list.bno + " ] " + list.btitle }</td>
                                             <td className = "col-md-1" style = {{ textAlign: "center", marginLeft: "0", paddingLeft: "0", paddingRight: "1.4vw" }}>
                                                 <div className = "row">
                                                     <label className = "col-md-3" style = {{ float: "right" }}>
@@ -325,7 +352,6 @@ function Board() {
                                         <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} id = "prevone" onClick = { pagingTest }></button> 
                                         :
                                         <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "prevone" onClick = { pagingTest }>&lt;</button> }
-                                { pcPage }
                                 { pagination.map((list) => 
                                     pagination.length >= 6 ?
                                         <label key = { list.pageno } style = {{ width: "2vw", border: "none", backgroundColor: Number(pcPage) === Number(list.pageno) ?  "#fdc6d5" : "white", borderRadius: "8px", paddingTop: "0.1vh", cursor: "pointer" }} id = { list.pageno } onClick = { pagingTest }>{ list.pageno }</label> : <></>

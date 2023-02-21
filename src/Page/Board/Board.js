@@ -151,24 +151,36 @@ function Board() {
         formData.append("mno", userInfo.mno);
         if([e.target.id].includes("prevfirst")) {
             console.log("prevfirst");
+            formData.append("page", 1);
+            formData.append("lastno", firstNo);
+            formData.append("pagestatus", "null");
+            setPcPage(1);
+            // alert(e.target.id);
+            call("/Board/BoardList", "POST", formData)
+            .then((res) => { console.log("/Board/BoardList/Res : ", res); setBoardList(res); });
         } else if([e.target.id].includes("prevone")) {
-            formData.append("lastno", boardList[boardList.length - 1].bno);
+            if(Number(pcPage) === Number(pagination.length)) {
+                formData.append("lastno", boardList[0].bno);
+            } else {
+                formData.append("lastno", boardList[boardList.length - 1].bno);
+            }
             formData.append("pagestatus", "prev");
-            console.log("prevone");
-            if(Number(pcPage) == 1) {
+            if(Number(pcPage) === 1) {
                 alert("첫 페이지입니다.");
                 return;
             }
             setPcPage(pcPage => Number(pcPage) - 1);
             console.log("pcPage : ", pcPage);
             formData.append("page", pcPage);
+            console.log("prevone : ", boardList.length);
             call("/Board/BoardList", "POST", formData)
             .then((res) => { console.log("/Board/BoardList/Res : ", res); setBoardList(res); });
         } else if([e.target.id].includes("nextone")) {
             formData.append("lastno", boardList[boardList.length - 1].bno);
             formData.append("pagestatus", "next");
             // 1 | 2 | 3 | 4 | 5 >> 6 | 7
-            console.log("nextone");
+            const bno = undefined;
+            console.log("nextone : ", boardList.length);
             if(Number(pcPage) >= Number(pagination.length)) {
                 alert("마지막 페이지입니다.");
                 return;
@@ -180,6 +192,16 @@ function Board() {
             .then((res) => { console.log("/Board/BoardList/Res : ", res); setBoardList(res); });
         } else if([e.target.id].includes("nextlast")) {
             console.log("nextlast");
+            setPcPage(pagination.length);
+            formData.append("page", pcPage);
+            // console.log("pagination.length : ", pagination.length);
+            // console.log("firstNo : ", firstNo);
+            // console.log("pcPage * 10 : ", pcPage * 10);
+            // console.log("(firstNo - (pcPage * 10)) : ", firstNo - (pcPage * 10));
+            formData.append("lastno", (firstNo - ((pagination.length - 1) * 10)));
+            formData.append("pagestatus", "null");
+            call("/Board/BoardList", "POST", formData)
+            .then((res) => { console.log("/Board/BoardList/Res : ", res); setBoardList(res); });
         } else {
             console.log(firstNo);
             formData.append("lastno", firstNo);
@@ -300,7 +322,7 @@ function Board() {
                                     </tr> 
                                     { boardList.map((list) => 
                                         <tr key = { list.bno } className = "row" style = {{  }}>
-                                            <td className = "col-md-6" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno, list.writerimg) } }>{ " [ " + list.bno + " ] " + list.btitle }</td>
+                                            <td className = "col-md-6" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno, list.writerimg) } } style = {{ cursor: "pointer" }}>{"[ " + list.bno + " ]= " + list.btitle }</td>
                                             <td className = "col-md-1" style = {{ textAlign: "center", marginLeft: "0", paddingLeft: "0", paddingRight: "1.4vw" }}>
                                                 <div className = "row">
                                                     <label className = "col-md-3" style = {{ float: "right" }}>
@@ -360,8 +382,16 @@ function Board() {
                                         // :
                                         // <label key = { list.pageno } style = {{ width: "2vw", border: "none", backgroundColor: Number(pcPage) === Number(list.pageno) ?  "#fdc6d5" : "white", borderRadius: "8px", paddingTop: "0.1vh", cursor: "pointer" }} id = { list.pageno } onClick = { pagingTest }>{ list.pageno }</label>
                                 ) }
-                                <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "nextone" onClick = { pagingTest }>&gt;</button>
-                                <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "nextlast" onClick = { pagingTest }>&gt;&gt;</button>
+                                { Number(pcPage) === Number(pagination.length) ? 
+                                    <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} id = "nextone" onClick = { pagingTest }></button> 
+                                    :
+                                    <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "nextone" onClick = { pagingTest }>&gt;</button> 
+                                }
+                                { Number(pcPage) === Number(pagination.length) ? 
+                                    <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} id = "nextlast" onClick = { pagingTest }></button>
+                                    :
+                                    <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "nextlast" onClick = { pagingTest }>&gt;&gt;</button>
+                                }
                             </div>
                         </div>
                     </div>

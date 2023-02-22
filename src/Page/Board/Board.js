@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ClockLoader } from 'react-spinners';
 import { BoardListAPI, call } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
@@ -28,7 +29,9 @@ function Board() {
         formData.append("lastno", 0);
         if(window.innerWidth >= 767) {
             formData.append("page", pcPage);
+            formData.append("device", "pc");
         } else {
+            formData.append("device", "mobile");
             formData.append("page", 0);
         }
         formData.append("pagestatus", "null");
@@ -86,6 +89,8 @@ function Board() {
         })
     };
 
+    const [loading, setLoading] = useState(false);
+
     // [ 인피니티 스크롤 ] 스크롤 위치 감지
     const [ page, setPage ] = useState(0);
     const getScroll = () => {
@@ -105,14 +110,17 @@ function Board() {
 
         if(eightyPerScroll <= leftScroll) {
             // 무한 스크롤 로직
+            setLoading(true);
             setPage(page + 1);
-            // boardList.sort(function(a, b) {
-            //     return parseFloat(a.bno) - parseFloat(b.bno);
-            // });
+
+            console.log(page, " : ", boardList.length);
+
             const formData = new FormData();
             formData.append("mno", userInfo.mno);
             formData.append("page", page);
             formData.append("lastno", boardList[boardList.length - 1].bno);
+            formData.append("device", "mobile");
+            formData.append("pagestatus", "null");
             call("/Board/BoardList", "POST", formData)
             .then((res) => {
                 boardList.push(...res);
@@ -149,6 +157,7 @@ function Board() {
     const pagingTest = (e) => {
         const formData = new FormData();
         formData.append("mno", userInfo.mno);
+        formData.append("device", "pc");
         if([e.target.id].includes("prevfirst")) {
             console.log("prevfirst");
             formData.append("page", 1);
@@ -234,7 +243,7 @@ function Board() {
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" } style = {{  }}>
                 { window.innerWidth <= 767 ? 
-                    <div style = {{ overflowY: "auto", height: "79vh" }} id = "ScrollContainer" onScroll = { getScroll }> {/*  id = "ScrollContainer" onScroll = { getScroll }  */}
+                    <div style = {{ overflowY: "auto", height: firstNo === boardList.length ? "83vh" : "79vh" }} id = "ScrollContainer" onScroll = { getScroll }> {/*  id = "ScrollContainer" onScroll = { getScroll }  */}
                         <table className = "table" style = {{ }}>
                             <tbody>
                                 { boardList.map((list) => 
@@ -267,7 +276,7 @@ function Board() {
                                                         <div className = "col-6" style = {{ marginTop: "0.8vh" }}>
                                                             <label style = {{ fontSize: "0.8rem" }}>{ list.bwriter }</label>
                                                             <span style = {{ fontSize: "1rem", marginLeft: "0.4vw", marginRight: "0.4vw" }}>·</span>
-                                                            <label style = {{ fontSize: "0.8rem" }}>{ list.createdDate }</label>
+                                                            <label style = {{ fontSize: "0.7rem" }}>{ list.createdDate }</label>
                                                         </div>
                                                         <div className = "col-6" style = {{ marginTop: "0.8vh", paddingRight: "0", marginRight: "0" }}>
                                                             <label style = {{ float: "right" }}>
@@ -305,6 +314,13 @@ function Board() {
                                         </td>
                                     </tr>
                                 )}
+                                { Number(boardList.length) === Number(firstNo) &&
+                                    <tr>
+                                        <td colSpan = { 3 } style = {{ backgroundColor: "#e4e4e4", textAlign: "center" }}>
+                                            ▲　마지막 글입니다.
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>

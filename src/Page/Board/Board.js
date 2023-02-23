@@ -92,6 +92,10 @@ function Board() {
     const [loading, setLoading] = useState(false);
 
     // [ 인피니티 스크롤 ] 스크롤 위치 감지
+    const override = {
+        backgroundColor: "black",
+        opacity: "1"
+    };
     const [ page, setPage ] = useState(0);
     const getScroll = () => {
         let scrollContainer = document.getElementById("ScrollContainer");
@@ -123,9 +127,10 @@ function Board() {
             formData.append("pagestatus", "null");
             call("/Board/BoardList", "POST", formData)
             .then((res) => {
-                boardList.push(...res);
                 // setBoardList([...boardList, res]);
-            });
+                    boardList.push(...res);
+                });
+            setLoading(false);
         }
     };
     // -/ [ 인피니티 스크롤 ] 스크롤 위치 감지
@@ -314,10 +319,33 @@ function Board() {
                                         </td>
                                     </tr>
                                 )}
-                                { Number(boardList.length) === Number(firstNo) &&
+                                { Number(boardList.length) === Number(firstNo) ?
                                     <tr>
                                         <td colSpan = { 3 } style = {{ backgroundColor: "#e4e4e4", textAlign: "center" }}>
                                             ▲　마지막 글입니다.
+                                        </td>
+                                    </tr>
+                                    :
+                                    <tr>
+                                        <td colSpan = { 3 } style = {{ backgroundColor: "#e4e4e4", textAlign: "center" }}>
+                                            <div 
+                                                style = {{ 
+                                                    // paddingTop: window.innerWidth <= 767 ? "47vh" : "50vh", 
+                                                    // paddingLeft: window.innerWidth <= 767 ? "45vw" : "47vw", 
+                                                    // position: "absolute", 
+                                                    backgroundColor: "black", 
+                                                    opacity: "0.6", 
+                                                    zIndex: "3", 
+                                                    border: "solid 1px aqua", 
+                                                    height: "100%" 
+                                                }}
+                                            >
+                                                <ClockLoader
+                                                    color = "#A7C2F7"
+                                                    loading = { loading }
+                                                    cssOverride = { override }
+                                                />
+                                            </div>
                                         </td>
                                     </tr>
                                 }
@@ -327,7 +355,7 @@ function Board() {
                     : 
                     <div className = "container" style = {{  }}>
                         <Link to = "/BoardWrite"><button type = "button" className = "btn btn-outline-success" style = {{ float: "right", marginBottom: "1.5vh" }}>글쓰기</button></Link>
-                        <table className = "table" style = {{ height: window.innerWidth <= 767 ? "80vh" : "70vh", marginBottom: "5vh" }}>
+                        <table className = "table" style = {{ height: window.innerWidth <= 767 ? "80vh" : "40vh", marginBottom: "5vh" }}>
                                 <tbody>
                                     <tr className = "row" style = {{ textAlign: "center" }}>
                                         <td className = "col-md-7">제목</td>
@@ -383,11 +411,11 @@ function Board() {
                         <div className = "row" style = {{ width: "100%", textAlign: "center" }}>
                             <div className = "col-md-12" style = {{ textAlign: "center" }}>
                                 { (Number(pcPage) === 1) ? 
-                                        <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} id = "prevfirst" onClick = { pagingTest }></button>
+                                        <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} disabled = { true } id = "prevfirst" onClick = { pagingTest }></button>
                                         :
                                         <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "prevfirst" onClick = { pagingTest }>&lt;&lt;</button> }
                                 { (Number(pcPage) === 1) ?
-                                        <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} id = "prevone" onClick = { pagingTest }></button> 
+                                        <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} disabled = { true } id = "prevone" onClick = { pagingTest }></button> 
                                         :
                                         <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "prevone" onClick = { pagingTest }>&lt;</button> }
                                 { pagination.map((list) => 
@@ -399,12 +427,12 @@ function Board() {
                                         // <label key = { list.pageno } style = {{ width: "2vw", border: "none", backgroundColor: Number(pcPage) === Number(list.pageno) ?  "#fdc6d5" : "white", borderRadius: "8px", paddingTop: "0.1vh", cursor: "pointer" }} id = { list.pageno } onClick = { pagingTest }>{ list.pageno }</label>
                                 ) }
                                 { Number(pcPage) === Number(pagination.length) ? 
-                                    <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} id = "nextone" onClick = { pagingTest }></button> 
+                                    <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} disabled = { true } id = "nextone" onClick = { pagingTest }></button> 
                                     :
                                     <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "nextone" onClick = { pagingTest }>&gt;</button> 
                                 }
                                 { Number(pcPage) === Number(pagination.length) ? 
-                                    <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} id = "nextlast" onClick = { pagingTest }></button>
+                                    <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh", cursor: "none" }} disabled = { true } id = "nextlast" onClick = { pagingTest }></button>
                                     :
                                     <button type = "button" style = {{ width: "2vw", border: "none", backgroundColor: "white", paddingTop: "0.1vh" }} id = "nextlast" onClick = { pagingTest }>&gt;&gt;</button>
                                 }

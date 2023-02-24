@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../../App.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { ClockLoader } from 'react-spinners';
 import { BoardListAPI, call } from '../../Service/APIService';
@@ -13,7 +14,7 @@ function Board() {
     let resizeWindow = () => {
         setWindowWidth(window.innerWidth);
         setWindowHeight(window.innerHeight);
-    };
+    }; 
     
     const userInfo = JSON.parse(localStorage.getItem("UserInfo"));
     const [ resStatus, setResStatus ] = useState("");
@@ -107,14 +108,13 @@ function Board() {
         if(page === 0) {
             // 99%로 설정하면 간헐적으로 정상 작동하고 아니면 첫 스크롤이 
             // 바로 렌더링 되지 않고 스크롤을 99%에 도달한 뒤에 움직여줘야 작동
-            eightyPerScroll = (yContainer * 0.85); // 스크롤이 전체 길이의 95% 내려갔을 때
+            eightyPerScroll = (yContainer * 0.85); // 스크롤이 전체 길이의 85% 내려갔을 때
         } else {
             eightyPerScroll = (yContainer * 0.99); // 스크롤이 전체 길이의 99% 내려갔을 때
         }
 
         if(eightyPerScroll <= leftScroll) {
             // 무한 스크롤 로직
-            setLoading(true);
             setPage(page + 1);
 
             console.log(page, " : ", boardList.length);
@@ -128,9 +128,8 @@ function Board() {
             call("/Board/BoardList", "POST", formData)
             .then((res) => {
                 // setBoardList([...boardList, res]);
-                    boardList.push(...res);
-                });
-            setLoading(false);
+                boardList.push(...res);
+            });
         }
     };
     // -/ [ 인피니티 스크롤 ] 스크롤 위치 감지
@@ -319,33 +318,10 @@ function Board() {
                                         </td>
                                     </tr>
                                 )}
-                                { Number(boardList.length) === Number(firstNo) ?
+                                { Number(boardList.length) === Number(firstNo) &&
                                     <tr>
                                         <td colSpan = { 3 } style = {{ backgroundColor: "#e4e4e4", textAlign: "center" }}>
                                             ▲　마지막 글입니다.
-                                        </td>
-                                    </tr>
-                                    :
-                                    <tr>
-                                        <td colSpan = { 3 } style = {{ backgroundColor: "#e4e4e4", textAlign: "center" }}>
-                                            <div 
-                                                style = {{ 
-                                                    // paddingTop: window.innerWidth <= 767 ? "47vh" : "50vh", 
-                                                    // paddingLeft: window.innerWidth <= 767 ? "45vw" : "47vw", 
-                                                    // position: "absolute", 
-                                                    backgroundColor: "black", 
-                                                    opacity: "0.6", 
-                                                    zIndex: "3", 
-                                                    border: "solid 1px aqua", 
-                                                    height: "100%" 
-                                                }}
-                                            >
-                                                <ClockLoader
-                                                    color = "#A7C2F7"
-                                                    loading = { loading }
-                                                    cssOverride = { override }
-                                                />
-                                            </div>
                                         </td>
                                     </tr>
                                 }

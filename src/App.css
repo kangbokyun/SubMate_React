@@ -8,13 +8,13 @@
     font-family: 'GongGothicMedium';
 }
 ::-webkit-scrollbar {
-  width:10px;
+  width:3px;
 }
 ::-webkit-scrollbar-track{
   background:#fff;
 }
 ::-webkit-scrollbar-thumb{
-  background:#000;
+  background:#e4e4e4;
   border-radius: 50px;
 }
 

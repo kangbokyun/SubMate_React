@@ -46,6 +46,11 @@ function Login() {
             setLoading(false);
         }, 1500);
     };
+    const enterSend = () => {
+        if(window.event.keycode === 13) {
+            console.log("keycode : ", window.event.keycode);
+        }
+    };
 
     const kakaoLogin = (result) => {
         setLoading(true);
@@ -138,7 +143,7 @@ function Login() {
                                 <h1>Login</h1>
                             </section>
                             <div className = "box" style = {{ width: "100%" }}>
-                                <input type = "text" name = "mid" required onChange = { changeBox } />
+                                <input type = "text" name = "mid" required onKeyUp = { enterSend } onChange = { changeBox } />
                                 <span>ID</span>
                                 <i></i>
                             </div>

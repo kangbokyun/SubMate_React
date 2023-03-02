@@ -46,9 +46,21 @@ function Login() {
             setLoading(false);
         }, 1500);
     };
-    const enterSend = () => {
-        if(window.event.keycode === 13) {
-            console.log("keycode : ", window.event.keycode);
+    const enterSend = (e) => {
+        if(e.key === "Enter") {
+            if(!minfo.mid) {
+                alert("아이디를 입력해주세요.");
+            } 
+            if(!minfo.mpw) {
+                alert("패스워드를 입력해주세요.");
+            }
+            if(minfo.mid && minfo.mpw) {
+                setLoading(true);
+                LoginAPI(minfo);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 1500);
+            }
         }
     };
 
@@ -96,7 +108,7 @@ function Login() {
     };
 
     return(
-        <div className = "row" style = {{ width: "100%", margin: "auto" }}>
+        <div className = "row" style = {{ width: "100%", margin: "auto" }} onKeyUp = { enterSend }>
             { loading &&
                 <div 
                     style = {{ 
@@ -143,7 +155,7 @@ function Login() {
                                 <h1>Login</h1>
                             </section>
                             <div className = "box" style = {{ width: "100%" }}>
-                                <input type = "text" name = "mid" required onKeyUp = { enterSend } onChange = { changeBox } />
+                                <input type = "text" name = "mid" required onChange = { changeBox } />
                                 <span>ID</span>
                                 <i></i>
                             </div>

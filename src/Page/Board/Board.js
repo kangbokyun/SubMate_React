@@ -56,6 +56,8 @@ function Board() {
             setPagination(res);
             console.log("res : >>>>>>>>>>>>>>>>", res);
         });
+
+        console.log(window.performance);
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         // paging();
@@ -67,9 +69,10 @@ function Board() {
     const GoBack = () => {
         return history(-1) // 한 페이지 뒤로
     };
-
+    
     const [ viewData, setViewData ] = useState("");
     const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg, createdDate, heart, hrno, writerimg) => {
+        // localStorage.setItem("Pages", pcPage);
         if(heart === "1") { heart = "1"; } else { heart = "0" }
         // 글 상세보기로
         history('/BoardView', {

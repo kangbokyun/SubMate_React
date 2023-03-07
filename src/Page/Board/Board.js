@@ -69,10 +69,15 @@ function Board() {
     const GoBack = () => {
         return history(-1) // 한 페이지 뒤로
     };
+
+    
+    // window.onpopstate = () => { // PC 뒤로가기 감지
+    //     // 감지 이후 로직
+    //     alert("111");
+    // };
     
     const [ viewData, setViewData ] = useState("");
     const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg, createdDate, heart, hrno, writerimg) => {
-        // localStorage.setItem("Pages", pcPage);
         if(heart === "1") { heart = "1"; } else { heart = "0" }
         // 글 상세보기로
         history('/BoardView', {

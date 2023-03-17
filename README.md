@@ -18,6 +18,16 @@
  - VersionControl : GitHub  
  - IDE : Client - VSCode / Server - Intelli J  
 
+### 업데이트 내역 (Ver 1.1.0)
+- Board
+ - PC 페이징 추가
+ - 모바일 인피니티 스크롤 추가
+- Profile
+ - 상대 프로필 확인 추가
+ - 내 프로필 보완
+- SideBar 추가
+- MyInfo 추가
+
 ### 개발목적
 
 - OpenAPI, API 가공, 여러 기능 결합과 처리 경험쌓기  

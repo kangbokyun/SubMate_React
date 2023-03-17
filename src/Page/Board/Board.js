@@ -24,14 +24,25 @@ function Board() {
     const [ pagination, setPagination ] = useState([]);
     const [ pcPage, setPcPage ] = useState(1);
     const [ firstNo, setFirstNo ] = useState();
+    const formData = new FormData();
     useEffect(() => {
-        const formData = new FormData();
         formData.append("mno", userInfo.mno);
-        formData.append("lastno", 0);
         if(window.innerWidth >= 767) {
-            formData.append("page", pcPage);
+            if(sessionStorage.getItem("pcPage") !== null) {
+                console.log("감지");
+                formData.append("page", sessionStorage.getItem("pcPage"));
+                formData.append("lastno", sessionStorage.getItem("lastNo"));
+                console.log("sessionStorage : ", sessionStorage.getItem("lastNo"))
+                console.log("formData : ", formData.get("lastno"))
+                sessionStorage.removeItem("pcPage");
+                sessionStorage.removeItem("lastNo");
+            } else {
+                formData.append("lastno", 0);
+                formData.append("page", pcPage);
+            }
             formData.append("device", "pc");
         } else {
+            formData.append("lastno", 0);
             formData.append("device", "mobile");
             formData.append("page", 0);
         }
@@ -73,12 +84,26 @@ function Board() {
     
     // window.onpopstate = () => { // PC 뒤로가기 감지
     //     // 감지 이후 로직
-    //     alert("111");
+    //     // const formData = new FormData();
+    //     formData.append("mno", userInfo.mno);
+    //     formData.append("page", sessionStorage.getItem("pcPage"));
+    //     formData.append("lastno", boardList[0].bno);
+    //     formData.append("device", "pc");
+    //     formData.append("pagestatus", "pcPaging");
+    //     call("/Board/BoardList", "POST", formData)
+    //     .then((res) => {
+    //         setBoardList(res);
+    //         setResStatus(res);
+    //         console.log("/Board/BoardListBack : ", res);
+    //         setFirstNo(res[0].bno);
+    //     })
     // };
     
     const [ viewData, setViewData ] = useState("");
     const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg, createdDate, heart, hrno, writerimg) => {
         if(heart === "1") { heart = "1"; } else { heart = "0" }
+        sessionStorage.setItem("pcPage", pcPage);
+        sessionStorage.setItem("lastNo", boardList[0].bno);
         // 글 상세보기로
         history('/BoardView', {
             state: { 

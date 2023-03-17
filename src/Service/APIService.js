@@ -70,7 +70,7 @@ export const call = (api, method, request) => {
         }
         console.log("error.status : ", error.status);
         if (error.status === 403 || error.status === undefined) {
-            window.location.href = "/Login"; // redirect
+            window.location.href = "/"; // redirect
         }else if(error.error === "Login Failed"){
             alert("로그인에 실패하였습니다. (아이디, 비밀번호 재확인 필요)")
         }else if(error.error === "NOTUSER"){

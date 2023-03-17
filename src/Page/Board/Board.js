@@ -84,6 +84,7 @@ function Board() {
     
     // window.onpopstate = () => { // PC 뒤로가기 감지
     //     // 감지 이후 로직
+<<<<<<< HEAD
     //     // const formData = new FormData();
     //     formData.append("mno", userInfo.mno);
     //     formData.append("page", sessionStorage.getItem("pcPage"));
@@ -97,6 +98,11 @@ function Board() {
     //         console.log("/Board/BoardListBack : ", res);
     //         setFirstNo(res[0].bno);
     //     })
+=======
+    //     상세보기로 이동 시 로컬 스토리지에 페이지 번호 저장
+    //     감지 시 로컬 스토리지 삭제
+    //     alert("111");
+>>>>>>> 472a8fc1629702275a6dfaadf9f9417c5b90ab4a
     // };
     
     const [ viewData, setViewData ] = useState("");

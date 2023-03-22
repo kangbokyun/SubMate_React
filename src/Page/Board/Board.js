@@ -24,6 +24,7 @@ function Board() {
     const [ pagination, setPagination ] = useState([]);
     const [ pcPage, setPcPage ] = useState(1);
     const [ firstNo, setFirstNo ] = useState();
+    const [ checkBack, setCheckBack ] = useState(false);
     const formData = new FormData();
     useEffect(() => {
         formData.append("mno", userInfo.mno);
@@ -32,26 +33,33 @@ function Board() {
                 console.log("감지");
                 formData.append("page", sessionStorage.getItem("pcPage"));
                 formData.append("lastno", sessionStorage.getItem("lastNo"));
+                formData.append("pagestatus", "backPage");
+                setCheckBack(true);
                 console.log("sessionStorage : ", sessionStorage.getItem("lastNo"))
                 console.log("formData : ", formData.get("lastno"))
-                sessionStorage.removeItem("pcPage");
                 sessionStorage.removeItem("lastNo");
             } else {
                 formData.append("lastno", 0);
                 formData.append("page", pcPage);
+                formData.append("pagestatus", "null");
             }
             formData.append("device", "pc");
         } else {
             formData.append("lastno", 0);
             formData.append("device", "mobile");
             formData.append("page", 0);
+            formData.append("pagestatus", "null");
         }
-        formData.append("pagestatus", "null");
         call("/Board/BoardList", "POST", formData)
         .then((res) => {
             setBoardList(res);
             setResStatus(res);
+            if(sessionStorage.getItem("pcPage")) {
+                setPcPage(sessionStorage.getItem("pcPage"));
+                sessionStorage.removeItem("pcPage");
+            }
             console.log("/Board/BoardList : ", res);
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n", pcPage, "\n", pagination, "\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
             setFirstNo(res[0].bno);
         })
         call("/Board/HeartList", "POST", null)
@@ -65,7 +73,7 @@ function Board() {
                 res.push({ pageno : 1 });
             } 
             setPagination(res);
-            console.log("res : >>>>>>>>>>>>>>>>", res);
+            console.log("res : >>>>>>>>>>>>>>>>\n", res);
         });
 
         console.log(window.performance);
@@ -84,7 +92,6 @@ function Board() {
     
     // window.onpopstate = () => { // PC 뒤로가기 감지
     //     // 감지 이후 로직
-<<<<<<< HEAD
     //     // const formData = new FormData();
     //     formData.append("mno", userInfo.mno);
     //     formData.append("page", sessionStorage.getItem("pcPage"));
@@ -98,11 +105,6 @@ function Board() {
     //         console.log("/Board/BoardListBack : ", res);
     //         setFirstNo(res[0].bno);
     //     })
-=======
-    //     상세보기로 이동 시 로컬 스토리지에 페이지 번호 저장
-    //     감지 시 로컬 스토리지 삭제
-    //     alert("111");
->>>>>>> 472a8fc1629702275a6dfaadf9f9417c5b90ab4a
     // };
     
     const [ viewData, setViewData ] = useState("");

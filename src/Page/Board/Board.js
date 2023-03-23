@@ -25,7 +25,9 @@ function Board() {
     const [ pcPage, setPcPage ] = useState(1);
     const [ firstNo, setFirstNo ] = useState();
     const [ checkBack, setCheckBack ] = useState(false);
+    const [ tempNo, setTempNo ] = useState();
     const formData = new FormData();
+    
     useEffect(() => {
         formData.append("mno", userInfo.mno);
         if(window.innerWidth >= 767) {
@@ -34,10 +36,10 @@ function Board() {
                 formData.append("page", sessionStorage.getItem("pcPage"));
                 formData.append("lastno", sessionStorage.getItem("lastNo"));
                 formData.append("pagestatus", "backPage");
+                // sessionStorage.removeItem("FirstNo");
                 setCheckBack(true);
                 console.log("sessionStorage : ", sessionStorage.getItem("lastNo"))
                 console.log("formData : ", formData.get("lastno"))
-                sessionStorage.removeItem("lastNo");
             } else {
                 formData.append("lastno", 0);
                 formData.append("page", pcPage);
@@ -54,13 +56,18 @@ function Board() {
         .then((res) => {
             setBoardList(res);
             setResStatus(res);
+            if(!sessionStorage.getItem("FirstNo")) {
+                sessionStorage.setItem("FirstNo", res[0].bno);
+                setFirstNo(res[0].bno);
+            } else {
+                setFirstNo(sessionStorage.getItem("FirstNo"));
+            }
             if(sessionStorage.getItem("pcPage")) {
                 setPcPage(sessionStorage.getItem("pcPage"));
                 sessionStorage.removeItem("pcPage");
+                sessionStorage.removeItem("lastNo");
             }
-            console.log("/Board/BoardList : ", res);
-            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n", pcPage, "\n", pagination, "\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-            setFirstNo(res[0].bno);
+            console.log("/Board/BoardList/useEffect : ", res);
         })
         call("/Board/HeartList", "POST", null)
         .then((res) => {
@@ -108,8 +115,15 @@ function Board() {
     // };
     
     const [ viewData, setViewData ] = useState("");
-    const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg, createdDate, heart, hrno, writerimg) => {
+    const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg, createdDate, heart, hrno, writerimg, device) => {
+        // let scrollContainer = document.getElementById("ScrollContainer");
+        // let yContainer = scrollContainer.scrollHeight; // 스크롤 전체 길이
+        // let y = scrollContainer.scrollTop; // 스크롤 된 높이
+        // let clientHeight = scrollContainer.clientHeight; // 눈에 보이는 높이
         if(heart === "1") { heart = "1"; } else { heart = "0" }
+        // if(device.includes('mobile')) {
+        //     alert("yContainer : " + yContainer + " y : " + y + " clientHeight : " + clientHeight);
+        // }
         sessionStorage.setItem("pcPage", pcPage);
         sessionStorage.setItem("lastNo", boardList[0].bno);
         // 글 상세보기로
@@ -257,7 +271,7 @@ function Board() {
             call("/Board/BoardList", "POST", formData)
             .then((res) => { console.log("/Board/BoardList/Res : ", res); setBoardList(res); });
         } else {
-            console.log(firstNo);
+            console.log("firstNo : ", firstNo);
             formData.append("lastno", firstNo);
             formData.append("pagestatus", "null");
             setPcPage(e.target.id);
@@ -305,7 +319,7 @@ function Board() {
                                             <div className = "row" style = {{ width: "100%" }}>
                                                 <div className = "col-12" style = {{ marginTop: "0.7vh", fontSize: "1.3rem" }}>
                                                     <div className = "row">
-                                                        <label className = "col-9 col-md-9" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno, list.writerimg) } }>
+                                                        <label className = "col-9 col-md-9" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno, list.writerimg, 'mobile') } }>
                                                             {list.btitle.length >= 11 ?
                                                                 String(list.btitle).substring(0, 10) + "..." 
                                                                 : 
@@ -383,7 +397,7 @@ function Board() {
                                     </tr> 
                                     { boardList.map((list) => 
                                         <tr key = { list.bno } className = "row" style = {{  }}>
-                                            <td className = "col-md-6" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno, list.writerimg) } } style = {{ cursor: "pointer" }}>{"[ " + list.bno + " ]= " + list.btitle }</td>
+                                            <td className = "col-md-6" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno, list.writerimg, 'pc') } } style = {{ cursor: "pointer" }}>{"[ " + list.bno + " ]= " + list.btitle }</td>
                                             <td className = "col-md-1" style = {{ textAlign: "center", marginLeft: "0", paddingLeft: "0", paddingRight: "1.4vw" }}>
                                                 <div className = "row">
                                                     <label className = "col-md-3" style = {{ float: "right" }}>

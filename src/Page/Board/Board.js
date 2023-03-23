@@ -36,10 +36,7 @@ function Board() {
                 formData.append("page", sessionStorage.getItem("pcPage"));
                 formData.append("lastno", sessionStorage.getItem("lastNo"));
                 formData.append("pagestatus", "backPage");
-                // sessionStorage.removeItem("FirstNo");
                 setCheckBack(true);
-                console.log("sessionStorage : ", sessionStorage.getItem("lastNo"))
-                console.log("formData : ", formData.get("lastno"))
             } else {
                 formData.append("lastno", 0);
                 formData.append("page", pcPage);
@@ -47,10 +44,16 @@ function Board() {
             }
             formData.append("device", "pc");
         } else {
-            formData.append("lastno", 0);
+            if(sessionStorage.getItem("page")) {
+                formData.append("lastno", sessionStorage.getItem("LastNo"));
+                formData.append("page", sessionStorage.getItem("page"));
+                formData.append("pagestatus", "returnPage");
+            } else {
+                formData.append("lastno", 0);
+                formData.append("page", 0);
+                formData.append("pagestatus", "null");
+            }
             formData.append("device", "mobile");
-            formData.append("page", 0);
-            formData.append("pagestatus", "null");
         }
         call("/Board/BoardList", "POST", formData)
         .then((res) => {
@@ -116,16 +119,23 @@ function Board() {
     
     const [ viewData, setViewData ] = useState("");
     const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg, createdDate, heart, hrno, writerimg, device) => {
-        // let scrollContainer = document.getElementById("ScrollContainer");
-        // let yContainer = scrollContainer.scrollHeight; // 스크롤 전체 길이
-        // let y = scrollContainer.scrollTop; // 스크롤 된 높이
-        // let clientHeight = scrollContainer.clientHeight; // 눈에 보이는 높이
+        let scrollContainer = document.getElementById("ScrollContainer");
+        let yContainer = scrollContainer.scrollHeight; // 스크롤 전체 길이
+        let y = scrollContainer.scrollTop; // 스크롤 된 높이
+        let clientHeight = scrollContainer.clientHeight; // 눈에 보이는 높이
         if(heart === "1") { heart = "1"; } else { heart = "0" }
-        // if(device.includes('mobile')) {
-        //     alert("yContainer : " + yContainer + " y : " + y + " clientHeight : " + clientHeight);
-        // }
-        sessionStorage.setItem("pcPage", pcPage);
-        sessionStorage.setItem("lastNo", boardList[0].bno);
+        if(device.includes('mobile')) {
+            alert("yContainer : " + yContainer + "\ny : " + y + "\nclientHeight : " + clientHeight + "\npage : " + page);
+        }
+        if(window.innerWidth >= 767) {
+            sessionStorage.setItem("pcPage", pcPage);
+            sessionStorage.setItem("lastNo", boardList[0].bno);
+        } else {
+            sessionStorage.setItem("page", page);
+            sessionStorage.setItem("yContainer", yContainer);
+            sessionStorage.setItem("y", y);
+            sessionStorage.setItem("clientHeight", clientHeight);
+        }
         // 글 상세보기로
         history('/BoardView', {
             state: { 
@@ -163,7 +173,8 @@ function Board() {
         if(page === 0) {
             // 99%로 설정하면 간헐적으로 정상 작동하고 아니면 첫 스크롤이 
             // 바로 렌더링 되지 않고 스크롤을 99%에 도달한 뒤에 움직여줘야 작동
-            eightyPerScroll = (yContainer * 0.85); // 스크롤이 전체 길이의 85% 내려갔을 때
+            // => 스크롤이 땋에 닿기 전 "여유롭게" 처음을 불러외기
+            eightyPerScroll = (yContainer * 0.75); // 스크롤이 전체 길이의 75% 내려갔을 때
         } else {
             eightyPerScroll = (yContainer * 0.99); // 스크롤이 전체 길이의 99% 내려갔을 때
         }
@@ -180,6 +191,7 @@ function Board() {
             formData.append("lastno", boardList[boardList.length - 1].bno);
             formData.append("device", "mobile");
             formData.append("pagestatus", "null");
+            sessionStorage.setItem("LastNo", boardList[boardList.length - 1].bno);
             call("/Board/BoardList", "POST", formData)
             .then((res) => {
                 // setBoardList([...boardList, res]);
@@ -223,7 +235,6 @@ function Board() {
             formData.append("lastno", firstNo);
             formData.append("pagestatus", "null");
             setPcPage(1);
-            // alert(e.target.id);
             call("/Board/BoardList", "POST", formData)
             .then((res) => { console.log("/Board/BoardList/Res : ", res); setBoardList(res); });
         } else if([e.target.id].includes("prevone")) {
@@ -262,10 +273,6 @@ function Board() {
             console.log("nextlast");
             setPcPage(pagination.length);
             formData.append("page", pcPage);
-            // console.log("pagination.length : ", pagination.length);
-            // console.log("firstNo : ", firstNo);
-            // console.log("pcPage * 10 : ", pcPage * 10);
-            // console.log("(firstNo - (pcPage * 10)) : ", firstNo - (pcPage * 10));
             formData.append("lastno", (firstNo - ((pagination.length - 1) * 10)));
             formData.append("pagestatus", "null");
             call("/Board/BoardList", "POST", formData)
@@ -275,7 +282,6 @@ function Board() {
             formData.append("lastno", firstNo);
             formData.append("pagestatus", "null");
             setPcPage(e.target.id);
-            // alert(e.target.id);
             formData.append("page", e.target.id);
             call("/Board/BoardList", "POST", formData)
             .then((res) => { console.log("/Board/BoardList/Res : ", res); setBoardList(res); });
@@ -302,8 +308,8 @@ function Board() {
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" } style = {{  }}>
                 { window.innerWidth <= 767 ? 
-                    <div style = {{ overflowY: "auto", height: firstNo === boardList.length ? "83vh" : "79vh" }} id = "ScrollContainer" onScroll = { getScroll }> {/*  id = "ScrollContainer" onScroll = { getScroll }  */}
-                        <table className = "table" style = {{ }}>
+                    <div style = {{ overflowY: "auto", height: firstNo === boardList.length ? "83vh" : "83vh" }} id = "ScrollContainer" onScroll = { getScroll }> {/*  id = "ScrollContainer" onScroll = { getScroll }  */}
+                        <table className = "table" style = {{  }}>
                             <tbody>
                                 { boardList.map((list) => 
                                     <tr style = {{ borderBottom: "solid 1px gray" }} key = { list.bno }>

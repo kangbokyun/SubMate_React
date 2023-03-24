@@ -63,7 +63,6 @@ export const call = (api, method, request) => {
         })
     )
     .catch((error) => {
-        alert(error.status);
         // 추가된 부분
         console.log("error : ", error);
         if(error === null){

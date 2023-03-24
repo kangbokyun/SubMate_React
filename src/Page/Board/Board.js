@@ -29,8 +29,9 @@ function Board() {
     const formData = new FormData();
     
     useEffect(() => {
+        document.getElementById("mobileTable").scrollTo(0, 100);
         formData.append("mno", userInfo.mno);
-        if(window.innerWidth >= 767) {
+        if(window.innerWidth >= 767) { // PC
             if(sessionStorage.getItem("pcPage") !== null) {
                 console.log("감지");
                 formData.append("page", sessionStorage.getItem("pcPage"));
@@ -43,11 +44,14 @@ function Board() {
                 formData.append("pagestatus", "null");
             }
             formData.append("device", "pc");
-        } else {
+        } else { // Mobile
             if(sessionStorage.getItem("page")) {
+                alert("ㅎㅇ");
                 formData.append("lastno", sessionStorage.getItem("LastNo"));
                 formData.append("page", sessionStorage.getItem("page"));
                 formData.append("pagestatus", "returnPage");
+                sessionStorage.removeItem("page");
+                sessionStorage.removeItem("LastNo");
             } else {
                 formData.append("lastno", 0);
                 formData.append("page", 0);
@@ -69,6 +73,7 @@ function Board() {
                 setPcPage(sessionStorage.getItem("pcPage"));
                 sessionStorage.removeItem("pcPage");
                 sessionStorage.removeItem("lastNo");
+                // window.scrollTo(0, sessionStorage.getItem("y"));
             }
             console.log("/Board/BoardList/useEffect : ", res);
         })
@@ -86,7 +91,6 @@ function Board() {
             console.log("res : >>>>>>>>>>>>>>>>\n", res);
         });
 
-        console.log(window.performance);
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         // paging();
@@ -135,6 +139,7 @@ function Board() {
             sessionStorage.setItem("yContainer", yContainer);
             sessionStorage.setItem("y", y);
             sessionStorage.setItem("clientHeight", clientHeight);
+            sessionStorage.setItem("LastNo", sessionStorage.getItem("FirstNo"));
         }
         // 글 상세보기로
         history('/BoardView', {
@@ -191,7 +196,6 @@ function Board() {
             formData.append("lastno", boardList[boardList.length - 1].bno);
             formData.append("device", "mobile");
             formData.append("pagestatus", "null");
-            sessionStorage.setItem("LastNo", boardList[boardList.length - 1].bno);
             call("/Board/BoardList", "POST", formData)
             .then((res) => {
                 // setBoardList([...boardList, res]);
@@ -309,7 +313,7 @@ function Board() {
             <div className = { window.innerWidth <= 767 ? "" : "container" } style = {{  }}>
                 { window.innerWidth <= 767 ? 
                     <div style = {{ overflowY: "auto", height: firstNo === boardList.length ? "83vh" : "83vh" }} id = "ScrollContainer" onScroll = { getScroll }> {/*  id = "ScrollContainer" onScroll = { getScroll }  */}
-                        <table className = "table" style = {{  }}>
+                        <table className = "table" style = {{  }} id = "mobileTable">
                             <tbody>
                                 { boardList.map((list) => 
                                     <tr style = {{ borderBottom: "solid 1px gray" }} key = { list.bno }>
@@ -326,7 +330,7 @@ function Board() {
                                                 <div className = "col-12" style = {{ marginTop: "0.7vh", fontSize: "1.3rem" }}>
                                                     <div className = "row">
                                                         <label className = "col-9 col-md-9" onClick = { (e) => { testFunction(list.bno, list.btitle, list.bcontents, list.bwriter, list.bview, list.becho, list.bechotimer, list.bimg, list.createdDate, list.heart, list.hrno, list.writerimg, 'mobile') } }>
-                                                            {list.btitle.length >= 11 ?
+                                                            [{ list.bno }]{list.btitle.length >= 11 ?
                                                                 String(list.btitle).substring(0, 10) + "..." 
                                                                 : 
                                                                 list.btitle

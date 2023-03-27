@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../../App.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { ClockLoader } from 'react-spinners';
@@ -28,8 +28,12 @@ function Board() {
     const [ tempNo, setTempNo ] = useState();
     const formData = new FormData();
     
+    const scroll = useRef();
+
     useEffect(() => {
-        document.getElementById("mobileTable").scrollTo(0, 100);
+        // document.getElementById("mobileTable").scrollTo(0, 100);
+        // document.getElementById("mobileTable").scrollTo({ top: 10, behavior: "smooth" });
+        scroll.current.scrollTop = scroll.current.scrollHeight;
         formData.append("mno", userInfo.mno);
         if(window.innerWidth >= 767) { // PC
             if(sessionStorage.getItem("pcPage") !== null) {
@@ -314,7 +318,7 @@ function Board() {
                 { window.innerWidth <= 767 ? 
                     <div style = {{ overflowY: "auto", height: firstNo === boardList.length ? "83vh" : "83vh" }} id = "ScrollContainer" onScroll = { getScroll }> {/*  id = "ScrollContainer" onScroll = { getScroll }  */}
                         <table className = "table" style = {{  }} id = "mobileTable">
-                            <tbody>
+                            <tbody  ref = { scroll }>
                                 { boardList.map((list) => 
                                     <tr style = {{ borderBottom: "solid 1px gray" }} key = { list.bno }>
                                         <td className = "col-3">

@@ -260,7 +260,7 @@ function Mate() {
                                         <div className = { dropDown ? "show-drop" : "hide-drop" } style = {{ backgroundColor: "#e6e6e6" }}>
                                             <table style = {{ width: "100%" }}>
                                                 <tbody>
-                                                    <tr style = {{ fontSize: "1rem" }}><td style = {{ paddingTop: "0.5vh", borderBottom: "solid 1px black", color: "black" }} onClick = { () => { handleShow() } }>채팅하기</td></tr>
+                                                    <tr style = {{ fontSize: "1rem" }}><td style = {{ paddingTop: "0.5vh", borderBottom: "solid 1px black", color: "black" }} onClick = { () => { handleShow(list.mno) } }>채팅하기</td></tr>
                                                     <tr style = {{ fontSize: "1rem" }}><td style = {{ paddingTop: "0.5vh", color: "black" }} id = { list.mno } onClick = { () => {getProfile(list.mno, list.mager, list.mbirth, list.mbti, list.mgender, list.mhobby, list.mid, list.mname, list.mphone, list.profileimg, list.mnickname)} }>프로필보기</td></tr>
                                                 </tbody>
                                             </table>

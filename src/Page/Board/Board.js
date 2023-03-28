@@ -33,7 +33,7 @@ function Board() {
     useEffect(() => {
         // document.getElementById("mobileTable").scrollTo(0, 100);
         // document.getElementById("mobileTable").scrollTo({ top: 10, behavior: "smooth" });
-        scroll.current.scrollTop = scroll.current.scrollHeight;
+        
         formData.append("mno", userInfo.mno);
         if(window.innerWidth >= 767) { // PC
             if(sessionStorage.getItem("pcPage") !== null) {
@@ -50,7 +50,6 @@ function Board() {
             formData.append("device", "pc");
         } else { // Mobile
             if(sessionStorage.getItem("page")) {
-                alert("ㅎㅇ");
                 formData.append("lastno", sessionStorage.getItem("LastNo"));
                 formData.append("page", sessionStorage.getItem("page"));
                 formData.append("pagestatus", "returnPage");
@@ -77,7 +76,16 @@ function Board() {
                 setPcPage(sessionStorage.getItem("pcPage"));
                 sessionStorage.removeItem("pcPage");
                 sessionStorage.removeItem("lastNo");
-                // window.scrollTo(0, sessionStorage.getItem("y"));
+            }
+            if(sessionStorage.getItem("y")) { 
+                // const scrollH = Number(sessionStorage.getItem("clientHeight"));
+                const scrollH = Number(sessionStorage.getItem("y"));
+                setTimeout(() => {
+                    scroll.current.scrollTop = scrollH; 
+                }, 100);
+                sessionStorage.removeItem("y");
+                sessionStorage.removeItem("yContainer");
+                sessionStorage.removeItem("clientHeight");
             }
             console.log("/Board/BoardList/useEffect : ", res);
         })
@@ -132,9 +140,6 @@ function Board() {
         let y = scrollContainer.scrollTop; // 스크롤 된 높이
         let clientHeight = scrollContainer.clientHeight; // 눈에 보이는 높이
         if(heart === "1") { heart = "1"; } else { heart = "0" }
-        if(device.includes('mobile')) {
-            alert("yContainer : " + yContainer + "\ny : " + y + "\nclientHeight : " + clientHeight + "\npage : " + page);
-        }
         if(window.innerWidth >= 767) {
             sessionStorage.setItem("pcPage", pcPage);
             sessionStorage.setItem("lastNo", boardList[0].bno);
@@ -182,7 +187,7 @@ function Board() {
         if(page === 0) {
             // 99%로 설정하면 간헐적으로 정상 작동하고 아니면 첫 스크롤이 
             // 바로 렌더링 되지 않고 스크롤을 99%에 도달한 뒤에 움직여줘야 작동
-            // => 스크롤이 땋에 닿기 전 "여유롭게" 처음을 불러외기
+            // => 스크롤이 땋에 닿기 전 "여유롭게" 처음을 불러오기
             eightyPerScroll = (yContainer * 0.75); // 스크롤이 전체 길이의 75% 내려갔을 때
         } else {
             eightyPerScroll = (yContainer * 0.99); // 스크롤이 전체 길이의 99% 내려갔을 때
@@ -316,9 +321,9 @@ function Board() {
             }
             <div className = { window.innerWidth <= 767 ? "" : "container" } style = {{  }}>
                 { window.innerWidth <= 767 ? 
-                    <div style = {{ overflowY: "auto", height: firstNo === boardList.length ? "83vh" : "83vh" }} id = "ScrollContainer" onScroll = { getScroll }> {/*  id = "ScrollContainer" onScroll = { getScroll }  */}
+                    <div style = {{ overflowY: "auto", height: firstNo === boardList.length ? "83vh" : "83vh" }} ref = { scroll } id = "ScrollContainer" onScroll = { getScroll }> {/*  id = "ScrollContainer" onScroll = { getScroll }  */}
                         <table className = "table" style = {{  }} id = "mobileTable">
-                            <tbody  ref = { scroll }>
+                            <tbody>
                                 { boardList.map((list) => 
                                     <tr style = {{ borderBottom: "solid 1px gray" }} key = { list.bno }>
                                         <td className = "col-3">

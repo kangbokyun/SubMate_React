@@ -66,6 +66,10 @@ function InChat() {
             return () => window.removeEventListener("resize", resizeWindow);
         }, []);
 
+        useEffect(() => {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        });
+
         // 채팅룸 상태
         const [ room, setRoom ] = useState(chatDTO.state.roomname);
 

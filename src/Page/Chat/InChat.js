@@ -186,6 +186,7 @@ function InChat() {
                 let chatMessage = {
                     senderName: userInfo.mnickname,
                     message: userData.message,
+                    mgender: userInfo.mgender,
                     status: "MESSAGE"
                 };
 
@@ -209,7 +210,7 @@ function InChat() {
                     message: userData.message,
                     receiverName: chatDTO.state.roomname,
                     senderno: chatDTO.state.senderno,
-                    mgender: userInfo.mnickname === chatDTO.state.sendername ? chatDTO.state.sgender : chatDTO.state.rgender,
+                    mgender: userInfo.mgender,
                     status: "MESSAGE"
                 };
 
@@ -230,7 +231,7 @@ function InChat() {
                         message: userData.message,
                         receiverName: chatDTO.state.roomname,
                         senderno: chatDTO.state.senderno,
-                        mgender: userInfo.mnickname === chatDTO.state.sendername ? chatDTO.state.sgender : chatDTO.state.rgender,
+                        mgender: userInfo.mgender,
                         status: "MESSAGE"
                     };
     
@@ -281,10 +282,10 @@ function InChat() {
                         </div>
                     </div> }
 
-                    {/* room이 "Room"이 아니라면 개인 메세지 상태 */}
+                    {/* room이 "Room"이 아니라면 개인 메세지 상태 */} 
                     { room !== "Room" && <div className = "row" style = {{ width: "100%" }}>
                         <ul style = {{ height: "74.5vh", overflowY: "scroll", marginLeft: "5.5vw" }} ref = { scrollRef }>
-                            { chatList.map((list) =>
+                            { chatList.map((list) => // 히스토리 보낸 곳
                                 <div key = { list.chno } style = {{ paddingRight: window.innerWidth <= 767 ? "" : "6vw" }}>
                                     { list.chsendername === userInfo.mnickname ? 
                                     <label className = "row" style = {{ width: "100%", marginTop: "1.5vh", float: "left" }}>
@@ -307,7 +308,7 @@ function InChat() {
                                             </label>
                                         </div>
                                     </label>
-                                    : 
+                                    : // 히스토리 받은 곳
                                     <label className = "row" style = {{ width: "100%", marginTop: "1.5vh", float: "right" }}>
                                         <div className = "col-3 offset-9" style = {{ textAlign: "right" }}>
                                             { list.chsendername }
@@ -330,7 +331,7 @@ function InChat() {
                             </div>
                             ) }
                             {/* privateChats.get(room) 탭에 해당하는 채팅 메세지 출력 */}
-                                { publicChats.map((chat, index) => 
+                                { publicChats.map((chat, index) => // 소켓 보내는곳
                                     <div key = { index } style = {{  }}>
                                         { chat.senderName === userInfo.mnickname ? 
                                         <label className = "row" style = {{ width: "100%", marginTop: "1.5vh", float: "left" }}>
@@ -339,37 +340,37 @@ function InChat() {
                                             </div>
                                             <div className = "col-10" style = {{ textAlign: "left" }}>
                                                 <label style = {{ 
-                                                    backgroundColor: chat.chsendername === chatDTO.state.sendername ? 
-                                                        chatDTO.state.sgender === "Man" ? "#a7c2f7" : "#fdc6d5"
-                                                        :
-                                                        chatDTO.state.rgender === "Man" ? "#a7c2f7" : "#fdc6d5",
+                                                    backgroundColor: userInfo.mgender === "Man" ? "#a7c2f7" : "#fdc6d5",
                                                     paddingLeft: "2vw", 
                                                     borderRadius: "8px", 
                                                     paddingTop: "0.4vh", 
                                                     paddingRight: "2vw" ,
                                                     paddingBottom: "0.4vh"
                                                 }}>
-                                                    { chat.message }<br />
+                                                    { chat.message }
                                                 </label>
                                             </div>
                                         </label>
-                                        : 
-                                        <label className = "row" style = {{ width: "100%", marginTop: "1.5vh", float: "right" }}>
+                                        : // 소켓 받는곳
+                                        <label className = "row" style = {{ width: "100%", marginTop: "1.5vh", float: "right" }}> 
                                             <div className = "col-3 offset-9" style = {{ textAlign: "right" }}>
                                                 { chat.senderName }
                                             </div>
                                             <div className = "col-10 offset-2" style = {{ textAlign: "right" }}>
                                                 <label style = {{ 
-                                                    backgroundColor: chat.chsendername === chatDTO.state.sendername ? 
-                                                        chatDTO.state.sgender === "Man" ? "#a7c2f7" : "#fdc6d5"
-                                                        :
-                                                        chatDTO.state.rgender === "Man" ? "#a7c2f7" : "#fdc6d5",
+                                                    backgroundColor: chat.mgender === "Man" ? "#a7c2f7" : "#fdc6d5",
+                                                    // chat.chsendername === chatDTO.state.sendername ? 
+                                                    //     chatDTO.state.sgender === "Man" ? "#a7c2f7" : "#fdc6d5"
+                                                    //     :
+                                                    //     chatDTO.state.rgender === "Man" ? "#a7c2f7" : "#fdc6d5",
                                                     paddingLeft: "2vw", 
                                                     borderRadius: "8px", 
                                                     paddingTop: "0.4vh", 
                                                     paddingRight: "2vw" ,
                                                     paddingBottom: "0.4vh"
-                                                }}>{ chat.message }</label>
+                                                }}>
+                                                    { chat.message }
+                                                </label>
                                             </div>
                                         </label>
                                     }

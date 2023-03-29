@@ -63,7 +63,7 @@
 |23.01.09 ~ 23.01.10|채팅 레이아웃 수정|
 |23.01.11 ~ 23.01.13|미흡한 부분 마무리|
 |23.01.14 ~ 23.01.15|마무리|
-|23.01.23 ~ :SubMate Ver 1.1.0 Update|
+| <center>23.01.23 ~</center> |SubMate Ver 1.1.0 Update|
 
 ### React Using Library
  - react-router-dom

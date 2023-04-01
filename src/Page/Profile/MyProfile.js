@@ -90,21 +90,21 @@ function MyProfile() {
                 <div><h1 style = {{ marginLeft: "3vw", marginTop: "8vh" }}>MyProfile</h1></div> :
                 <h1 style = {{ marginLeft: "6vw", marginTop: "8vh" }}>MyProfile</h1> 
             }
-            <div className = { window.innerWidth <= 767 ? "container" : "" }>
-                <div className = "row" style = {{ width: "100%", marginTop: "3vh", marginLeft: "0.1vw" }}>
-                    <div className = "col-6 col-md-6" style = {{ height: "6vh", textAlign: "center", backgroundColor: view === 1 ? "white" : "#e6e6e6", paddingLeft: "1.5vw", boxShadow: view === 1 ? "" : "inset -5px -5px 5px 5px gray" }}>
+            <div className = { window.innerWidth <= 767 ? "" : "container" }>
+                <div className = "row" style = {{ width: "96%", marginTop: "3vh", marginLeft: "0.1vw" }}>
+                    <div className = "col-6 col-md-6" style = {{ height: "6vh", textAlign: "center", backgroundColor: view === 1 ? "white" : "#e6e6e6", paddingLeft: "1.5vw" }}>
                         <img alt = "" src = { require('../../IMG/ProfileHuman.png') } 
                             style = {{  
-                                width: "10vw"
+                                width: window.innerWidth <= 767 ? "10vw" : "5vw"
                             }}
                             id = "2"
                             onClick = { viewChange }
                         />
                     </div>
-                    <div className = "col-6 col-md-6" style = {{ height: "6vh", textAlign: "center", backgroundColor: view === 2 ? "white" : "#e6e6e6", boxShadow: view === 2 ? "" : "inset 5px -5px 5px 5px gray" }}>
+                    <div className = "col-6 col-md-6" style = {{ height: "6vh", textAlign: "center", backgroundColor: view === 2 ? "white" : "#e6e6e6" }}>
                         <img alt = "" src = { require('../../IMG/ProfileGraph.png') } 
                             style = {{  
-                                width: "12vw",
+                                width: window.innerWidth <= 767 ? "12vw" : "5vw",
                                 marginTop: "0.5vh"
                             }}
                             id = "1"
@@ -115,30 +115,30 @@ function MyProfile() {
                 { view === 1 ? 
                 
                 <div className = "row" style = {{ width: "100%", marginTop: "3vh" }}>
-                    <table className = "table">
+                    <table className = "table" style = {{ width: "95%" }}>
                         <tbody>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-3 col-md-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>ID</label></td>
-                                <td className = "col-6 col-md-6"><input type = "text" className = "form-control" value = { userInfo.mid } disabled = { idSt } /></td>
+                                <td className = "col-7 col-md-7"><input type = "text" className = "form-control" value = { userInfo.mid } disabled = { idSt } /></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Name</label></td>
-                                <td className = "col-6"><input type = "text" className = "form-control" value = { userInfo.mname } disabled = { nameSt } /></td>
+                                <td className = "col-7"><input type = "text" className = "form-control" value = { userInfo.mname } disabled = { nameSt } /></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
-                                <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Nick</label></td>
-                                <td className = "col-6"><input type = "text" className = "form-control" value = { userInfo.mnickname } disabled = { nickSt } /></td>
-                                <td className = "col-3"><button type = "button" onClick = { stChange } id = "nickBtn" className = "btn btn-info" style = {{ width: "100%", color: "white" }}>수정</button></td>
+                                <td className = "col-3 col-md-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Nick</label></td>
+                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" value = { userInfo.mnickname } disabled = { nickSt } /></td>
+                                <td className = "col-3 col-md-2"><button type = "button" onClick = { stChange } id = "nickBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>수정</button></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
-                                <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>MBTI</label></td>
-                                <td className = "col-6"><input type = "text" className = "form-control" value = { userInfo.mbti } disabled = { mbtiSt } /></td>
-                                <td className = "col-3"><button type = "button" onClick = { stChange } id = "mbtiBtn" className = "btn btn-info" style = {{ width: "100%", color: "white" }}>수정</button></td>
+                                <td className = "col-3 col-md-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>MBTI</label></td>
+                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" value = { userInfo.mbti } disabled = { mbtiSt } /></td>
+                                <td className = "col-3 col-md-2"><button type = "button" onClick = { stChange } id = "mbtiBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>수정</button></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
-                                <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Address</label></td>
-                                <td className = "col-6"><input type = "text" className = "form-control" value = { userInfo.maddress } disabled = { addressSt } /></td>
-                                <td className = "col-3"><button type = "button" onClick = { stChange } id = "addressBtn" className = "btn btn-info" style = {{ width: "100%", color: "white" }}>수정</button></td>
+                                <td className = "col-3 col-md-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Address</label></td>
+                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" value = { userInfo.maddress } disabled = { addressSt } /></td>
+                                <td className = "col-3 col-md-2"><button type = "button" onClick = { stChange } id = "addressBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>수정</button></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-12">
@@ -147,7 +147,7 @@ function MyProfile() {
                                         alt = "" 
                                         src = { require('../../MemberImg' + userInfo.profileimg.split("/MemberImg")[1]) }
                                         style = {{  
-                                            width: "90vw",
+                                            width: window.innerWidth <= 767 ? "96vw" : "100%",
                                             height: "30vh",
                                             objectFit: "contain",
                                             backgroundColor: "#f0efed"
@@ -158,7 +158,7 @@ function MyProfile() {
                                         alt = "" 
                                         src = { previewImg } 
                                         style = {{ 
-                                            width: "90vw",
+                                            width: window.innerWidth <= 767 ? "96vw" : "100%",
                                             height: "30vh",
                                             objectFit: "contain",
                                             backgroundColor: "#f0efed"

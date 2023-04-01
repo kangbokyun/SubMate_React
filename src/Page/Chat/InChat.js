@@ -302,7 +302,9 @@ function InChat() {
                                                 borderRadius: "8px", 
                                                 paddingTop: "0.4vh", 
                                                 paddingRight: "2vw" ,
-                                                paddingBottom: "0.4vh"
+                                                paddingBottom: "0.4vh",
+                                                maxWidth: window.innerWidth <= 767 ? "60%" : "50%",
+                                                textAlign: "left"
                                             }}>
                                                 { list.chcontents }<br />
                                             </label>
@@ -323,8 +325,12 @@ function InChat() {
                                                 borderRadius: "8px", 
                                                 paddingTop: "0.4vh", 
                                                 paddingRight: "2vw" ,
-                                                paddingBottom: "0.4vh"
-                                            }}>{ list.chcontents }</label>
+                                                paddingBottom: "0.4vh",
+                                                maxWidth: window.innerWidth <= 767 ? "60%" : "50%",
+                                                textAlign: "left"
+                                            }}>
+                                                { list.chcontents }
+                                            </label>
                                         </div>
                                     </label>
                                 }
@@ -345,7 +351,9 @@ function InChat() {
                                                     borderRadius: "8px", 
                                                     paddingTop: "0.4vh", 
                                                     paddingRight: "2vw" ,
-                                                    paddingBottom: "0.4vh"
+                                                    paddingBottom: "0.4vh",
+                                                    maxWidth: window.innerWidth <= 767 ? "60%" : "50%",
+                                                    textAlign: "left"
                                                 }}>
                                                     { chat.message }
                                                 </label>
@@ -353,21 +361,19 @@ function InChat() {
                                         </label>
                                         : // 소켓 받는곳
                                         <label className = "row" style = {{ width: "100%", marginTop: "1.5vh", float: "right" }}> 
-                                            <div className = "col-3 offset-9" style = {{ textAlign: "right" }}>
+                                            <div className = "col-3 offset-9" style = {{ textAlign: "right", paddingRight: window.innerWidth >= 767 && "7vw" }}>
                                                 { chat.senderName }
                                             </div>
-                                            <div className = "col-10 offset-2" style = {{ textAlign: "right" }}>
+                                            <div className = "col-10 offset-2" style = {{ textAlign: "right", paddingRight: window.innerWidth >= 767 && "7vw" }}>
                                                 <label style = {{ 
                                                     backgroundColor: chat.mgender === "Man" ? "#a7c2f7" : "#fdc6d5",
-                                                    // chat.chsendername === chatDTO.state.sendername ? 
-                                                    //     chatDTO.state.sgender === "Man" ? "#a7c2f7" : "#fdc6d5"
-                                                    //     :
-                                                    //     chatDTO.state.rgender === "Man" ? "#a7c2f7" : "#fdc6d5",
                                                     paddingLeft: "2vw", 
                                                     borderRadius: "8px", 
                                                     paddingTop: "0.4vh", 
                                                     paddingRight: "2vw" ,
-                                                    paddingBottom: "0.4vh"
+                                                    paddingBottom: "0.4vh",
+                                                    maxWidth: window.innerWidth <= 767 ? "60%" : "50%",
+                                                    textAlign: "left"
                                                 }}>
                                                     { chat.message }
                                                 </label>

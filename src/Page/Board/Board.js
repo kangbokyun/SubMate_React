@@ -135,15 +135,15 @@ function Board() {
     
     const [ viewData, setViewData ] = useState("");
     const testFunction = (bno, btitle, bcontents, bwriter, bview, becho, bechotimer, bimg, createdDate, heart, hrno, writerimg, device) => {
-        let scrollContainer = document.getElementById("ScrollContainer");
-        let yContainer = scrollContainer.scrollHeight; // 스크롤 전체 길이
-        let y = scrollContainer.scrollTop; // 스크롤 된 높이
-        let clientHeight = scrollContainer.clientHeight; // 눈에 보이는 높이
         if(heart === "1") { heart = "1"; } else { heart = "0" }
         if(window.innerWidth >= 767) {
             sessionStorage.setItem("pcPage", pcPage);
             sessionStorage.setItem("lastNo", boardList[0].bno);
         } else {
+            let scrollContainer = document.getElementById("ScrollContainer");
+            let yContainer = scrollContainer.scrollHeight; // 스크롤 전체 길이
+            let y = scrollContainer.scrollTop; // 스크롤 된 높이
+            let clientHeight = scrollContainer.clientHeight; // 눈에 보이는 높이
             sessionStorage.setItem("page", page);
             sessionStorage.setItem("yContainer", yContainer);
             sessionStorage.setItem("y", y);

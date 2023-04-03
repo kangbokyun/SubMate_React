@@ -3,16 +3,16 @@ import React from 'react';
 function Statistics() {
     return(
         <div className = "row" style = {{ width: "100%", marginTop: "1.5vh" }}>
-            <div className = "col-6">
+            <div className = "col-6 col-md-3">
                 <h4>내가 쓴 게시글</h4>
             </div>
-            <div className = "col-6">
+            <div className = "col-6 col-md-3">
                 <h5>개수</h5>
             </div>
-            <div className = "col-6">
+            <div className = "col-6 col-md-3">
                 <h4>내가 쓴 댓글</h4>
             </div>
-            <div className = "col-6">
+            <div className = "col-6 col-md-3">
                 <h5>개수</h5>
             </div>
             <div className = "col-12">

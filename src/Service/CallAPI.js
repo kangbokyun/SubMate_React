@@ -20,5 +20,6 @@ export const FormDataAPI = [
     "/ChatRoom",
     "/ChatRoomList",
     "/CreateChatRoom",
-    "/ChatHistoryList"
+    "/ChatHistoryList",
+    "/MyInfo/WritedBoard"
 ]

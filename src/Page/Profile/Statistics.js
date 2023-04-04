@@ -1,10 +1,30 @@
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-function Statistics() {
+function Statistics(props) {
+    const [ WritedBoard ] = props;
+    useEffect(() => {
+        // const [ WritedBoard ] = props;
+        console.log("WritedBoard : ", props);
+        console.log("props.props : ", props.WritedBoard);
+    });
+
+
     return(
         <div className = "row" style = {{ width: "100%", marginTop: "1.5vh" }}>
             <div className = "col-6 col-md-3">
                 <h4>내가 쓴 게시글</h4>
+                <table className = "" style = {{ border: "solid 1px black", width: "100%" }}>
+                    <tbody>
+                        {/* { props.props.data.map((list) => {
+                            <tr className = "row" style = {{ width: "100%" }}>
+                                <td className = "col-2 col-md-3">{list.wno}</td>
+                            </tr>
+
+                        }) } */}
+                    </tbody>
+                </table>
             </div>
             <div className = "col-6 col-md-3">
                 <h5>개수</h5>

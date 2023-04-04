@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { call } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
 import Statistics from './Statistics';
@@ -24,6 +25,7 @@ function MyProfile() {
     const [ addressSt, setAddressSt ] = useState(true);
     const [ previewImg, setPreviewImg ] = useState();
     const [ previewImgName, setPreviewImgName ] = useState("");
+    const [ WritedBoard, setWritedBoard ] = useState({});
     
     let userInfo = JSON.parse(localStorage.getItem("UserInfo"));
     
@@ -31,8 +33,13 @@ function MyProfile() {
         setWindowWidth(window.innerWidth);
         setWindowHeight(window.innerHeight);
     };
-
+    
     useEffect(() => {
+        const formData = new FormData();
+        formData.append("mno", userInfo.mno);
+        call("/MyInfo/WritedBoard", "POST", formData)
+        .then((res) => { console.log("/MyInfo/WritedBoard/Res => ", res); setWritedBoard(res); });
+
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -95,7 +102,7 @@ function MyProfile() {
                     <div className = "col-6 col-md-6" style = {{ height: "6vh", textAlign: "center", backgroundColor: view === 1 ? "white" : "#e6e6e6", paddingLeft: "1.5vw" }}>
                         <img alt = "" src = { require('../../IMG/ProfileHuman.png') } 
                             style = {{  
-                                width: window.innerWidth <= 767 ? "10vw" : "5vw"
+                                width: window.innerWidth <= 767 ? "10vw" : "4vw"
                             }}
                             id = "2"
                             onClick = { viewChange }
@@ -175,7 +182,7 @@ function MyProfile() {
                     </table>
                     </div>
                     :
-                    <Statistics />
+                    <Statistics WritedBoard = { WritedBoard } />
                 }
             </div>
             <Menu />

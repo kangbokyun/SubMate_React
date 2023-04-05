@@ -26,6 +26,8 @@ function MyProfile() {
     const [ previewImg, setPreviewImg ] = useState();
     const [ previewImgName, setPreviewImgName ] = useState("");
     const [ WritedBoard, setWritedBoard ] = useState({});
+    const [ writedReply, setWritedReply ] = useState({});
+    const [ takeHeart, setTakeHeart ] = useState();
     
     let userInfo = JSON.parse(localStorage.getItem("UserInfo"));
     
@@ -39,7 +41,10 @@ function MyProfile() {
         formData.append("mno", userInfo.mno);
         call("/MyInfo/WritedBoard", "POST", formData)
         .then((res) => { console.log("/MyInfo/WritedBoard/Res => ", res); setWritedBoard(res); });
-
+        call("/MyInfo/WritedReply", "POST", formData)
+        .then((res) => { console.log("/MyInfo/WritedReply/Res => ", res); setWritedReply(res); })
+        call("/MyInfo/TakeHeart", "POST", formData)
+        .then((res) => { console.log("/MyInfo/TakeHeart/Res => ", res); setTakeHeart(res); })
         resizeWindow();
         window.addEventListener("resize", resizeWindow);
         return () => window.removeEventListener("resize", resizeWindow);
@@ -175,14 +180,14 @@ function MyProfile() {
                                 </td>
                                 <td>
                                     <input id = "fileInput" accept = "image/*" type = "file" style = {{ display: "none" }} onChange = { (e) => imagePreview(e) } />
-                                    <label htmlFor = "fileInput" style= {{ border: "solid 1px green" }}>{ !previewImg ? userInfo.profileimg.split("/MemberImg")[1].split("_")[1] : previewImgName }</label>
+                                    <label htmlFor = "fileInput" style= {{  }}>{ !previewImg ? userInfo.profileimg.split("/MemberImg")[1].split("_")[1] : previewImgName }</label>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     </div>
                     :
-                    <Statistics WritedBoard = { WritedBoard } />
+                    <Statistics WritedBoard = { WritedBoard } WritedReply = { writedReply } TakeHeart = { takeHeart } />
                 }
             </div>
             <Menu />

@@ -31,10 +31,10 @@ function MyProfile() {
     const [ mbtiFlag, setMbtiFlag ] = useState(false);
     
     let userInfo = JSON.parse(localStorage.getItem("UserInfo"));
-    const [ nick, setNick ] = useState({ "cnick" : userInfo.mnickname});
-    const [ phone, setPhone ] = useState({ "cphone" : userInfo.mphone});
-    const [ mbti, setMbti ] = useState({ "cmbti" : userInfo.mbti});
-    const [ address, setAddress ] = useState({ "caddress" : userInfo.maddress});
+    const [ nick, setNick ] = useState({ "mnickname" : userInfo.mnickname});
+    const [ phone, setPhone ] = useState({ "mphone" : userInfo.mphone});
+    const [ mbti, setMbti ] = useState({ "mbti" : userInfo.mbti});
+    const [ address, setAddress ] = useState({ "maddress" : userInfo.maddress});
     
     let resizeWindow = () => {
         setWindowWidth(window.innerWidth);
@@ -62,47 +62,37 @@ function MyProfile() {
     };
 
     const stChange = (e) => {
-        console.log(e.target.id);
-        if([e.target.name].includes("cnick")) { setNick({ ...nick, [e.target.name] : e.target.value }); }
-        else if([e.target.name].includes("cphone")) { setPhone({ ...phone, [e.target.name] : e.target.value }); }
-        else if([e.target.name].includes("cmbti")) { setMbti({ ...mbti, [e.target.name] : e.target.value }); }
-        else if([e.target.name].includes("caddress")) { setAddress({ ...address, [e.target.name] : e.target.value }); }
+        if([e.target.name].includes("mnickname")) { 
+            setNick({[e.target.name] : e.target.value});
+            userInfo.mnickname = e.target.value;
+        } else if([e.target.name].includes("mphone")) { 
+            setPhone({ ...phone, [e.target.name] : e.target.value }); 
+            userInfo.mnickname = e.target.value;
+        } else if([e.target.name].includes("mbti")) { 
+            setMbti({ ...mbti, [e.target.name] : e.target.value }); 
+            userInfo.mnickname = e.target.value;
+        } else if([e.target.name].includes("maddress")) { 
+            setAddress({ ...address, [e.target.name] : e.target.value });
+            userInfo.mnickname = e.target.value; 
+        }
 
-        if([e.target.id].includes("nickBtn")) {
-            if(!nickSt) {  console.log("수정완료"); if(userInfo.mnickname !== nick.cnick) { setNickFlag(nickFlag => !nickFlag); } }
-            setNcikSt(nickSt => !nickSt);
-        } else if([e.target.id].includes("phoneBtn")) {
-            if(!phoneSt) { console.log("수정완료"); if(userInfo.mnickname !== nick.cnick) { setPhoneFlag(phoneFlag => !phoneFlag); } }
-            setPhoneSt(phoneSt => !phoneSt);
-        } else if([e.target.id].includes("mbtiBtn")) {
-            if(!mbtiSt) { console.log("수정완료"); if(userInfo.mnickname !== nick.cnick) { setMbtiFlag(mbtiFlag => !mbtiFlag); } }
-            setMbtiSt(mbtiSt => !mbtiSt);
-        } else if([e.target.id].includes("addressBtn")) {
-            if(!addressSt) { console.log("수정완료"); if(userInfo.mnickname !== nick.cnick) { setAddressFlag(addressFlag => !addressFlag); } }
-            setAddressSt(addressSt => !addressSt);
+        setChangeInfo({ ...changeInfo, "mno" : userInfo.mno, [e.target.name] : e.target.value });
+    };
+
+    const confirmBtn = (e) => {
+        if([e.target.id].includes("nickBtn")) { setNcikSt(nickSt => !nickSt);
+        } else if([e.target.id].includes("phoneBtn")) {  setPhoneSt(phoneSt => !phoneSt);
+        } else if([e.target.id].includes("mbtiBtn")) { setMbtiSt(mbtiSt => !mbtiSt);
+        } else if([e.target.id].includes("addressBtn")) { setAddressSt(addressSt => !addressSt);
         } else if([e.target.id].includes("imgBtn")) {
             
         }
-
-        console.log("nick.cnick : ", nick.length);
-
-        // if(nick.length)
-
-        if(!nickFlag || !phoneFlag || !mbtiFlag || !addressFlag) {
-            setChangeInfo({ 
-                "mnickname" : nick.cnick, 
-                "mphone" : phone.cphone, 
-                "mbti" : mbti.cmbti, 
-                "maddress" : address.caddress 
-            });
-            console.log(userInfo.mnickname, " : ", nick);
-            if(nick.cnick !== userInfo.mnickname && !nickSt || phone.cphone !== userInfo.mphone && !phoneSt || mbti.cmbti !== userInfo.mbti && !mbtiSt || address.caddress !== userInfo.maddress && !addressSt) {
-                ChangeInfo(changeInfo);
-            } else {
-                console.log("@@@@@@@@@\nㄴㄴㄴㄴ\n@@@@@@@@@")
-            }
+        
+        if(!nickSt || !phoneSt || !mbtiSt || !addressSt) {
+            localStorage.removeItem("UserInfo");
+            localStorage.setItem("UserInfo", JSON.stringify(userInfo));
+            ChangeInfo(changeInfo);
         }
-
     };
 
     const [ view, setView ] = useState(1);
@@ -171,23 +161,23 @@ function MyProfile() {
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-3 col-md-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Nick</label></td>
-                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" name = "cnick" onChange = { stChange } value = { nick.cnick } disabled = { nickSt } /></td>
-                                <td className = "col-3 col-md-2"><button type = "button" onClick = { stChange } id = "nickBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>{ nickSt ? "수정" : "완료" }</button></td>
+                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" name = "mnickname" onChange = { stChange } value = { nick.mnickname } disabled = { nickSt } /></td>
+                                <td className = "col-3 col-md-2"><button type = "button" onClick = { confirmBtn } id = "nickBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>{ nickSt ? "수정" : "완료" }</button></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-3 col-md-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Phone</label></td>
-                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" name = "cphone" onChange = { stChange } value = { phone.cphone } disabled = { phoneSt } /></td>
-                                <td className = "col-3 col-md-2"><button type = "button" onClick = { stChange } id = "phoneBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>{ phoneSt ? "수정" : "완료" }</button></td>
+                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" name = "mphone" onChange = { stChange } value = { phone.mphone } disabled = { phoneSt } /></td>
+                                <td className = "col-3 col-md-2"><button type = "button" onClick = { confirmBtn } id = "phoneBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>{ phoneSt ? "수정" : "완료" }</button></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-3 col-md-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>MBTI</label></td>
-                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" name = "cmbti" onChange = { stChange } value = { mbti.cmbti } disabled = { mbtiSt } /></td>
-                                <td className = "col-3 col-md-2"><button type = "button" onClick = { stChange } id = "mbtiBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>{ mbtiSt ? "수정" : "완료" }</button></td>
+                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" name = "mbti" onChange = { stChange } value = { mbti.mbti } disabled = { mbtiSt } /></td>
+                                <td className = "col-3 col-md-2"><button type = "button" onClick = { confirmBtn } id = "mbtiBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>{ mbtiSt ? "수정" : "완료" }</button></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-3 col-md-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Address</label></td>
-                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" name = "caddress" onChange = { stChange } value = { address.caddress } disabled = { addressSt } /></td>
-                                <td className = "col-3 col-md-2"><button type = "button" onClick = { stChange } id = "addressBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>{ addressSt ? "수정" : "완료" }</button></td>
+                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" name = "maddress" onChange = { stChange } value = { address.maddress } disabled = { addressSt } /></td>
+                                <td className = "col-3 col-md-2"><button type = "button" onClick = { confirmBtn } id = "addressBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>{ addressSt ? "수정" : "완료" }</button></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-12">

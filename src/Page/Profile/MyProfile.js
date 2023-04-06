@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { call } from '../../Service/APIService';
+import { ChangeInfo, call } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
 import Statistics from './Statistics';
@@ -15,21 +15,26 @@ function MyProfile() {
     const [ idSt, setIdSt ] = useState(true);
     const [ name, setName ] = useState("");
     const [ nameSt, setNameSt ] = useState(true);
-    const [ nick, setNick ] = useState("");
     const [ nickSt, setNcikSt ] = useState(true);
-    const [ phone, setPhone ] = useState("");
     const [ phoneSt, setPhoneSt ] = useState(true);
-    const [ mbti, setMbti ] = useState("");
     const [ mbtiSt, setMbtiSt ] = useState(true);
-    const [ address, setAddress ] = useState("");
     const [ addressSt, setAddressSt ] = useState(true);
     const [ previewImg, setPreviewImg ] = useState();
     const [ previewImgName, setPreviewImgName ] = useState("");
     const [ WritedBoard, setWritedBoard ] = useState({});
     const [ writedReply, setWritedReply ] = useState({});
     const [ takeHeart, setTakeHeart ] = useState();
+    const [ changeInfo, setChangeInfo ] = useState({});
+    const [ nickFlag, setNickFlag ] = useState(false);
+    const [ phoneFlag, setPhoneFlag ] = useState(false);
+    const [ addressFlag, setAddressFlag ] = useState(false);
+    const [ mbtiFlag, setMbtiFlag ] = useState(false);
     
     let userInfo = JSON.parse(localStorage.getItem("UserInfo"));
+    const [ nick, setNick ] = useState({ "cnick" : userInfo.mnickname});
+    const [ phone, setPhone ] = useState({ "cphone" : userInfo.mphone});
+    const [ mbti, setMbti ] = useState({ "cmbti" : userInfo.mbti});
+    const [ address, setAddress ] = useState({ "caddress" : userInfo.maddress});
     
     let resizeWindow = () => {
         setWindowWidth(window.innerWidth);
@@ -58,19 +63,46 @@ function MyProfile() {
 
     const stChange = (e) => {
         console.log(e.target.id);
-        if([e.target.id].includes("idBtn")) {
-            setIdSt(idSt => !idSt);
-        } else if([e.target.id].includes("nameBtn")) {
-            setIdSt(nameSt => !nameSt);
-        } else if([e.target.id].includes("nickBtn")) {
-            setIdSt(nickSt => !nickSt);
+        if([e.target.name].includes("cnick")) { setNick({ ...nick, [e.target.name] : e.target.value }); }
+        else if([e.target.name].includes("cphone")) { setPhone({ ...phone, [e.target.name] : e.target.value }); }
+        else if([e.target.name].includes("cmbti")) { setMbti({ ...mbti, [e.target.name] : e.target.value }); }
+        else if([e.target.name].includes("caddress")) { setAddress({ ...address, [e.target.name] : e.target.value }); }
+
+        if([e.target.id].includes("nickBtn")) {
+            if(!nickSt) {  console.log("수정완료"); if(userInfo.mnickname !== nick.cnick) { setNickFlag(nickFlag => !nickFlag); } }
+            setNcikSt(nickSt => !nickSt);
         } else if([e.target.id].includes("phoneBtn")) {
-            setIdSt(phoneSt => !phoneSt);
+            if(!phoneSt) { console.log("수정완료"); if(userInfo.mnickname !== nick.cnick) { setPhoneFlag(phoneFlag => !phoneFlag); } }
+            setPhoneSt(phoneSt => !phoneSt);
         } else if([e.target.id].includes("mbtiBtn")) {
-            setIdSt(mbtiSt => !mbtiSt);
+            if(!mbtiSt) { console.log("수정완료"); if(userInfo.mnickname !== nick.cnick) { setMbtiFlag(mbtiFlag => !mbtiFlag); } }
+            setMbtiSt(mbtiSt => !mbtiSt);
         } else if([e.target.id].includes("addressBtn")) {
-            setIdSt(addressSt => !addressSt);
+            if(!addressSt) { console.log("수정완료"); if(userInfo.mnickname !== nick.cnick) { setAddressFlag(addressFlag => !addressFlag); } }
+            setAddressSt(addressSt => !addressSt);
+        } else if([e.target.id].includes("imgBtn")) {
+            
         }
+
+        console.log("nick.cnick : ", nick.length);
+
+        // if(nick.length)
+
+        if(!nickFlag || !phoneFlag || !mbtiFlag || !addressFlag) {
+            setChangeInfo({ 
+                "mnickname" : nick.cnick, 
+                "mphone" : phone.cphone, 
+                "mbti" : mbti.cmbti, 
+                "maddress" : address.caddress 
+            });
+            console.log(userInfo.mnickname, " : ", nick);
+            if(nick.cnick !== userInfo.mnickname && !nickSt || phone.cphone !== userInfo.mphone && !phoneSt || mbti.cmbti !== userInfo.mbti && !mbtiSt || address.caddress !== userInfo.maddress && !addressSt) {
+                ChangeInfo(changeInfo);
+            } else {
+                console.log("@@@@@@@@@\nㄴㄴㄴㄴ\n@@@@@@@@@")
+            }
+        }
+
     };
 
     const [ view, setView ] = useState(1);
@@ -131,26 +163,31 @@ function MyProfile() {
                         <tbody>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-3 col-md-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>ID</label></td>
-                                <td className = "col-7 col-md-7"><input type = "text" className = "form-control" value = { userInfo.mid } disabled = { idSt } /></td>
+                                <td className = "col-7 col-md-7"><input type = "text" id = "idBtn" className = "form-control" value = { userInfo.mid } disabled = { idSt } /></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Name</label></td>
-                                <td className = "col-7"><input type = "text" className = "form-control" value = { userInfo.mname } disabled = { nameSt } /></td>
+                                <td className = "col-7"><input type = "text" id = "idBtn" className = "form-control" value = { userInfo.mname } disabled = { nameSt } /></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-3 col-md-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Nick</label></td>
-                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" value = { userInfo.mnickname } disabled = { nickSt } /></td>
-                                <td className = "col-3 col-md-2"><button type = "button" onClick = { stChange } id = "nickBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>수정</button></td>
+                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" name = "cnick" onChange = { stChange } value = { nick.cnick } disabled = { nickSt } /></td>
+                                <td className = "col-3 col-md-2"><button type = "button" onClick = { stChange } id = "nickBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>{ nickSt ? "수정" : "완료" }</button></td>
+                            </tr>
+                            <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
+                                <td className = "col-3 col-md-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Phone</label></td>
+                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" name = "cphone" onChange = { stChange } value = { phone.cphone } disabled = { phoneSt } /></td>
+                                <td className = "col-3 col-md-2"><button type = "button" onClick = { stChange } id = "phoneBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>{ phoneSt ? "수정" : "완료" }</button></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-3 col-md-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>MBTI</label></td>
-                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" value = { userInfo.mbti } disabled = { mbtiSt } /></td>
-                                <td className = "col-3 col-md-2"><button type = "button" onClick = { stChange } id = "mbtiBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>수정</button></td>
+                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" name = "cmbti" onChange = { stChange } value = { mbti.cmbti } disabled = { mbtiSt } /></td>
+                                <td className = "col-3 col-md-2"><button type = "button" onClick = { stChange } id = "mbtiBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>{ mbtiSt ? "수정" : "완료" }</button></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-3 col-md-3"><label style = {{ fontSize: "1rem", marginTop: "1vh" }}>Address</label></td>
-                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" value = { userInfo.maddress } disabled = { addressSt } /></td>
-                                <td className = "col-3 col-md-2"><button type = "button" onClick = { stChange } id = "addressBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>수정</button></td>
+                                <td className = "col-6 col-md-7"><input type = "text" className = "form-control" name = "caddress" onChange = { stChange } value = { address.caddress } disabled = { addressSt } /></td>
+                                <td className = "col-3 col-md-2"><button type = "button" onClick = { stChange } id = "addressBtn" className = "btn btn-info" style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>{ addressSt ? "수정" : "완료" }</button></td>
                             </tr>
                             <tr className = "row" style = {{ width: "100%", marginLeft: "3vw" }}>
                                 <td className = "col-12">
@@ -158,6 +195,7 @@ function MyProfile() {
                                     <img 
                                         alt = "" 
                                         src = { require('../../MemberImg' + userInfo.profileimg.split("/MemberImg")[1]) }
+                                        htmlFor = "fileInput"
                                         style = {{  
                                             width: window.innerWidth <= 767 ? "96vw" : "100%",
                                             height: "30vh",
@@ -178,9 +216,16 @@ function MyProfile() {
                                     /> 
                                 }
                                 </td>
-                                <td>
+                                <td className = "col-9 col-md-9" style = {{ textAlign: "center", paddingTop: "1vh" }}>
                                     <input id = "fileInput" accept = "image/*" type = "file" style = {{ display: "none" }} onChange = { (e) => imagePreview(e) } />
-                                    <label htmlFor = "fileInput" style= {{  }}>{ !previewImg ? userInfo.profileimg.split("/MemberImg")[1].split("_")[1] : previewImgName }</label>
+                                    <label htmlFor = "fileInput" style= {{ textAlign: "center" }}>{ !previewImg ? userInfo.profileimg.split("/MemberImg")[1].split("_")[1] : previewImgName }</label>
+                                </td>
+                                <td className = "col-3 col-md-3" style = {{ textAlign: "right" }}>
+                                    { previewImg ? 
+                                        <button type = "button" id = "imgBtn" className = "btn btn-info" onClick = { stChange } style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>완료</button>
+                                        :
+                                        <></>
+                                    }
                                 </td>
                             </tr>
                         </tbody>

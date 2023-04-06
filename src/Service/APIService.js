@@ -160,6 +160,16 @@ export const ChatCall = (formData) => {
     })
 };
 
+// 내 정보 변경
+export const ChangeInfo = (memberDTO) => {
+    return call("/ChangeMyInfo", "POST", memberDTO)
+    .then((res) => {
+        if(res) {
+            alert("변경 되었습니다.");
+        }
+    })
+};
+
 // -/Member===========================================================================================
 // Board==============================================================================================
 

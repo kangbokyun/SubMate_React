@@ -29,6 +29,7 @@ function MyProfile() {
     const [ phoneFlag, setPhoneFlag ] = useState(false);
     const [ addressFlag, setAddressFlag ] = useState(false);
     const [ mbtiFlag, setMbtiFlag ] = useState(false);
+    const [ profileImg, setProfileImg ] = useState({});
     
     let userInfo = JSON.parse(localStorage.getItem("UserInfo"));
     const [ nick, setNick ] = useState({ "mnickname" : userInfo.mnickname});
@@ -74,6 +75,8 @@ function MyProfile() {
         } else if([e.target.name].includes("maddress")) { 
             setAddress({ ...address, [e.target.name] : e.target.value });
             userInfo.mnickname = e.target.value; 
+        } else if([e.target.name].includes("imgBtn")) {
+            
         }
 
         setChangeInfo({ ...changeInfo, "mno" : userInfo.mno, [e.target.name] : e.target.value });
@@ -83,14 +86,16 @@ function MyProfile() {
         if([e.target.id].includes("nickBtn")) { setNcikSt(nickSt => !nickSt);
         } else if([e.target.id].includes("phoneBtn")) {  setPhoneSt(phoneSt => !phoneSt);
         } else if([e.target.id].includes("mbtiBtn")) { setMbtiSt(mbtiSt => !mbtiSt);
-        } else if([e.target.id].includes("addressBtn")) { setAddressSt(addressSt => !addressSt);
-        } else if([e.target.id].includes("imgBtn")) {
-            
-        }
+        } else if([e.target.id].includes("addressBtn")) { setAddressSt(addressSt => !addressSt); }
         
         if(!nickSt || !phoneSt || !mbtiSt || !addressSt) {
-            localStorage.removeItem("UserInfo");
-            localStorage.setItem("UserInfo", JSON.stringify(userInfo));
+            const userData = JSON.parse(localStorage.getItem("UserInfo"));
+            if(!nickSt) { if(userInfo.mnickname !== changeInfo.mnickname && changeInfo.mnickname !== undefined) { userData.mnickname = changeInfo.mnickname; } }
+            if(!phoneSt) { if(!userInfo.mphone !== changeInfo.mphone && changeInfo.mphone !== undefined) { userData.mphone = changeInfo.mphone; } }
+            if(!mbtiSt) { if(!userInfo.mbti !== changeInfo.mbti && changeInfo.mbti !== undefined) { userData.mbti = changeInfo.mbti; } }
+            if(!addressSt) { if(!userInfo.maddress !== changeInfo.maddress && changeInfo.maddress !== undefined) {  userData.maddress = changeInfo.maddress; } }
+            localStorage.setItem("UserInfo", JSON.stringify(userData));
+
             ChangeInfo(changeInfo);
         }
     };
@@ -105,16 +110,22 @@ function MyProfile() {
     };
 
     const imagePreview = (e) => {
+        alert("123");
         let fileReader = new FileReader();
 
         if(e.target.files[0]) {
             fileReader.readAsDataURL(e.target.files[0]);
             setPreviewImgName(e.target.files[0].name);
+            setProfileImg({ [ e.target.name ] : e.target.files[0] });
         }
 
         fileReader.onloadend = () => {
             setPreviewImg(fileReader.result);
         };
+        alert(e.target.name);
+        if([e.target.name].includes("imgBtn")) {
+            alert(e.target.files[0].name);
+        }
     };
 
     return(
@@ -208,11 +219,11 @@ function MyProfile() {
                                 </td>
                                 <td className = "col-9 col-md-9" style = {{ textAlign: "center", paddingTop: "1vh" }}>
                                     <input id = "fileInput" accept = "image/*" type = "file" style = {{ display: "none" }} onChange = { (e) => imagePreview(e) } />
-                                    <label htmlFor = "fileInput" style= {{ textAlign: "center" }}>{ !previewImg ? userInfo.profileimg.split("/MemberImg")[1].split("_")[1] : previewImgName }</label>
+                                    <label onClick = { stChange } name = "imgTitle" htmlFor = "fileInput" style= {{ textAlign: "center" }}>{ !previewImg ? userInfo.profileimg.split("/MemberImg")[1].split("_")[1] : previewImgName }</label>
                                 </td>
                                 <td className = "col-3 col-md-3" style = {{ textAlign: "right" }}>
                                     { previewImg ? 
-                                        <button type = "button" id = "imgBtn" className = "btn btn-info" onClick = { stChange } style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>완료</button>
+                                        <button type = "button" name = "imgBtn" className = "btn btn-info" onClick = { imagePreview } style = {{ width: window.innerWidth <= 767 ? "100%" : "63%", color: "white" }}>완료</button>
                                         :
                                         <></>
                                     }

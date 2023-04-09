@@ -124,7 +124,7 @@ function MyProfile() {
         };
         alert(e.target.name);
         if([e.target.name].includes("imgBtn")) {
-            alert(e.target.files[0].name);
+            alert(e.target.files[0].name); // 파일 변경
         }
     };
 

@@ -117,6 +117,8 @@ function BoardWrite() {
                     BoardWriteNoImgAPI(write);
                 }
             } else { // 이미지가 있을 때
+                console.log("data : ", data);
+                console.log("data.bimg : ", data.bimg);
                 formData.append("bimg", data.bimg);
                 formData.append("btitle", data.btitle);
                 formData.append("bcontents", data.bcontents);

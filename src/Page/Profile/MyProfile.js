@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ChangeInfo, call } from '../../Service/APIService';
+import { ChangeInfo, ChangeInfoImg, call } from '../../Service/APIService';
 import Header from '../Header';
 import Menu from '../Menu';
 import Statistics from './Statistics';
@@ -110,21 +110,27 @@ function MyProfile() {
     };
 
     const imagePreview = (e) => {
-        alert("123");
-        let fileReader = new FileReader();
-
-        if(e.target.files[0]) {
-            fileReader.readAsDataURL(e.target.files[0]);
-            setPreviewImgName(e.target.files[0].name);
-            setProfileImg({ [ e.target.name ] : e.target.files[0] });
-        }
-
-        fileReader.onloadend = () => {
-            setPreviewImg(fileReader.result);
-        };
-        alert(e.target.name);
         if([e.target.name].includes("imgBtn")) {
-            alert(e.target.files[0].name); // 파일 변경
+            const formData1 = new FormData();
+            const userData = JSON.parse(localStorage.getItem("UserInfo"));
+            formData1.append("mno", userInfo.mno);
+            formData1.append("profileImg", profileImg.profileImg);
+            call("/ChangeMyInfoImg", "POST", formData1)
+            .then((res) => { if(res) { 
+                console.log("변경되었습니다.");
+                userData.profileimg = res.profileimg;
+                localStorage.setItem("UserInfo", JSON.stringify(userData));
+            }})
+        } else {
+            let fileReader = new FileReader();
+    
+            if(e.target.files[0]) {
+                fileReader.readAsDataURL(e.target.files[0]);
+                setPreviewImgName(e.target.files[0].name);
+                setProfileImg({ "profileImg" : e.target.files[0] });
+            }
+    
+            fileReader.onloadend = () => { setPreviewImg(fileReader.result); };
         }
     };
 
@@ -218,7 +224,7 @@ function MyProfile() {
                                 }
                                 </td>
                                 <td className = "col-9 col-md-9" style = {{ textAlign: "center", paddingTop: "1vh" }}>
-                                    <input id = "fileInput" accept = "image/*" type = "file" style = {{ display: "none" }} onChange = { (e) => imagePreview(e) } />
+                                    <input id = "fileInput" name = "profileimg" accept = "image/*" type = "file" style = {{ display: "none" }} onChange = { (e) => imagePreview(e) } />
                                     <label onClick = { stChange } name = "imgTitle" htmlFor = "fileInput" style= {{ textAlign: "center" }}>{ !previewImg ? userInfo.profileimg.split("/MemberImg")[1].split("_")[1] : previewImgName }</label>
                                 </td>
                                 <td className = "col-3 col-md-3" style = {{ textAlign: "right" }}>

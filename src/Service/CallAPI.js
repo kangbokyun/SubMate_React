@@ -23,5 +23,6 @@ export const FormDataAPI = [
     "/ChatHistoryList",
     "/MyInfo/WritedBoard",
     "/MyInfo/TakeHeart",
-    "/MyInfo/WritedReply"
+    "/MyInfo/WritedReply",
+    "/ChangeMyInfoImg"
 ]
